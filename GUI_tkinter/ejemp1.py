@@ -7,6 +7,7 @@ def registrar():
     nombre = entry_nombre.get()
     correo = entry_correo.get()
     contraseña = entry_contraseña.get()
+    print(f"El nombre{nombre} con correo {correo} se registró exitosamente")
     messagebox.showinfo("Registro Exitoso", f"Nombre: {nombre}\nCorreo: {correo}\nContraseña: {contraseña}")
 
 # Función para el botón "Cancelar"
@@ -16,7 +17,7 @@ def cancelar():
 # Crear la ventana principal
 ventana = tk.Tk()
 ventana.title("Formulario de Registro")
-ventana.geometry("400x600")  # Tamaño de la ventana
+ventana.geometry("400x600")
 
 # Cargar la imagen
 imagen = Image.open("C://Users//Jaime//Documents//GitHub//progavan//GUI_tkinter//pythonimg.jpg")
