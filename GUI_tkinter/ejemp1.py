@@ -29,9 +29,9 @@ label_imagen.pack(pady=20)
 
 # Etiqueta y campo de entrada para el nombre
 label_nombre = tk.Label(ventana, text="Nombre:")
-label_nombre.pack(pady=5)
+label_nombre.pack(pady=5,side="left")
 entry_nombre = tk.Entry(ventana)
-entry_nombre.pack(pady=5)
+entry_nombre.pack(pady=5,side="right")
 
 # Etiqueta y campo de entrada para el correo electrónico
 label_correo = tk.Label(ventana, text="Correo electrónico:")
