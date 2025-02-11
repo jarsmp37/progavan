@@ -49,8 +49,8 @@ import tkinter as tk
 etiqueta = tk.Label(ven1,text="Nombre",font=("Arial", 14, "bold"), fg="white",bg="navy",padx=20,pady=10)
 etiqueta.grid(row=2, column=0, padx=5, pady=5)
 # Campo de entrada
-Nombre = tk.Entry(ven1, width=30)
-Nombre.grid(row=2, column=1, padx=5, pady=5)
+Nombre = tk.Entry(ven1, width=30,font=("Arial", 18, "bold"))
+Nombre.grid(row=2, column=1, padx=5, pady=5,sticky="w")
 
 etiqueta = tk.Label(ven1,text="Comida",font=("Arial", 14, "bold"), fg="white",bg="navy",padx=20,pady=10)
 etiqueta.grid(row=3, column=0, padx=5, pady=5)
