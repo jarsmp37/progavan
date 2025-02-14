@@ -21,8 +21,6 @@ def mostrar():
 
 
 
-
-
 ven1=tk.Tk()
 ven1.title("Trabajo Clase")
 ven1.geometry("800x450")
@@ -44,7 +42,6 @@ imagen_tk2 = ImageTk.PhotoImage(imagen2)
 label_imagen2 = tk.Label(ven1, image=imagen_tk2)
 label_imagen2.grid(row=0, column=2, padx=5, pady=5)
 
-import tkinter as tk
 
 etiqueta = tk.Label(ven1,text="Nombre",font=("Arial", 14, "bold"), fg="white",bg="navy",padx=20,pady=10)
 etiqueta.grid(row=2, column=0, padx=5, pady=5)
