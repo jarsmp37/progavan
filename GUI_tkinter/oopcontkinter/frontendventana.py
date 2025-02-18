@@ -13,6 +13,19 @@ def registrar():
     obt_edad.delete(0,tk.END)
     obt_sangre.delete(0,tk.END)
 
+def mostrarlista():
+    ventana2=tk.Toplevel()
+    ventana2.title("Lista de usuarios")
+    ventana2.geometry("400x400")
+    listausuario=Joaquin.mostarusuarios()
+
+    for i,usuario in enumerate(listausuario,start=1):
+        etiqueta_usuario=tk.Label(ventana2,text=usuario.mostrarinfo())
+        etiqueta_usuario.pack(pady=6)
+
+
+    ventana2.mainloop()
+
 
 
 ventana1=tk.Tk()
@@ -36,5 +49,8 @@ obt_sangre.pack(pady=8)
 
 boton1=tk.Button(ventana1,text="Registrar",command=registrar)
 boton1.pack(pady=8)
+
+boton2=tk.Button(ventana1,text="Mostrar lista",command=mostrarlista)
+boton2.pack(pady=7)
 
 ventana1.mainloop()
