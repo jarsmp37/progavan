@@ -59,6 +59,6 @@ boton1.pack(pady=8)
 boton2=tk.Button(ventana1,text="Mostrar lista",command=mostrarlista)
 boton2.pack(pady=7)
 
-ventana1.protocol("WM_DELETEWINDOW",al_cerrar)
+ventana1.protocol("WM_DELETE_WINDOW",al_cerrar)
 
 ventana1.mainloop()
