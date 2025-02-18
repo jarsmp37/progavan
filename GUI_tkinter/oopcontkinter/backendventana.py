@@ -1,3 +1,4 @@
+import json
 class Joaquin:
     usuarios=[]
     
@@ -13,3 +14,20 @@ class Joaquin:
     @classmethod
     def mostarusuarios(cls):
         return cls.usuarios
+    
+    @classmethod
+    def guardar_usuarios(cls,archivo):
+        usuarios_guardados=[{"nombre":u.nombre,"edad":u.edad,"tiposangre":u.tiposangre}for u in cls.usuarios]
+        with open(archivo,"w") as f:
+            json.dump(usuarios_guardados,f)
+
+    @classmethod
+    def cargar_usuarios(cls,archivo):
+        try:
+            with open(archivo,"r") as f:
+                usuarios_guardados=json.load(f)
+                cls.usuarios=[Joaquin(u["nombre"],u["edad"],u["tiposangre"])for u in usuarios_guardados]
+        except FileNotFoundError:
+            cls.usuarios=[]
+
+

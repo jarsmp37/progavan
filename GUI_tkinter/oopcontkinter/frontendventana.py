@@ -2,6 +2,10 @@ import tkinter as tk
 from backendventana import Joaquin
 from tkinter import messagebox
 
+def al_cerrar():
+    Joaquin.guardar_usuarios("Usuarios.json")
+    ventana1.destroy()
+
 def registrar():
     Nombre=obt_nombre.get()
     Edad=obt_edad.get()
@@ -32,6 +36,8 @@ ventana1=tk.Tk()
 ventana1.title("Ventana de Registro")
 ventana1.geometry("500x400")
 
+Joaquin.cargar_usuarios("Usuarios.json")
+
 etiqueta_nom=tk.Label(ventana1,text="Nombre")
 etiqueta_nom.pack(pady=8)
 obt_nombre=tk.Entry(ventana1)
@@ -52,5 +58,7 @@ boton1.pack(pady=8)
 
 boton2=tk.Button(ventana1,text="Mostrar lista",command=mostrarlista)
 boton2.pack(pady=7)
+
+ventana1.protocol("WM_DELETEWINDOW",al_cerrar)
 
 ventana1.mainloop()
