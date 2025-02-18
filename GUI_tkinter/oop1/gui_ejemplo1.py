@@ -11,9 +11,16 @@ def registrar_usuario():
     entnombre.delete(0,tk.END)
     entedad.delete(0,tk.END)
 
+def editar():
+    pass
+
+def eliminar():
+    pass
+
 def mostrarusuarios():
     ventana_usuarios=tk.Toplevel(ventana1)
     ventana_usuarios.title("Usuarios Registrados")
+    ventana_usuarios.geometry("500x400")
 
     #Jalar lista de la clase
     usuarios=personas.obtener_lista()
@@ -21,7 +28,11 @@ def mostrarusuarios():
     #ciclo for para imprimir los datos
     for i, usuario in enumerate(usuarios,start=1):
         etiqueta_usuario=Label(ventana_usuarios,text=usuario.mostrardatos())
-        etiqueta_usuario.pack(pady=7)
+        etiqueta_usuario.pack(pady=7,side="left")
+        boton_editar=Button(ventana_usuarios,text="editar",command=editar)
+        boton_editar.pack(pady=5,side="right")
+        boton_eliminar=Button(ventana_usuarios,text="eliminar",command=eliminar)
+        boton_eliminar.pack(pady=5,side="right")
 
 
 ventana1=tk.Tk()
