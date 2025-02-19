@@ -11,7 +11,7 @@ def registrar_usuario():
     Nombre=entnombre.get()
     Edad=entedad.get()
     personas(Nombre,Edad)
-    messagebox.showinfo("Registro exitoso",f"El usuario {Nombre} se registró")
+    #messagebox.showinfo("Registro exitoso",f"El usuario {Nombre} se registró")
     entnombre.delete(0,tk.END)
     entedad.delete(0,tk.END)
 
