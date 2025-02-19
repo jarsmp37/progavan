@@ -18,11 +18,16 @@ def registrar_usuario():
 def editar():
     pass
 
-def eliminar():
-    pass
+def eliminar(usuario):
+    ventana_usuarios.destroy()
+    personas.eliminar_usuario(usuario)
+    messagebox.showinfo("Eliminar usuario",f"Eliminaste al {usuario.nombre}")
+    mostrarusuarios()
+    
 
 
 def mostrarusuarios():
+    global ventana_usuarios
     ventana_usuarios=tk.Toplevel(ventana1)
     ventana_usuarios.title("Usuarios Registrados")
     ventana_usuarios.geometry("500x400")
@@ -31,14 +36,14 @@ def mostrarusuarios():
     usuarios=personas.obtener_lista()
 
     #ciclo for para imprimir los datos
-    for i, usuario in enumerate(usuarios,start=1):
+    for i, usuario1 in enumerate(usuarios,start=1):
         frame1=Frame(ventana_usuarios)
         frame1.pack(pady=7)
-        etiqueta_usuario=Label(frame1,text=usuario.mostrardatos())
+        etiqueta_usuario=Label(frame1,text=usuario1.mostrardatos())
         etiqueta_usuario.pack(pady=7,side="left")
         boton_editar=Button(frame1,text="editar",command=editar)
         boton_editar.pack(pady=5,side="right")
-        boton_eliminar=Button(frame1,text="eliminar",command=eliminar)
+        boton_eliminar=Button(frame1,text="eliminar",command=lambda u=usuario1: eliminar(u))
         boton_eliminar.pack(pady=5,side="right")
 
 

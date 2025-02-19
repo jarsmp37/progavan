@@ -27,6 +27,11 @@ class personas:
                 cls.usuarios=[personas(u["nombre"],u["edad"])for u in usuarios_guardados]
         except FileNotFoundError:
             cls.usuarios=[]
+
+    @classmethod
+    def eliminar_usuario(cls,usuario):
+        cls.usuarios.remove(usuario)
+        cls.guardar_usuarios("Usuarios.json")
     
 
     
