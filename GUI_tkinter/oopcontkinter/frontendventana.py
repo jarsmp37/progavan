@@ -6,6 +6,12 @@ def al_cerrar():
     Joaquin.guardar_usuarios("Usuarios.json")
     ventana1.destroy()
 
+def editar():
+    pass
+
+def eliminar():
+    pass
+
 def registrar():
     Nombre=obt_nombre.get()
     Edad=obt_edad.get()
@@ -20,12 +26,18 @@ def registrar():
 def mostrarlista():
     ventana2=tk.Toplevel()
     ventana2.title("Lista de usuarios")
-    ventana2.geometry("400x400")
+    ventana2.geometry("500x400")
     listausuario=Joaquin.mostarusuarios()
 
     for i,usuario in enumerate(listausuario,start=1):
-        etiqueta_usuario=tk.Label(ventana2,text=usuario.mostrarinfo())
-        etiqueta_usuario.pack(pady=6)
+        frameeti=tk.Frame(ventana2)
+        frameeti.pack(pady=6,fill=tk.X)
+        etiqueta_usuario=tk.Label(frameeti,text=usuario.mostrarinfo())
+        etiqueta_usuario.pack(padx=6,side="left")
+        boton3=tk.Button(frameeti,text="Editar",command=editar)
+        boton3.pack(padx=5,side="left")
+        boton4=tk.Button(frameeti,text="Eliminar",command=eliminar)
+        boton4.pack(padx=5,side="left")
 
 
     ventana2.mainloop()
@@ -45,7 +57,8 @@ obt_nombre.pack(pady=8)
 
 etiqueta_edad=tk.Label(ventana1,text="Edad")
 etiqueta_edad.pack(pady=8)
-obt_edad=tk.Entry(ventana1)
+obt_edad=tk.Entry(ventana1, fg="gray")
+obt_edad.insert(0,"Inserta tu edad")
 obt_edad.pack(pady=8)
 
 etiqueta_sangre=tk.Label(ventana1,text="Tipo de Sagre")

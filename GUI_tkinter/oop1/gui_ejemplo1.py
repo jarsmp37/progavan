@@ -3,6 +3,10 @@ from tkinter import *
 from ejemplo1 import personas
 from tkinter import messagebox
 
+def al_cerrar():
+    personas.guardar_usuarios("Usuarios.json")
+    ventana1.destroy()
+
 def registrar_usuario():
     Nombre=entnombre.get()
     Edad=entedad.get()
@@ -16,6 +20,7 @@ def editar():
 
 def eliminar():
     pass
+
 
 def mostrarusuarios():
     ventana_usuarios=tk.Toplevel(ventana1)
@@ -38,6 +43,7 @@ def mostrarusuarios():
 ventana1=tk.Tk()
 ventana1.title("Registro de usuarios")
 ventana1.geometry("500x400")
+personas.cargar_usuarios("Usuarios.json")
 
 etinombre=Label(ventana1,text="Nombre")
 etinombre.pack(pady=4)
@@ -55,4 +61,5 @@ boton_reg.pack(pady=6)
 boton_mostrar=Button(ventana1,text="Mostrar usuarios",command=mostrarusuarios)
 boton_mostrar.pack(pady=6)
 
+ventana1.protocol("WM_DELETE_WINDOW",al_cerrar)
 ventana1.mainloop()
