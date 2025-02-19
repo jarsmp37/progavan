@@ -32,11 +32,13 @@ def mostrarusuarios():
 
     #ciclo for para imprimir los datos
     for i, usuario in enumerate(usuarios,start=1):
-        etiqueta_usuario=Label(ventana_usuarios,text=usuario.mostrardatos())
+        frame1=Frame(ventana_usuarios)
+        frame1.pack(pady=7)
+        etiqueta_usuario=Label(frame1,text=usuario.mostrardatos())
         etiqueta_usuario.pack(pady=7,side="left")
-        boton_editar=Button(ventana_usuarios,text="editar",command=editar)
+        boton_editar=Button(frame1,text="editar",command=editar)
         boton_editar.pack(pady=5,side="right")
-        boton_eliminar=Button(ventana_usuarios,text="eliminar",command=eliminar)
+        boton_eliminar=Button(frame1,text="eliminar",command=eliminar)
         boton_eliminar.pack(pady=5,side="right")
 
 
