@@ -73,7 +73,7 @@ def registrar():
     Sangre=obt_sangre.get()
 
     Joaquin(Nombre,Edad,Sangre)
-    messagebox.showinfo("Registro Exitoso",f"El usuario {Nombre} quedó registrado")
+    #messagebox.showinfo("Registro Exitoso",f"El usuario {Nombre} quedó registrado")
     obt_nombre.delete(0,tk.END)
     obt_edad.delete(0,tk.END)
     obt_sangre.delete(0,tk.END)
