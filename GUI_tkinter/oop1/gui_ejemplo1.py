@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import *
 from ejemplo1 import personas
-from tkinter import messagebox
+from tkinter import messagebox, ttk
 
 def al_cerrar():
     personas.guardar_usuarios("Usuarios.json")
@@ -11,19 +11,28 @@ def registrar_usuario():
     Nombre=entnombre.get()
     Edad=entedad.get()
     personas(Nombre,Edad)
-    #messagebox.showinfo("Registro exitoso",f"El usuario {Nombre} se registró")
+    messagebox.showinfo("Registro exitoso",f"El usuario {Nombre} se registró")
     entnombre.delete(0,tk.END)
     entedad.delete(0,tk.END)
 
 def editar():
-    pass
+    ventana_edicion=tk.Toplevel(ventana_usuarios)
+    ventana_edicion.title("Edición de usuarios")
+    ventana_edicion.geometry("500x400")
+
+    ventana_edicion.mainloop()
+
 
 def eliminar(usuario):
     ventana_usuarios.destroy()
-    personas.eliminar_usuario(usuario)
-    messagebox.showinfo("Eliminar usuario",f"Eliminaste al {usuario.nombre}")
-    mostrarusuarios()
-    
+    respuesta = messagebox.askyesno("Pregunta", f"¿Quieres eliminar al usuario {usuario.nombre}?")
+    if respuesta:
+        personas.eliminar_usuario(usuario)
+        messagebox.showinfo("Eliminar usuario",f"Eliminaste al {usuario.nombre}")
+        mostrarusuarios()
+    else:
+        mostrarusuarios()
+     
 
 
 def mostrarusuarios():
@@ -31,6 +40,14 @@ def mostrarusuarios():
     ventana_usuarios=tk.Toplevel(ventana1)
     ventana_usuarios.title("Usuarios Registrados")
     ventana_usuarios.geometry("500x400")
+
+    #canvas=tk.Canvas(ventana_usuarios)
+    #scrolbar=ttk.Scrollbar(ventana_usuarios,orient="vertical",command=canvas.yview)
+    #frame_usuarios =tk.Frame(canvas)
+    #canvas.configure(yscrollcommand=scrolbar.set)
+    #canvas.create_window((0,0),window=frame_usuarios,anchor="nw")
+    #canvas.pack(side="left",fill="both",expand=True)
+    #scrolbar.pack(side="right",fill="y")
 
     #Jalar lista de la clase
     usuarios=personas.obtener_lista()
@@ -41,7 +58,7 @@ def mostrarusuarios():
         frame1.pack(pady=7)
         etiqueta_usuario=Label(frame1,text=usuario1.mostrardatos())
         etiqueta_usuario.pack(pady=7,side="left")
-        boton_editar=Button(frame1,text="editar",command=editar)
+        boton_editar=Button(frame1,text="editar",command=lambda u=usuario1: editar(u))
         boton_editar.pack(pady=5,side="right")
         boton_eliminar=Button(frame1,text="eliminar",command=lambda u=usuario1: eliminar(u))
         boton_eliminar.pack(pady=5,side="right")

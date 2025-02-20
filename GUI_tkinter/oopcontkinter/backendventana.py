@@ -30,4 +30,9 @@ class Joaquin:
         except FileNotFoundError:
             cls.usuarios=[]
 
+    @classmethod
+    def eliminar_usuario(cls,usuario):
+        cls.usuarios.remove(usuario)
+        cls.guardar_usuarios("Usuarios2.json")
+
 
