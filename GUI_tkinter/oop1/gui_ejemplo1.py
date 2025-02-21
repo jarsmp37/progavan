@@ -4,7 +4,7 @@ from ejemplo1 import personas
 from tkinter import messagebox, ttk
 
 def al_cerrar():
-    personas.guardar_usuarios("Usuarios.json")
+    personas.guardar_usuarios("C://Users//Jaime//Documents//GitHub//progavan//GUI_tkinter//oop1//Usuarios.json")
     ventana1.destroy()
 
 def guardar_cambios():
@@ -12,20 +12,20 @@ def guardar_cambios():
 
     nuevo_nombre = obt_nombre_editar.get()
     nueva_edad = obt_edad_editar.get()
-    nueva_sangre = obt_sangre_editar.get()
-
+    
     usuario_actual.nombre = nuevo_nombre
     usuario_actual.edad = nueva_edad
-    usuario_actual.tiposangre = nueva_sangre
+    
 
-    Joaquin.guardar_usuarios("Usuarios.json")
+    personas.guardar_usuarios("C://Users//Jaime//Documents//GitHub//progavan//GUI_tkinter//oop1//Usuarios.json")
 
     ventana_editar.destroy()
 
-    mostrarlista()
+    mostrarusuarios()
 
 def editar(usuario):
     global ventana_editar, obt_nombre_editar, obt_edad_editar, usuario_actual
+    ventana_usuarios.destroy()
 
     usuario_actual = usuario  
 
@@ -117,7 +117,7 @@ def mostrarusuarios():
 ventana1=tk.Tk()
 ventana1.title("Registro de usuarios")
 ventana1.geometry("500x400")
-personas.cargar_usuarios("Usuarios.json")
+personas.cargar_usuarios("C://Users//Jaime//Documents//GitHub//progavan//GUI_tkinter//oop1//Usuarios.json")
 
 etinombre=Label(ventana1,text="Nombre")
 etinombre.pack(pady=4)

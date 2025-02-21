@@ -31,7 +31,7 @@ class personas:
     @classmethod
     def eliminar_usuario(cls,usuario):
         cls.usuarios.remove(usuario)
-        cls.guardar_usuarios("Usuarios.json")
+        cls.guardar_usuarios("C://Users//Jaime//Documents//GitHub//progavan//GUI_tkinter//oop1//Usuarios.json")
     
 
     
