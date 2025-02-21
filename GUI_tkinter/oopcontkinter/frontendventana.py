@@ -3,7 +3,7 @@ from backendventana import Joaquin
 from tkinter import messagebox
 
 def al_cerrar():
-    Joaquin.guardar_usuarios("Usuarios2.json")
+    Joaquin.guardar_usuarios("C://Users//Jaime//Documents//GitHub//progavan//GUI_tkinter//oopcontkinter//Usuarios2.json")
     ventana1.destroy()
 
 def guardar_cambios():
@@ -17,7 +17,7 @@ def guardar_cambios():
     usuario_actual.edad = nueva_edad
     usuario_actual.tiposangre = nueva_sangre
 
-    Joaquin.guardar_usuarios("Usuarios2.json")
+    Joaquin.guardar_usuarios("C://Users//Jaime//Documents//GitHub//progavan//GUI_tkinter//oopcontkinter//Usuarios2.json")
 
     ventana_editar.destroy()
 
@@ -124,7 +124,7 @@ ventana1=tk.Tk()
 ventana1.title("Ventana de Registro")
 ventana1.geometry("500x400")
 
-Joaquin.cargar_usuarios("Usuarios2.json")
+Joaquin.cargar_usuarios("C://Users//Jaime//Documents//GitHub//progavan//GUI_tkinter//oopcontkinter//Usuarios2.json")
 
 etiqueta_nom=tk.Label(ventana1,text="Nombre")
 etiqueta_nom.pack(pady=8)

@@ -7,6 +7,53 @@ def al_cerrar():
     personas.guardar_usuarios("Usuarios.json")
     ventana1.destroy()
 
+def guardar_cambios():
+    global usuario_actual
+
+    nuevo_nombre = obt_nombre_editar.get()
+    nueva_edad = obt_edad_editar.get()
+    nueva_sangre = obt_sangre_editar.get()
+
+    usuario_actual.nombre = nuevo_nombre
+    usuario_actual.edad = nueva_edad
+    usuario_actual.tiposangre = nueva_sangre
+
+    Joaquin.guardar_usuarios("Usuarios.json")
+
+    ventana_editar.destroy()
+
+    mostrarlista()
+
+def editar(usuario):
+    global ventana_editar, obt_nombre_editar, obt_edad_editar, usuario_actual
+
+    usuario_actual = usuario  
+
+    ventana_editar = tk.Toplevel()
+    ventana_editar.title("Editar Usuario")
+    ventana_editar.geometry("300x400")
+
+    
+    etiqueta_nom_editar = tk.Label(ventana_editar, text="Nombre")
+    etiqueta_nom_editar.pack(pady=5)
+    obt_nombre_editar = tk.Entry(ventana_editar)
+    obt_nombre_editar.insert(0, usuario.nombre)  
+    obt_nombre_editar.pack(pady=5)
+
+    etiqueta_edad_editar = tk.Label(ventana_editar, text="Edad")
+    etiqueta_edad_editar.pack(pady=5)
+    obt_edad_editar = tk.Entry(ventana_editar)
+    obt_edad_editar.insert(0, usuario.edad) 
+    obt_edad_editar.pack(pady=5)
+
+    boton_guardar = tk.Button(ventana_editar, text="Guardar", command=guardar_cambios)
+    boton_guardar.pack(pady=10)
+
+    boton_cancelar = tk.Button(ventana_editar, text="Cancelar", command=ventana_editar.destroy)
+    boton_cancelar.pack(pady=10)
+
+
+
 def registrar_usuario():
     Nombre=entnombre.get()
     Edad=entedad.get()
@@ -14,13 +61,6 @@ def registrar_usuario():
     messagebox.showinfo("Registro exitoso",f"El usuario {Nombre} se registró")
     entnombre.delete(0,tk.END)
     entedad.delete(0,tk.END)
-
-def editar():
-    ventana_edicion=tk.Toplevel(ventana_usuarios)
-    ventana_edicion.title("Edición de usuarios")
-    ventana_edicion.geometry("500x400")
-
-    ventana_edicion.mainloop()
 
 
 def eliminar(usuario):
@@ -41,21 +81,31 @@ def mostrarusuarios():
     ventana_usuarios.title("Usuarios Registrados")
     ventana_usuarios.geometry("500x400")
 
-    #canvas=tk.Canvas(ventana_usuarios)
-    #scrolbar=ttk.Scrollbar(ventana_usuarios,orient="vertical",command=canvas.yview)
-    #frame_usuarios =tk.Frame(canvas)
-    #canvas.configure(yscrollcommand=scrolbar.set)
-    #canvas.create_window((0,0),window=frame_usuarios,anchor="nw")
-    #canvas.pack(side="left",fill="both",expand=True)
-    #scrolbar.pack(side="right",fill="y")
+    canvas = tk.Canvas(ventana_usuarios)
+    scrollbar = tk.Scrollbar(ventana_usuarios, orient="vertical", command=canvas.yview)
+    scrollable_frame = tk.Frame(canvas)
 
-    #Jalar lista de la clase
+    scrollable_frame.bind(
+        "<Configure>",
+        lambda e: canvas.configure(
+            scrollregion=canvas.bbox("all")
+        )
+    )
+
+    canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
+    canvas.configure(yscrollcommand=scrollbar.set)
+
+    # Empaquetar el Canvas y el Scrollbar
+    canvas.pack(side="left", fill="both", expand=True)
+    scrollbar.pack(side="right", fill="y")
+
+
+
     usuarios=personas.obtener_lista()
 
-    #ciclo for para imprimir los datos
     for i, usuario1 in enumerate(usuarios,start=1):
-        frame1=Frame(ventana_usuarios)
-        frame1.pack(pady=7)
+        frame1=Frame(scrollable_frame)
+        frame1.pack(pady=7,fill=tk.X)
         etiqueta_usuario=Label(frame1,text=usuario1.mostrardatos())
         etiqueta_usuario.pack(pady=7,side="left")
         boton_editar=Button(frame1,text="editar",command=lambda u=usuario1: editar(u))
