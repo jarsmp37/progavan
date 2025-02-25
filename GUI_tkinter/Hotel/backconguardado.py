@@ -1,3 +1,14 @@
+#Con opcion de guardar
+import json
+from datetime import datetime
+import os
+
+USUARIOS_JSON = "usuarios.json"
+HABITACIONES_JSON = "habitaciones.json"
+HUESPEDES_JSON = "huespedes.json"
+RESERVAS_JSON = "reservas.json"
+
+
 class Usuario:
     lista_usuario = []
 
@@ -19,12 +30,33 @@ class Usuario:
         print("Datos incorrectos para inicio de sesión")
         return None
 
+    @classmethod
+    def cargar_usuarios(cls):
+        if os.path.exists(USUARIOS_JSON):
+            with open(USUARIOS_JSON, "r") as file:
+                data = json.load(file)
+                for usuario_data in data:
+                    Usuario(usuario_data["nombre"], usuario_data["rol"], usuario_data["password"])
+
+    @classmethod
+    def guardar_usuarios(cls):
+        data = []
+        for usuario in Usuario.lista_usuario:
+            data.append({
+                "nombre": usuario.nombre,
+                "rol": usuario.rol,
+                "password": usuario._Usuario__pass
+            })
+        with open(USUARIOS_JSON, "w") as file:
+            json.dump(data, file, indent=4)
+
 
 class Administrador(Usuario):
     def registrar(self, huesped):
         if isinstance(huesped, Huesped):
             Huesped.lista_huespedes.append(huesped)
             print(f"Huesped {huesped.nombre} registrado exitosamente.")
+            Huesped.guardar_huespedes()
         else:
             print("Error: El objeto no es un Huesped válido.")
 
@@ -35,6 +67,7 @@ class Administrador(Usuario):
             if nuevo_telefono:
                 huesped.telefono = nuevo_telefono
             print(f"Huesped {huesped.nombre} modificado exitosamente.")
+            Huesped.guardar_huespedes()
         else:
             print("Error: Huesped no encontrado.")
 
@@ -42,12 +75,14 @@ class Administrador(Usuario):
         if huesped in Huesped.lista_huespedes:
             Huesped.lista_huespedes.remove(huesped)
             print(f"Huesped {huesped.nombre} eliminado exitosamente.")
+            Huesped.guardar_huespedes()
         else:
             print("Error: Huesped no encontrado.")
 
     def crearhabitaciones(self, numero, tipo, camas, costonoche):
         nueva_habitacion = Habitacion(numero, tipo, camas, costonoche)
         print(f"Habitación {nueva_habitacion.numero} creada exitosamente.")
+        Habitacion.guardar_habitaciones()
 
 
 class Recepcionista(Usuario):
@@ -62,6 +97,7 @@ class Recepcionista(Usuario):
             nueva_reserva = Reserva(len(Reserva.lista_reservas) + 1, habitacion, fecha_entrada, fecha_salida, huesped)
             habitacion.disponibilidad = False
             print(f"Reserva realizada exitosamente para la habitación {habitacion.numero}.")
+            Reserva.guardar_reservas()
         else:
             print(f"La habitación {habitacion.numero} no está disponible para reservar.")
 
@@ -70,6 +106,7 @@ class Recepcionista(Usuario):
             reserva.habitacion.disponibilidad = True
             Reserva.lista_reservas.remove(reserva)
             print(f"Reserva {reserva.id} cancelada exitosamente.")
+            Reserva.guardar_reservas()
         else:
             print("Error: Reserva no encontrada.")
 
@@ -85,6 +122,28 @@ class Habitacion:
         self.disponibilidad = True
         Habitacion.lista_Habitaciones.append(self)
 
+    @classmethod
+    def cargar_habitaciones(cls):
+        if os.path.exists(HABITACIONES_JSON):
+            with open(HABITACIONES_JSON, "r") as file:
+                data = json.load(file)
+                for habitacion_data in data:
+                    Habitacion(habitacion_data["numero"], habitacion_data["tipo"], habitacion_data["camas"], habitacion_data["costo"])
+
+    @classmethod
+    def guardar_habitaciones(cls):
+        data = []
+        for habitacion in Habitacion.lista_Habitaciones:
+            data.append({
+                "numero": habitacion.numero,
+                "tipo": habitacion.tipo,
+                "camas": habitacion.camas,
+                "costo": habitacion.costo,
+                "disponibilidad": habitacion.disponibilidad
+            })
+        with open(HABITACIONES_JSON, "w") as file:
+            json.dump(data, file, indent=4)
+
 
 class Huesped:
     lista_huespedes = []
@@ -94,8 +153,25 @@ class Huesped:
         self.telefono = telefono
         Huesped.lista_huespedes.append(self)
 
+    @classmethod
+    def cargar_huespedes(cls):
+        if os.path.exists(HUESPEDES_JSON):
+            with open(HUESPEDES_JSON, "r") as file:
+                data = json.load(file)
+                for huesped_data in data:
+                    Huesped(huesped_data["nombre"], huesped_data["telefono"])
 
-from datetime import datetime  
+    @classmethod
+    def guardar_huespedes(cls):
+        data = []
+        for huesped in Huesped.lista_huespedes:
+            data.append({
+                "nombre": huesped.nombre,
+                "telefono": huesped.telefono
+            })
+        with open(HUESPEDES_JSON, "w") as file:
+            json.dump(data, file, indent=4)
+
 
 class Reserva:
     lista_reservas = []
@@ -103,15 +179,47 @@ class Reserva:
     def __init__(self, id, habitacion, fecha_entrada, fecha_salida, huesped):
         self.id = id
         self.habitacion = habitacion
-        self.fecha_entrada = datetime.strptime(fecha_entrada, "%Y-%m-%d").date()  
-        self.fecha_salida = datetime.strptime(fecha_salida, "%Y-%m-%d").date()    
+        self.fecha_entrada = datetime.strptime(fecha_entrada, "%Y-%m-%d").date()
+        self.fecha_salida = datetime.strptime(fecha_salida, "%Y-%m-%d").date()
         self.huesped = huesped
         Reserva.lista_reservas.append(self)
 
     def costo_total(self):
-        dias = (self.fecha_salida - self.fecha_entrada).days  
+        dias = (self.fecha_salida - self.fecha_entrada).days
         costototal = self.habitacion.costo * dias
         return f"El costo total de la habitación {self.habitacion.numero} será {costototal}."
+
+    @classmethod
+    def cargar_reservas(cls):
+        if os.path.exists(RESERVAS_JSON):
+            with open(RESERVAS_JSON, "r") as file:
+                data = json.load(file)
+                for reserva_data in data:
+                    habitacion = next((h for h in Habitacion.lista_Habitaciones if h.numero == reserva_data["habitacion"]), None)
+                    huesped = next((h for h in Huesped.lista_huespedes if h.nombre == reserva_data["huesped"]), None)
+                    if habitacion and huesped:
+                        Reserva(reserva_data["id"], habitacion, reserva_data["fecha_entrada"], reserva_data["fecha_salida"], huesped)
+
+    @classmethod
+    def guardar_reservas(cls):
+        data = []
+        for reserva in Reserva.lista_reservas:
+            data.append({
+                "id": reserva.id,
+                "habitacion": reserva.habitacion.numero,
+                "fecha_entrada": reserva.fecha_entrada.strftime("%Y-%m-%d"),
+                "fecha_salida": reserva.fecha_salida.strftime("%Y-%m-%d"),
+                "huesped": reserva.huesped.nombre
+            })
+        with open(RESERVAS_JSON, "w") as file:
+            json.dump(data, file, indent=4)
+
+
+
+Usuario.cargar_usuarios()
+Habitacion.cargar_habitaciones()
+Huesped.cargar_huespedes()
+Reserva.cargar_reservas()
 
 
 
@@ -129,3 +237,9 @@ reserva = Reserva.lista_reservas[0]
 print(reserva.costo_total())
 
 recepcionista.cancelar(reserva)
+
+
+Usuario.guardar_usuarios()
+Habitacion.guardar_habitaciones()
+Huesped.guardar_huespedes()
+Reserva.guardar_reservas()
