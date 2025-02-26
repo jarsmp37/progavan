@@ -115,7 +115,8 @@ class Reserva:
 
 
 
-admin = Administrador("Admin", "Administrador", "admin123")
+admin = Administrador("Jaime", "Administrador", "admin123")
+
 huesped1 = Huesped("Juan Perez", "123456789")
 habitacion1 = Habitacion(101, "Individual", 1, 100)
 

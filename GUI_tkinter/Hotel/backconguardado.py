@@ -223,21 +223,8 @@ Reserva.cargar_reservas()
 
 
 
-admin = Administrador("Admin", "Administrador", "admin123")
-huesped1 = Huesped("Juan Perez", "123456789")
-habitacion1 = Habitacion(101, "Individual", 1, 100)
-
-admin.registrar(huesped1)
-admin.crearhabitaciones(102, "Doble", 2, 150)
-
+admin = Administrador("Jaime", "Administrador", "admin123")
 recepcionista = Recepcionista("Recepcionista1", "Recepcionista", "recepcion123")
-recepcionista.reservar(habitacion1, "2023-10-01", "2023-10-05", huesped1)
-
-reserva = Reserva.lista_reservas[0]
-print(reserva.costo_total())
-
-recepcionista.cancelar(reserva)
-
 
 Usuario.guardar_usuarios()
 Habitacion.guardar_habitaciones()

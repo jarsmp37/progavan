@@ -1,0 +1,100 @@
+[
+    {
+        "numero": 101,
+        "tipo": "Individual",
+        "camas": 1,
+        "costo": 100,
+        "disponibilidad": true
+    },
+    {
+        "numero": 102,
+        "tipo": "Doble",
+        "camas": 2,
+        "costo": 150,
+        "disponibilidad": true
+    },
+    {
+        "numero": 101,
+        "tipo": "Individual",
+        "camas": 1,
+        "costo": 100,
+        "disponibilidad": true
+    },
+    {
+        "numero": 102,
+        "tipo": "Doble",
+        "camas": 2,
+        "costo": 150,
+        "disponibilidad": true
+    },
+    {
+        "numero": 101,
+        "tipo": "Individual",
+        "camas": 1,
+        "costo": 100,
+        "disponibilidad": true
+    },
+    {
+        "numero": 102,
+        "tipo": "Doble",
+        "camas": 2,
+        "costo": 150,
+        "disponibilidad": true
+    },
+    {
+        "numero": 101,
+        "tipo": "Individual",
+        "camas": 1,
+        "costo": 100,
+        "disponibilidad": true
+    },
+    {
+        "numero": 102,
+        "tipo": "Doble",
+        "camas": 2,
+        "costo": 150,
+        "disponibilidad": true
+    },
+    {
+        "numero": 101,
+        "tipo": "Individual",
+        "camas": 1,
+        "costo": 100,
+        "disponibilidad": true
+    },
+    {
+        "numero": 102,
+        "tipo": "Doble",
+        "camas": 2,
+        "costo": 150,
+        "disponibilidad": true
+    },
+    {
+        "numero": 101,
+        "tipo": "Individual",
+        "camas": 1,
+        "costo": 100,
+        "disponibilidad": true
+    },
+    {
+        "numero": 102,
+        "tipo": "Doble",
+        "camas": 2,
+        "costo": 150,
+        "disponibilidad": true
+    },
+    {
+        "numero": 101,
+        "tipo": "Individual",
+        "camas": 1,
+        "costo": 100,
+        "disponibilidad": true
+    },
+    {
+        "numero": 102,
+        "tipo": "Doble",
+        "camas": 2,
+        "costo": 150,
+        "disponibilidad": true
+    }
+]
