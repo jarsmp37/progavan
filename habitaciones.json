@@ -96,5 +96,12 @@
         "camas": 2,
         "costo": 150,
         "disponibilidad": true
+    },
+    {
+        "numero": "103",
+        "tipo": "Individual",
+        "camas": "2",
+        "costo": "500",
+        "disponibilidad": true
     }
 ]

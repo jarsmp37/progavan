@@ -3,6 +3,10 @@ import json
 import os
 
 PERSONAS_JSON = "personas.json"
+PACIENTES_JSON = "pacientes.json"
+CITAS_JSON = "citas.json"
+SERVICIOS_JSON = "servicios.json"
+EXPEDIENTES_JSON = "expedientes.json"
 
 class Personas:
     Lista_personas = []
@@ -34,6 +38,9 @@ class Personas:
             json.dump(data, file, indent=4)
 
 
+    
+
+
 class Pacientes(Personas):
     Lista_pacientes = []
 
@@ -45,6 +52,31 @@ class Pacientes(Personas):
         self.peso = Peso
         self.altura = Altura
         Pacientes.Lista_pacientes.append(self)
+
+    @classmethod
+    def cargar_pacientes(cls):
+        if os.path.exists(PACIENTES_JSON):
+            with open(PACIENTES_JSON, "r") as file:
+                data = json.load(file)
+                for paciente_data in data:
+                    Pacientes(paciente_data["Id"], paciente_data["Nombre"], paciente_data["Rol"], paciente_data["Edad"], paciente_data["Tipo_Sangre"], paciente_data["Alergias"], paciente_data["Peso"], paciente_data["Altura"])
+
+    @classmethod
+    def guardar_pacientes(cls):
+        data = []
+        for paciente in Pacientes.Lista_pacientes:
+            data.append({
+                "Id": paciente.id,
+                "Nombre": paciente.nombre,
+                "Rol": paciente.rol,
+                "Edad": paciente.edad,
+                "Tipo_Sangre": paciente.tipo_sangre,
+                "Alergias": paciente.alergias,
+                "Peso": paciente.peso,
+                "Altura": paciente.altura
+            })
+        with open(PACIENTES_JSON, "w") as file:
+            json.dump(data, file, indent=4)
 
 
 class Doctores(Personas):
@@ -125,6 +157,18 @@ class Expediente:
         else:
             print(f"No se encontró expediente para {paciente.nombre}.")
 
+    @classmethod
+    def cargar_expedientes(cls):
+        if os.path.exists(EXPEDIENTES_JSON):
+            with open(EXPEDIENTES_JSON, "r") as file:
+                return json.load(file)
+        return {}
+
+    @classmethod
+    def guardar_expedientes(cls, expedientes):
+        with open(EXPEDIENTES_JSON, "w") as file:
+            json.dump(expedientes, file, indent=4)
+
 
 class Citas:
     lista_citas = []
@@ -137,6 +181,31 @@ class Citas:
         self.doctor = None
         Citas.lista_citas.append(self)
 
+    @classmethod
+    def cargar_citas(cls):
+        if os.path.exists(CITAS_JSON):
+            with open(CITAS_JSON, "r") as file:
+                data = json.load(file)
+                for cita_data in data:
+                    cita = Citas(cita_data["dia"], cita_data["hora"])
+                    cita.Disponibilidad = cita_data["Disponibilidad"]
+                    cita.paciente = cita_data["paciente"]
+                    cita.doctor = cita_data["doctor"]
+
+    @classmethod
+    def guardar_citas(cls):
+        data = []
+        for cita in Citas.lista_citas:
+            data.append({
+                "dia": cita.dia,
+                "hora": cita.hora,
+                "Disponibilidad": cita.Disponibilidad,
+                "paciente": cita.paciente,
+                "doctor": cita.doctor
+            })
+        with open(CITAS_JSON, "w") as file:
+            json.dump(data, file, indent=4)
+
 
 class Servicios:
     Lista_servicios = []
@@ -145,6 +214,25 @@ class Servicios:
         self.servicio = servicio
         self.costo = costo
         Servicios.Lista_servicios.append(self)
+
+    @classmethod
+    def cargar_servicios(cls):
+        if os.path.exists(SERVICIOS_JSON):
+            with open(SERVICIOS_JSON, "r") as file:
+                data = json.load(file)
+                for servicio_data in data:
+                    Servicios(servicio_data["servicio"], servicio_data["costo"])
+
+    @classmethod
+    def guardar_servicios(cls):
+        data = []
+        for servicio in Servicios.Lista_servicios:
+            data.append({
+                "servicio": servicio.servicio,
+                "costo": servicio.costo
+            })
+        with open(SERVICIOS_JSON, "w") as file:
+            json.dump(data, file, indent=4)
 
 
 class Consulta:
@@ -158,3 +246,6 @@ class Consulta:
 
     def Tratamiento(self, tratamiento):
         print(f"Tratamiento para {self.paciente.nombre}: {tratamiento}")
+
+
+ 

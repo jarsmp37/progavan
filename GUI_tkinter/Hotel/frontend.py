@@ -1,12 +1,15 @@
 import tkinter as tk
 from PIL import Image, ImageTk
 from backconguardado import *
+from tkinter import messagebox
 
 def ventanainicio():
     venta1 = tk.Tk()
     venta1.title("Inicio de Sesión")
     venta1.geometry("400x400")
     venta1.config(bg="lightblue")
+
+    venta1.iconbitmap("C://Users//Jaime//Documents//GitHub//progavan//GUI_tkinter//Hotel//hotel.ico")
 
     global entrada1,entrada2
 
