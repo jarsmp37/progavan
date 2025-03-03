@@ -2,19 +2,18 @@ import tkinter as tk
 from tkinter import messagebox, ttk
 from backend import *
 
-# Crear la ventana principal
 root = tk.Tk()
 root.title("Sistema de Consultorio Médico")
 root.geometry("800x600")
 
-# Cargar datos existentes
+
 Personas.cargar_usuarios()
 Pacientes.cargar_pacientes()
 Citas.cargar_citas()
 Servicios.cargar_servicios()
 expedientes = Expediente.cargar_expedientes()
 
-# Funciones para la interfaz gráfica
+
 def agregar_paciente():
     def guardar_paciente():
         id = int(entry_id.get())
