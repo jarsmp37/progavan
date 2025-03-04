@@ -158,5 +158,65 @@
         "nombre": "Recepcionista1",
         "rol": "Recepcionista",
         "password": "recepcion123"
+    },
+    {
+        "nombre": "Jaime",
+        "rol": "Administrador",
+        "password": "admin123"
+    },
+    {
+        "nombre": "Recepcionista1",
+        "rol": "Recepcionista",
+        "password": "recepcion123"
+    },
+    {
+        "nombre": "Jaime",
+        "rol": "Administrador",
+        "password": "admin123"
+    },
+    {
+        "nombre": "Recepcionista1",
+        "rol": "Recepcionista",
+        "password": "recepcion123"
+    },
+    {
+        "nombre": "Jaime",
+        "rol": "Administrador",
+        "password": "admin123"
+    },
+    {
+        "nombre": "Recepcionista1",
+        "rol": "Recepcionista",
+        "password": "recepcion123"
+    },
+    {
+        "nombre": "Jaime",
+        "rol": "Administrador",
+        "password": "admin123"
+    },
+    {
+        "nombre": "Recepcionista1",
+        "rol": "Recepcionista",
+        "password": "recepcion123"
+    },
+    {
+        "nombre": "Jaime",
+        "rol": "Administrador",
+        "password": "admin123"
+    },
+    {
+        "nombre": "Recepcionista1",
+        "rol": "Recepcionista",
+        "password": "recepcion123"
+    },
+    {
+        "nombre": "Jaime",
+        "rol": "Administrador",
+        "password": "admin123"
+    },
+    {
+        "nombre": "Recepcionista1",
+        "rol": "Recepcionista",
+        "password": "recepcion123"
     }
 ]

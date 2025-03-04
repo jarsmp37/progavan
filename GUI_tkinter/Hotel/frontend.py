@@ -2,6 +2,7 @@ import tkinter as tk
 from PIL import Image, ImageTk
 from backconguardado import *
 from tkinter import messagebox
+from tkinter import ttk
 
 def ventanainicio():
     venta1 = tk.Tk()
@@ -56,21 +57,49 @@ def ventanadmin():
     venta2.geometry("600x500")
     tk.Label(venta2, text="Bienvenido, Administrador").pack()
 
-    # Botón para registrar huéspedes
+
     boton_registrar_huesped = tk.Button(venta2, text="Registrar Huésped", command=registrar_huesped)
     boton_registrar_huesped.pack()
 
-    # Botón para modificar huéspedes
+    
     boton_modificar_huesped = tk.Button(venta2, text="Modificar Huésped", command=modificar_huesped)
     boton_modificar_huesped.pack()
 
-    # Botón para eliminar huéspedes
-    boton_eliminar_huesped = tk.Button(venta2, text="Eliminar Huésped", command=eliminar_huesped)
-    boton_eliminar_huesped.pack()
-
-    # Botón para crear habitaciones
     boton_crear_habitacion = tk.Button(venta2, text="Crear Habitación", command=crear_habitacion)
     boton_crear_habitacion.pack()
+
+    boton_mostrar_habitaciones = tk.Button(venta2, text="Mostrar Habitaciones", command=mostrar_habitaciones)
+    boton_mostrar_habitaciones.pack()
+
+def mostrar_habitaciones():
+    ventana_habitaciones = tk.Toplevel()
+    ventana_habitaciones.title("Lista de Habitaciones")
+    ventana_habitaciones.geometry("600x400")
+
+    # Crear un Frame para contener el Treeview y el Scrollbar
+    frame = tk.Frame(ventana_habitaciones)
+    frame.pack(fill=tk.BOTH, expand=True)
+
+    # Crear un Treeview para mostrar las habitaciones
+    tree = ttk.Treeview(frame, columns=("Número", "Tipo", "Camas", "Costo por noche", "Disponibilidad"), show="headings")
+    tree.heading("Número", text="Número")
+    tree.heading("Tipo", text="Tipo")
+    tree.heading("Camas", text="Camas")
+    tree.heading("Costo por noche", text="Costo por noche")
+    tree.heading("Disponibilidad", text="Disponibilidad")
+
+    # Configurar el Treeview para que ocupe todo el espacio disponible
+    tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+    # Añadir un scrollbar para el Treeview
+    scrollbar = ttk.Scrollbar(frame, orient=tk.VERTICAL, command=tree.yview)
+    tree.configure(yscroll=scrollbar.set)
+    scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+
+    # Insertar datos de las habitaciones en el Treeview
+    for habitacion in Habitacion.lista_Habitaciones:
+        disponibilidad = "Disponible" if habitacion.disponibilidad else "Ocupada"
+        tree.insert("", tk.END, values=(habitacion.numero, habitacion.tipo, habitacion.camas, habitacion.costo, disponibilidad))
 
 def registrar_huesped():
     ventana_registrar = tk.Toplevel()
@@ -98,54 +127,76 @@ def registrar_huesped():
 def modificar_huesped():
     ventana_modificar = tk.Toplevel()
     ventana_modificar.title("Modificar Huésped")
-    ventana_modificar.geometry("300x200")
+    ventana_modificar.geometry("600x400")
 
-    tk.Label(ventana_modificar, text="Nombre actual:").pack()
-    entrada_nombre_actual = tk.Entry(ventana_modificar)
-    entrada_nombre_actual.pack()
+    
+    frame_huespedes = tk.Frame(ventana_modificar)
+    frame_huespedes.pack(fill=tk.BOTH, expand=True)
 
-    tk.Label(ventana_modificar, text="Nuevo nombre:").pack()
-    entrada_nuevo_nombre = tk.Entry(ventana_modificar)
+    
+    canvas = tk.Canvas(frame_huespedes)
+    scrollbar = tk.Scrollbar(frame_huespedes, orient=tk.VERTICAL, command=canvas.yview)
+    scrollable_frame = tk.Frame(canvas)
+
+    scrollable_frame.bind(
+        "<Configure>",
+        lambda e: canvas.configure(
+            scrollregion=canvas.bbox("all")
+        )
+    )
+
+    canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
+    canvas.configure(yscrollcommand=scrollbar.set)
+
+    canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+    scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+
+    
+    for huesped in Huesped.lista_huespedes:
+        frame_huesped = tk.Frame(scrollable_frame)
+        frame_huesped.pack(fill=tk.X, padx=5, pady=5)
+
+        tk.Label(frame_huesped, text=f"Nombre: {huesped.nombre}, Teléfono: {huesped.telefono}").pack(side=tk.LEFT)
+
+        boton_modificar = tk.Button(frame_huesped, text="Modificar", command=lambda h=huesped: modificar_huesped_seleccionado(h))
+        boton_modificar.pack(side=tk.LEFT, padx=5)
+
+        boton_eliminar = tk.Button(frame_huesped, text="Eliminar", command=lambda h=huesped: eliminar_huesped_seleccionado(h))
+        boton_eliminar.pack(side=tk.LEFT, padx=5)
+
+def modificar_huesped_seleccionado(huesped):
+    ventana_editar = tk.Toplevel()
+    ventana_editar.title("Editar Huésped")
+    ventana_editar.geometry("300x200")
+
+    tk.Label(ventana_editar, text="Nuevo nombre:").pack()
+    entrada_nuevo_nombre = tk.Entry(ventana_editar)
+    entrada_nuevo_nombre.insert(0, huesped.nombre)
     entrada_nuevo_nombre.pack()
 
-    tk.Label(ventana_modificar, text="Nuevo teléfono:").pack()
-    entrada_nuevo_telefono = tk.Entry(ventana_modificar)
+    tk.Label(ventana_editar, text="Nuevo teléfono:").pack()
+    entrada_nuevo_telefono = tk.Entry(ventana_editar)
+    entrada_nuevo_telefono.insert(0, huesped.telefono)
     entrada_nuevo_telefono.pack()
 
     def guardar_cambios():
-        nombre_actual = entrada_nombre_actual.get()
         nuevo_nombre = entrada_nuevo_nombre.get()
         nuevo_telefono = entrada_nuevo_telefono.get()
-        huesped = next((h for h in Huesped.lista_huespedes if h.nombre == nombre_actual), None)
-        if huesped:
-            admin.modificarcliente(huesped, nuevo_nombre, nuevo_telefono)
-            ventana_modificar.destroy()
-        else:
-            tk.messagebox.showerror("Error", "Huésped no encontrado")
+        admin.modificarcliente(huesped, nuevo_nombre, nuevo_telefono)
+        ventana_editar.destroy()
+        tk.messagebox.showinfo("Éxito", "Huésped modificado correctamente")
 
-    boton_guardar = tk.Button(ventana_modificar, text="Guardar Cambios", command=guardar_cambios)
+    boton_guardar = tk.Button(ventana_editar, text="Guardar Cambios", command=guardar_cambios)
     boton_guardar.pack()
 
-def eliminar_huesped():
-    ventana_eliminar = tk.Toplevel()
-    ventana_eliminar.title("Eliminar Huésped")
-    ventana_eliminar.geometry("300x100")
+def eliminar_huesped_seleccionado(huesped):
+  
+    confirmacion = tk.messagebox.askyesno("Confirmar", f"¿Estás seguro de eliminar a {huesped.nombre}?")
+    if confirmacion:
+        admin.eliminarcliente(huesped)
+        tk.messagebox.showinfo("Éxito", f"Huésped {huesped.nombre} eliminado correctamente")
+        modificar_huesped()
 
-    tk.Label(ventana_eliminar, text="Nombre del huésped:").pack()
-    entrada_nombre = tk.Entry(ventana_eliminar)
-    entrada_nombre.pack()
-
-    def confirmar_eliminar():
-        nombre = entrada_nombre.get()
-        huesped = next((h for h in Huesped.lista_huespedes if h.nombre == nombre), None)
-        if huesped:
-            admin.eliminarcliente(huesped)
-            ventana_eliminar.destroy()
-        else:
-            tk.messagebox.showerror("Error", "Huésped no encontrado")
-
-    boton_confirmar = tk.Button(ventana_eliminar, text="Eliminar", command=confirmar_eliminar)
-    boton_confirmar.pack()
 
 def crear_habitacion():
     ventana_crear = tk.Toplevel()

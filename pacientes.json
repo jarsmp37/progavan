@@ -1,0 +1,22 @@
+[
+    {
+        "Id": 1,
+        "Nombre": "Lidia",
+        "Rol": "Paciente",
+        "Edad": 18,
+        "Tipo_Sangre": "A",
+        "Alergias": "ibuprofeno",
+        "Peso": 40.0,
+        "Altura": 1.5
+    },
+    {
+        "Id": 3,
+        "Nombre": "Farid",
+        "Rol": "Paciente",
+        "Edad": 18,
+        "Tipo_Sangre": "o+",
+        "Alergias": "nada",
+        "Peso": 50.0,
+        "Altura": 1.7
+    }
+]
