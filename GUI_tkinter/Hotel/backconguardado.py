@@ -1,8 +1,8 @@
-#Con opcion de guardar
 import json
 from datetime import datetime
 import os
 
+# Rutas de los archivos JSON
 USUARIOS_JSON = "usuarios.json"
 HABITACIONES_JSON = "habitaciones.json"
 HUESPEDES_JSON = "huespedes.json"
@@ -32,6 +32,7 @@ class Usuario:
 
     @classmethod
     def cargar_usuarios(cls):
+        Usuario.lista_usuario.clear()
         if os.path.exists(USUARIOS_JSON):
             with open(USUARIOS_JSON, "r") as file:
                 data = json.load(file)
@@ -121,14 +122,23 @@ class Habitacion:
         self.costo = costonoche
         self.disponibilidad = True
         Habitacion.lista_Habitaciones.append(self)
+        print(f"Habitación {self.numero} creada y añadida a la lista.")  # Depuración
 
     @classmethod
     def cargar_habitaciones(cls):
+        Habitacion.lista_Habitaciones.clear()
         if os.path.exists(HABITACIONES_JSON):
             with open(HABITACIONES_JSON, "r") as file:
                 data = json.load(file)
                 for habitacion_data in data:
-                    Habitacion(habitacion_data["numero"], habitacion_data["tipo"], habitacion_data["camas"], habitacion_data["costo"])
+                    habitacion = Habitacion(
+                        habitacion_data["numero"],
+                        habitacion_data["tipo"],
+                        habitacion_data["camas"],
+                        habitacion_data["costo"]
+                    )
+                    habitacion.disponibilidad = habitacion_data["disponibilidad"]
+                print("Habitaciones cargadas:", [h.numero for h in Habitacion.lista_Habitaciones])  # Depuración
 
     @classmethod
     def guardar_habitaciones(cls):
@@ -143,6 +153,7 @@ class Habitacion:
             })
         with open(HABITACIONES_JSON, "w") as file:
             json.dump(data, file, indent=4)
+        print("Habitaciones guardadas:", data)  # Depuración
 
 
 class Huesped:
@@ -155,6 +166,7 @@ class Huesped:
 
     @classmethod
     def cargar_huespedes(cls):
+        Huesped.lista_huespedes.clear()
         if os.path.exists(HUESPEDES_JSON):
             with open(HUESPEDES_JSON, "r") as file:
                 data = json.load(file)
@@ -191,6 +203,7 @@ class Reserva:
 
     @classmethod
     def cargar_reservas(cls):
+        Reserva.lista_reservas.clear()
         if os.path.exists(RESERVAS_JSON):
             with open(RESERVAS_JSON, "r") as file:
                 data = json.load(file)
@@ -213,20 +226,3 @@ class Reserva:
             })
         with open(RESERVAS_JSON, "w") as file:
             json.dump(data, file, indent=4)
-
-
-
-Usuario.cargar_usuarios()
-Habitacion.cargar_habitaciones()
-Huesped.cargar_huespedes()
-Reserva.cargar_reservas()
-
-
-
-admin = Administrador("Jaime", "Administrador", "admin123")
-recepcionista = Recepcionista("Recepcionista1", "Recepcionista", "recepcion123")
-
-Usuario.guardar_usuarios()
-Habitacion.guardar_habitaciones()
-Huesped.guardar_huespedes()
-Reserva.guardar_reservas()

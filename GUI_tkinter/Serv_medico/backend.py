@@ -7,6 +7,7 @@ PACIENTES_JSON = "pacientes.json"
 CITAS_JSON = "citas.json"
 SERVICIOS_JSON = "servicios.json"
 EXPEDIENTES_JSON = "expedientes.json"
+DOCTORES_JSON = "doctores.json"
 
 class Personas:
     Lista_personas = []
@@ -36,9 +37,6 @@ class Personas:
             })
         with open(PERSONAS_JSON, "w") as file:
             json.dump(data, file, indent=4)
-
-
-    
 
 
 class Pacientes(Personas):
@@ -80,9 +78,33 @@ class Pacientes(Personas):
 
 
 class Doctores(Personas):
+    Lista_doctores = []
+
     def __init__(self, Id, Nombre, Rol, Especialidad):
         super().__init__(Id, Nombre, Rol)
         self.especialidad = Especialidad
+        Doctores.Lista_doctores.append(self)
+
+    @classmethod
+    def cargar_doctores(cls):
+        if os.path.exists(DOCTORES_JSON):
+            with open(DOCTORES_JSON, "r") as file:
+                data = json.load(file)
+                for doctor_data in data:
+                    Doctores(doctor_data["Id"], doctor_data["Nombre"], doctor_data["Rol"], doctor_data["Especialidad"])
+
+    @classmethod
+    def guardar_doctores(cls):
+        data = []
+        for doctor in Doctores.Lista_doctores:
+            data.append({
+                "Id": doctor.id,
+                "Nombre": doctor.nombre,
+                "Rol": doctor.rol,
+                "Especialidad": doctor.especialidad
+            })
+        with open(DOCTORES_JSON, "w") as file:
+            json.dump(data, file, indent=4)
 
     def Crear_receta(self, paciente, medicamentos, instrucciones):
         receta = {
@@ -246,6 +268,3 @@ class Consulta:
 
     def Tratamiento(self, tratamiento):
         print(f"Tratamiento para {self.paciente.nombre}: {tratamiento}")
-
-
- 
