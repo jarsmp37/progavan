@@ -653,9 +653,8 @@ def reservar_habitacion():
         nombre_huesped = entrada_nombre.get()
         telefono_huesped = entrada_telefono.get()
 
-        # Convertir las fechas a objetos datetime
-        fecha_entrada = datetime.strptime(calendario_entrada.get(), "%m/%d/%Y")
-        fecha_salida = datetime.strptime(calendario_salida.get(), "%m/%d/%Y")
+        fecha_entrada = calendario_entrada.get_date()
+        fecha_salida = calendario_salida.get_date()
 
         if not nombre_huesped or not telefono_huesped:
             tk.messagebox.showerror("Error", "Ingrese el nombre y teléfono del huésped")
@@ -781,3 +780,8 @@ def cancelar_reserva():
     boton_cancelar.pack(pady=10)
 
 ventanainicio()
+
+
+#crear autoejecutable
+#poner en su directorio actual
+#correr pyinstaller --onefile --windowed frontend.py

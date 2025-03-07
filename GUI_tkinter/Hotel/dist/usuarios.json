@@ -1,0 +1,22 @@
+[
+    {
+        "nombre": "Recepcionista1",
+        "rol": "Recepcionista",
+        "password": "recepcion123"
+    },
+    {
+        "nombre": "Jaime",
+        "rol": "Administrador",
+        "password": "admin123"
+    },
+    {
+        "nombre": "Angel",
+        "rol": "Recepcionista",
+        "password": "123"
+    },
+    {
+        "nombre": "Mia",
+        "rol": "Recepcionista",
+        "password": "234"
+    }
+]
