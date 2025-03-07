@@ -3,6 +3,9 @@ from PIL import Image, ImageTk
 from backconguardado import *
 from tkinter import messagebox
 from tkinter import ttk
+from tkcalendar import DateEntry
+from datetime import datetime
+
 
 def ventanainicio():
     global venta1
@@ -271,15 +274,15 @@ def mostrar_habitaciones():
         selected_item = tree.selection()
         if selected_item:
             item = tree.item(selected_item)
-            numero_habitacion = str(item["values"][0])  # Convertir a cadena para asegurar la comparación
+            numero_habitacion = str(item["values"][0])  
 
-            # Buscar y eliminar la habitación
+            
             for habitacion in Habitacion.lista_Habitaciones:
                 if str(habitacion.numero) == numero_habitacion:
                     Habitacion.lista_Habitaciones.remove(habitacion)
                     break
 
-            # Actualizar la lista en la interfaz
+            
             for row in tree.get_children():
                 tree.delete(row)
 
@@ -287,7 +290,7 @@ def mostrar_habitaciones():
                 disponibilidad = "Disponible" if habitacion.disponibilidad else "Ocupada"
                 tree.insert("", tk.END, values=(habitacion.numero, habitacion.tipo, habitacion.camas, habitacion.costo, disponibilidad))
 
-            # Guardar los cambios en el archivo JSON
+            
             Habitacion.guardar_habitaciones()
             messagebox.showinfo("Éxito", "Habitación eliminada correctamente")
 
@@ -299,22 +302,21 @@ def mostrar_habitaciones():
 
 
 def abrir_edicion_habitacion(numero_habitacion):
-    # Convertir el número de habitación a cadena para asegurar la comparación
     numero_habitacion = str(numero_habitacion)
     
-    # Buscar la habitación en la lista
+    
     habitacion = next((h for h in Habitacion.lista_Habitaciones if str(h.numero) == numero_habitacion), None)
     
     if not habitacion:
         messagebox.showerror("Error", "Habitación no encontrada")
         return
 
-    # Crear la ventana de edición
+    
     ventana_edicion = tk.Toplevel()
     ventana_edicion.title("Editar Habitación")
     ventana_edicion.geometry("300x200")
 
-    # Campos para editar
+    
     tk.Label(ventana_edicion, text="Número:").pack()
     entrada_numero = tk.Entry(ventana_edicion)
     entrada_numero.insert(0, habitacion.numero)
@@ -336,18 +338,17 @@ def abrir_edicion_habitacion(numero_habitacion):
     entrada_costo.pack()
 
     def guardar_cambios():
-        # Actualizar los datos de la habitación
+        
         habitacion.numero = entrada_numero.get()
         habitacion.tipo = entrada_tipo.get()
         habitacion.camas = entrada_camas.get()
         habitacion.costo = entrada_costo.get()
         
-        # Guardar los cambios
         Habitacion.guardar_habitaciones()
         messagebox.showinfo("Éxito", "Habitación modificada correctamente")
         ventana_edicion.destroy()
 
-    # Botón para guardar cambios
+    
     tk.Button(ventana_edicion, text="Guardar", command=guardar_cambios).pack()
 
 def registrar_huesped():
@@ -485,22 +486,36 @@ def crear_habitacion():
 
 def ventanarecep():
     venta3 = tk.Tk()
-    venta3.title("Ventana recepción")
+    venta3.title("Ventana Recepción")
     venta3.geometry("600x500")
-    tk.Label(venta3, text="Bienvenido, Recepcionista").pack()
+    venta3.resizable(False, False)
 
-   
-    boton_ver_disponibilidad = tk.Button(venta3, text="Ver Disponibilidad", command=ver_disponibilidad)
-    boton_ver_disponibilidad.pack()
+    
+    imagen_fondo = Image.open("C://Users//Jaime//Documents//GitHub//progavan//GUI_tkinter//Hotel//recepcion_bg.jpg")
+    imagen_fondo = imagen_fondo.resize((600, 500))
+    fondo = ImageTk.PhotoImage(imagen_fondo)
 
-    boton_reservar = tk.Button(venta3, text="Reservar Habitación", command=reservar_habitacion)
-    boton_reservar.pack()
+    
+    canvas = tk.Canvas(venta3, width=600, height=500)
+    canvas.pack(fill="both", expand=True)
+    canvas.create_image(0, 0, anchor=tk.NW, image=fondo)
+    canvas.image = fondo
 
-    boton_cancelar = tk.Button(venta3, text="Cancelar Reserva", command=cancelar_reserva)
-    boton_cancelar.pack()
+    titulo = tk.Label(venta3, text="Panel de Recepción", font=("Arial", 16, "bold"), bg="lightgray")
+    canvas.create_window(300, 50, window=titulo)
 
-    boton_cerrar_sesion = tk.Button(venta3, text="Cerrar Sesión", command=lambda: cerrar_sesion(venta3))
-    boton_cerrar_sesion.pack()
+    botones = [
+        ("Ver Disponibilidad", ver_disponibilidad),
+        ("Reservar Habitación", reservar_habitacion),
+        ("Cancelar Reserva", cancelar_reserva),
+        ("Cerrar Sesión", lambda: cerrar_sesion(venta3))
+    ]
+
+    for i, (texto, comando) in enumerate(botones):
+        boton = tk.Button(venta3, text=texto, command=comando, width=20, height=2, font=("Arial", 10, "bold"))
+        canvas.create_window(300, 120 + i * 60, window=boton)
+
+    venta3.mainloop()
 
 
 def cerrar_sesion(ventana_actual):
@@ -511,71 +526,258 @@ def cerrar_sesion(ventana_actual):
 def ver_disponibilidad():
     ventana_disponibilidad = tk.Toplevel()
     ventana_disponibilidad.title("Disponibilidad de Habitaciones")
-    ventana_disponibilidad.geometry("400x300")
+    ventana_disponibilidad.geometry("600x400")
+
+    frame = tk.Frame(ventana_disponibilidad)
+    frame.pack(fill=tk.BOTH, expand=True)
+
+    columnas = ("Disponibilidad", "Número", "Tipo", "Camas", "Costo por noche")
+    tree = ttk.Treeview(frame, columns=columnas, show="headings")
+    
+    tree.heading("Disponibilidad", text="Disponibilidad")
+    tree.heading("Número", text="Número")
+    tree.heading("Tipo", text="Tipo")
+    tree.heading("Camas", text="Camas")
+    tree.heading("Costo por noche", text="Costo por noche")
+
+    tree.column("Disponibilidad", width=100)
+    tree.column("Número", width=100)
+    tree.column("Tipo", width=150)
+    tree.column("Camas", width=100)
+    tree.column("Costo por noche", width=150)
 
     for habitacion in Habitacion.lista_Habitaciones:
-        estado = "Disponible" if habitacion.disponibilidad else "Ocupada"
-        tk.Label(ventana_disponibilidad, text=f"Habitación {habitacion.numero}: {estado}").pack()
+        disponibilidad = "Disponible" if habitacion.disponibilidad else "Ocupada"
+        tree.insert("", tk.END, values=(disponibilidad, habitacion.numero, habitacion.tipo, habitacion.camas, habitacion.costo))
+
+    scrollbar = ttk.Scrollbar(frame, orient=tk.VERTICAL, command=tree.yview)
+    tree.configure(yscroll=scrollbar.set)
+    scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+    tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+
 
 def reservar_habitacion():
     ventana_reservar = tk.Toplevel()
     ventana_reservar.title("Reservar Habitación")
-    ventana_reservar.geometry("400x300")
+    ventana_reservar.geometry("650x550")
 
-    tk.Label(ventana_reservar, text="Número de habitación:").pack()
-    entrada_numero = tk.Entry(ventana_reservar)
-    entrada_numero.pack()
+    frame_personas = tk.Frame(ventana_reservar)
+    frame_personas.pack(pady=10)
 
-    tk.Label(ventana_reservar, text="Fecha de entrada (YYYY-MM-DD):").pack()
-    entrada_fecha_entrada = tk.Entry(ventana_reservar)
-    entrada_fecha_entrada.pack()
+    tk.Label(frame_personas, text="¿Para cuántas personas?").pack(side=tk.LEFT, padx=5)
+    spin_personas = tk.Spinbox(frame_personas, from_=1, to=10, width=5)
+    spin_personas.pack(side=tk.LEFT, padx=5)
 
-    tk.Label(ventana_reservar, text="Fecha de salida (YYYY-MM-DD):").pack()
-    entrada_fecha_salida = tk.Entry(ventana_reservar)
-    entrada_fecha_salida.pack()
+    frame_calendarios = tk.Frame(ventana_reservar)
+    frame_calendarios.pack(pady=10)
 
-    tk.Label(ventana_reservar, text="Nombre del huésped:").pack()
-    entrada_huesped = tk.Entry(ventana_reservar)
-    entrada_huesped.pack()
+    tk.Label(frame_calendarios, text="Fecha de entrada:").pack(side=tk.LEFT, padx=5)
+    calendario_entrada = DateEntry(frame_calendarios, width=12, background="darkblue", foreground="white", borderwidth=2)
+    calendario_entrada.pack(side=tk.LEFT, padx=5)
+
+    tk.Label(frame_calendarios, text="Fecha de salida:").pack(side=tk.LEFT, padx=5)
+    calendario_salida = DateEntry(frame_calendarios, width=12, background="darkblue", foreground="white", borderwidth=2)
+    calendario_salida.pack(side=tk.LEFT, padx=5)
+
+    frame_habitaciones = tk.Frame(ventana_reservar)
+    frame_habitaciones.pack(pady=10)
+
+    columnas = ("Número", "Tipo", "Camas", "Costo por noche", "Disponibilidad")
+    tree = ttk.Treeview(frame_habitaciones, columns=columnas, show="headings")
+    
+    tree.heading("Número", text="Número")
+    tree.heading("Tipo", text="Tipo")
+    tree.heading("Camas", text="Camas")
+    tree.heading("Costo por noche", text="Costo por noche")
+    tree.heading("Disponibilidad", text="Disponibilidad")
+
+    tree.column("Número", width=100)
+    tree.column("Tipo", width=150)
+    tree.column("Camas", width=100)
+    tree.column("Costo por noche", width=150)
+    tree.column("Disponibilidad", width=100)
+
+    scrollbar = ttk.Scrollbar(frame_habitaciones, orient=tk.VERTICAL, command=tree.yview)
+    tree.configure(yscroll=scrollbar.set)
+    scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+    tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+    def actualizar_habitaciones():
+        for row in tree.get_children():
+            tree.delete(row)
+
+        num_personas = int(spin_personas.get())
+        fecha_entrada = calendario_entrada.get_date()
+        fecha_salida = calendario_salida.get_date()
+
+        if num_personas <= 2:
+            camas_necesarias = 1
+        elif num_personas <= 4:
+            camas_necesarias = 2
+        elif num_personas <= 6:
+            camas_necesarias = 3
+        else:
+            camas_necesarias = (num_personas // 2) + (1 if num_personas % 2 != 0 else 0)
+
+        for habitacion in Habitacion.lista_Habitaciones:
+            if habitacion.disponibilidad and int(habitacion.camas) >= camas_necesarias:
+                disponibilidad = "Disponible"
+                costo_total = (fecha_salida - fecha_entrada).days * habitacion.costo
+                tree.insert("", tk.END, values=(habitacion.numero, habitacion.tipo, habitacion.camas, f"${costo_total}", disponibilidad))
+
+    boton_actualizar = tk.Button(ventana_reservar, text="Actualizar Habitaciones", command=actualizar_habitaciones)
+    boton_actualizar.pack(pady=10)
+
+    frame_huesped = tk.Frame(ventana_reservar)
+    frame_huesped.pack(pady=10)
+
+    tk.Label(frame_huesped, text="Nombre del huésped:").pack(side=tk.LEFT, padx=5)
+    entrada_nombre = tk.Entry(frame_huesped)
+    entrada_nombre.pack(side=tk.LEFT, padx=5)
+
+    tk.Label(frame_huesped, text="Teléfono:").pack(side=tk.LEFT, padx=5)
+    entrada_telefono = tk.Entry(frame_huesped)
+    entrada_telefono.pack(side=tk.LEFT, padx=5)
+
+    from datetime import datetime
 
     def confirmar_reserva():
-        numero = entrada_numero.get()
-        fecha_entrada = entrada_fecha_entrada.get()
-        fecha_salida = entrada_fecha_salida.get()
-        nombre_huesped = entrada_huesped.get()
+        selected_item = tree.selection()
+        if not selected_item:
+            tk.messagebox.showerror("Error", "Seleccione una habitación")
+            return
 
-        habitacion = next((h for h in Habitacion.lista_Habitaciones if h.numero == numero), None)
+        item = tree.item(selected_item)
+        numero_habitacion = item["values"][0]
+        nombre_huesped = entrada_nombre.get()
+        telefono_huesped = entrada_telefono.get()
+
+        # Convertir las fechas a objetos datetime
+        fecha_entrada = datetime.strptime(calendario_entrada.get(), "%m/%d/%Y")
+        fecha_salida = datetime.strptime(calendario_salida.get(), "%m/%d/%Y")
+
+        if not nombre_huesped or not telefono_huesped:
+            tk.messagebox.showerror("Error", "Ingrese el nombre y teléfono del huésped")
+            return
+
+        # Buscar o crear el huésped
         huesped = next((h for h in Huesped.lista_huespedes if h.nombre == nombre_huesped), None)
+        if not huesped:
+            huesped = Huesped(nombre_huesped, telefono_huesped)
+            Huesped.guardar_huespedes()
+
+        # Buscar la habitación
+        habitacion = next((h for h in Habitacion.lista_Habitaciones if h.numero == numero_habitacion), None)
 
         if habitacion and huesped:
-            recepcionista.reservar(habitacion, fecha_entrada, fecha_salida, huesped)
+            # Crear una nueva reserva con un ID único
+            nueva_reserva = Reserva(
+                id=len(Reserva.lista_reservas) + 1,  # ID único
+                habitacion=habitacion,
+                fecha_entrada=fecha_entrada,
+                fecha_salida=fecha_salida,
+                huesped=huesped
+            )
+            # Marcar la habitación como no disponible
+            habitacion.disponibilidad = False
+            # Guardar los cambios
+            Reserva.guardar_reservas()
+            Habitacion.guardar_habitaciones()
             ventana_reservar.destroy()
         else:
-            tk.messagebox.showerror("Error", "Habitación o huésped no encontrado")
+            tk.messagebox.showerror("Error", "Habitación no disponible")
 
     boton_confirmar = tk.Button(ventana_reservar, text="Confirmar Reserva", command=confirmar_reserva)
-    boton_confirmar.pack()
+    boton_confirmar.pack(pady=10)
 
 def cancelar_reserva():
     ventana_cancelar = tk.Toplevel()
     ventana_cancelar.title("Cancelar Reserva")
-    ventana_cancelar.geometry("300x100")
+    ventana_cancelar.geometry("800x400")
 
-    tk.Label(ventana_cancelar, text="ID de la reserva:").pack()
-    entrada_id = tk.Entry(ventana_cancelar)
-    entrada_id.pack()
+    # Frame para la lista de reservas activas
+    frame_reservas = tk.Frame(ventana_cancelar)
+    frame_reservas.pack(fill=tk.BOTH, expand=True)
 
-    def confirmar_cancelar():
-        id_reserva = int(entrada_id.get())
+    # Crear la tabla (Treeview)
+    columnas = ("ID", "Habitación", "Huésped", "Fecha Entrada", "Fecha Salida", "Costo Total")
+    tree = ttk.Treeview(frame_reservas, columns=columnas, show="headings")
+    
+    # Configurar las columnas
+    tree.heading("ID", text="ID")
+    tree.heading("Habitación", text="Habitación")
+    tree.heading("Huésped", text="Huésped")
+    tree.heading("Fecha Entrada", text="Fecha Entrada")
+    tree.heading("Fecha Salida", text="Fecha Salida")
+    tree.heading("Costo Total", text="Costo Total")
+
+    # Ajustar el ancho de las columnas
+    tree.column("ID", width=50)
+    tree.column("Habitación", width=100)
+    tree.column("Huésped", width=150)
+    tree.column("Fecha Entrada", width=100)
+    tree.column("Fecha Salida", width=100)
+    tree.column("Costo Total", width=100)
+
+    # Añadir las reservas activas a la tabla
+    for reserva in Reserva.lista_reservas:
+        costo_total = (reserva.fecha_salida - reserva.fecha_entrada).days * reserva.habitacion.costo
+        tree.insert("", tk.END, values=(
+            reserva.id,
+            reserva.habitacion.numero,
+            reserva.huesped.nombre,
+            reserva.fecha_entrada.strftime("%Y-%m-%d"),
+            reserva.fecha_salida.strftime("%Y-%m-%d"),
+            f"${costo_total}"
+        ))
+
+    # Añadir una barra de desplazamiento
+    scrollbar = ttk.Scrollbar(frame_reservas, orient=tk.VERTICAL, command=tree.yview)
+    tree.configure(yscroll=scrollbar.set)
+    scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+    tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+    
+    def cancelar_seleccionada():
+        selected_item = tree.selection()
+        if not selected_item:
+            tk.messagebox.showerror("Error", "Seleccione una reserva para cancelar")
+            return
+
+        item = tree.item(selected_item)
+        id_reserva = item["values"][0]
+
         reserva = next((r for r in Reserva.lista_reservas if r.id == id_reserva), None)
         if reserva:
-            recepcionista.cancelar(reserva)
-            ventana_cancelar.destroy()
+            
+            reserva.habitacion.disponibilidad = True
+
+            Reserva.lista_reservas.remove(reserva)
+
+            Reserva.guardar_reservas()
+            Habitacion.guardar_habitaciones()
+
+            for row in tree.get_children():
+                tree.delete(row)
+
+            for reserva in Reserva.lista_reservas:
+                costo_total = (reserva.fecha_salida - reserva.fecha_entrada).days * reserva.habitacion.costo
+                tree.insert("", tk.END, values=(
+                    reserva.id,
+                    reserva.habitacion.numero,
+                    reserva.huesped.nombre,
+                    reserva.fecha_entrada.strftime("%Y-%m-%d"),
+                    reserva.fecha_salida.strftime("%Y-%m-%d"),
+                    f"${costo_total}"
+                ))
+
+            tk.messagebox.showinfo("Éxito", "Reserva cancelada correctamente")
         else:
             tk.messagebox.showerror("Error", "Reserva no encontrada")
 
-    boton_confirmar = tk.Button(ventana_cancelar, text="Cancelar Reserva", command=confirmar_cancelar)
-    boton_confirmar.pack()
-
+    
+    boton_cancelar = tk.Button(ventana_cancelar, text="Cancelar Reserva Seleccionada", command=cancelar_seleccionada)
+    boton_cancelar.pack(pady=10)
 
 ventanainicio()

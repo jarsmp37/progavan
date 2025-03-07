@@ -87,12 +87,6 @@ class Administrador(Usuario):
 
 
 class Recepcionista(Usuario):
-    def checardisponibilidad(self, habitacion):
-        if habitacion.disponibilidad:
-            print(f"La habitación {habitacion.numero} está disponible.")
-        else:
-            print(f"La habitación {habitacion.numero} no está disponible.")
-
     def reservar(self, habitacion, fecha_entrada, fecha_salida, huesped):
         if habitacion.disponibilidad:
             nueva_reserva = Reserva(len(Reserva.lista_reservas) + 1, habitacion, fecha_entrada, fecha_salida, huesped)
@@ -122,7 +116,7 @@ class Habitacion:
         self.costo = costonoche
         self.disponibilidad = True
         Habitacion.lista_Habitaciones.append(self)
-        print(f"Habitación {self.numero} creada y añadida a la lista.")  # Depuración
+        
 
     @classmethod
     def cargar_habitaciones(cls):
@@ -138,7 +132,7 @@ class Habitacion:
                         habitacion_data["costo"]
                     )
                     habitacion.disponibilidad = habitacion_data["disponibilidad"]
-                print("Habitaciones cargadas:", [h.numero for h in Habitacion.lista_Habitaciones])  # Depuración
+                
 
     @classmethod
     def guardar_habitaciones(cls):
@@ -153,7 +147,7 @@ class Habitacion:
             })
         with open(HABITACIONES_JSON, "w") as file:
             json.dump(data, file, indent=4)
-        print("Habitaciones guardadas:", data)  # Depuración
+        
 
 
 class Huesped:
@@ -185,21 +179,18 @@ class Huesped:
             json.dump(data, file, indent=4)
 
 
+from datetime import datetime
+
 class Reserva:
     lista_reservas = []
 
     def __init__(self, id, habitacion, fecha_entrada, fecha_salida, huesped):
         self.id = id
         self.habitacion = habitacion
-        self.fecha_entrada = datetime.strptime(fecha_entrada, "%Y-%m-%d").date()
-        self.fecha_salida = datetime.strptime(fecha_salida, "%Y-%m-%d").date()
+        self.fecha_entrada = fecha_entrada
+        self.fecha_salida = fecha_salida
         self.huesped = huesped
         Reserva.lista_reservas.append(self)
-
-    def costo_total(self):
-        dias = (self.fecha_salida - self.fecha_entrada).days
-        costototal = self.habitacion.costo * dias
-        return f"El costo total de la habitación {self.habitacion.numero} será {costototal}."
 
     @classmethod
     def cargar_reservas(cls):
@@ -211,7 +202,10 @@ class Reserva:
                     habitacion = next((h for h in Habitacion.lista_Habitaciones if h.numero == reserva_data["habitacion"]), None)
                     huesped = next((h for h in Huesped.lista_huespedes if h.nombre == reserva_data["huesped"]), None)
                     if habitacion and huesped:
-                        Reserva(reserva_data["id"], habitacion, reserva_data["fecha_entrada"], reserva_data["fecha_salida"], huesped)
+                        # Convertir las fechas de cadena a datetime
+                        fecha_entrada = datetime.strptime(reserva_data["fecha_entrada"], "%Y-%m-%d")
+                        fecha_salida = datetime.strptime(reserva_data["fecha_salida"], "%Y-%m-%d")
+                        Reserva(reserva_data["id"], habitacion, fecha_entrada, fecha_salida, huesped)
 
     @classmethod
     def guardar_reservas(cls):
