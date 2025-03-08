@@ -2,6 +2,7 @@ from datetime import datetime
 import json
 import os
 
+# Rutas de los archivos JSON
 PERSONAS_JSON = "personas.json"
 PACIENTES_JSON = "pacientes.json"
 CITAS_JSON = "citas.json"
@@ -21,10 +22,13 @@ class Personas:
     @classmethod
     def cargar_usuarios(cls):
         if os.path.exists(PERSONAS_JSON):
-            with open(PERSONAS_JSON, "r") as file:
-                data = json.load(file)
-                for usuario_data in data:
-                    Personas(usuario_data["Id"], usuario_data["Nombre"], usuario_data["Rol"])
+            try:
+                with open(PERSONAS_JSON, "r") as file:
+                    data = json.load(file)
+                    for usuario_data in data:
+                        Personas(usuario_data["Id"], usuario_data["Nombre"], usuario_data["Rol"])
+            except json.JSONDecodeError:
+                print("Advertencia: El archivo de personas está vacío o corrupto. Se inicializó una lista vacía.")
 
     @classmethod
     def guardar_usuarios(cls):
@@ -54,10 +58,17 @@ class Pacientes(Personas):
     @classmethod
     def cargar_pacientes(cls):
         if os.path.exists(PACIENTES_JSON):
-            with open(PACIENTES_JSON, "r") as file:
-                data = json.load(file)
-                for paciente_data in data:
-                    Pacientes(paciente_data["Id"], paciente_data["Nombre"], paciente_data["Rol"], paciente_data["Edad"], paciente_data["Tipo_Sangre"], paciente_data["Alergias"], paciente_data["Peso"], paciente_data["Altura"])
+            try:
+                with open(PACIENTES_JSON, "r") as file:
+                    data = json.load(file)
+                    for paciente_data in data:
+                        Pacientes(
+                            paciente_data["Id"], paciente_data["Nombre"], paciente_data["Rol"],
+                            paciente_data["Edad"], paciente_data["Tipo_Sangre"],
+                            paciente_data["Alergias"], paciente_data["Peso"], paciente_data["Altura"]
+                        )
+            except json.JSONDecodeError:
+                print("Advertencia: El archivo de pacientes está vacío o corrupto. Se inicializó una lista vacía.")
 
     @classmethod
     def guardar_pacientes(cls):
@@ -88,10 +99,13 @@ class Doctores(Personas):
     @classmethod
     def cargar_doctores(cls):
         if os.path.exists(DOCTORES_JSON):
-            with open(DOCTORES_JSON, "r") as file:
-                data = json.load(file)
-                for doctor_data in data:
-                    Doctores(doctor_data["Id"], doctor_data["Nombre"], doctor_data["Rol"], doctor_data["Especialidad"])
+            try:
+                with open(DOCTORES_JSON, "r") as file:
+                    data = json.load(file)
+                    for doctor_data in data:
+                        Doctores(doctor_data["Id"], doctor_data["Nombre"], doctor_data["Rol"], doctor_data["Especialidad"])
+            except json.JSONDecodeError:
+                print("Advertencia: El archivo de doctores está vacío o corrupto. Se inicializó una lista vacía.")
 
     @classmethod
     def guardar_doctores(cls):
@@ -105,91 +119,6 @@ class Doctores(Personas):
             })
         with open(DOCTORES_JSON, "w") as file:
             json.dump(data, file, indent=4)
-
-    def Crear_receta(self, paciente, medicamentos, instrucciones):
-        receta = {
-            "paciente": paciente.nombre,
-            "medicamentos": medicamentos,
-            "instrucciones": instrucciones,
-            "fecha": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        }
-        print(f"Receta creada para {paciente.nombre}: {receta}")
-
-    def Realizar_Consulta(self, cita):
-        if cita.Disponibilidad:
-            cita.Disponibilidad = False
-            print(f"Consulta realizada para {cita.paciente.nombre} el {cita.dia} a las {cita.hora}.")
-        else:
-            print("La cita no está disponible.")
-
-    def verificar_expediente(self, paciente, expediente):
-        if paciente in expediente:
-            print(f"Expediente de {paciente.nombre}: {expediente[paciente]}")
-        else:
-            print(f"No se encontró expediente para {paciente.nombre}.")
-
-
-class Recepcionista(Personas):
-    def agendar_cita(self, cita, paciente, doctor):
-        if cita.Disponibilidad:
-            cita.paciente = paciente
-            cita.doctor = doctor
-            cita.Disponibilidad = False
-            print(f"Cita agendada para {paciente.nombre} con {doctor.nombre} el {cita.dia} a las {cita.hora}.")
-        else:
-            print("La cita no está disponible.")
-
-    def cancelar_cita(self, cita):
-        if not cita.Disponibilidad:
-            cita.Disponibilidad = True
-            cita.paciente = None
-            cita.doctor = None
-            print("Cita cancelada.")
-        else:
-            print("La cita ya está disponible.")
-
-    def Acceder_registro(self, paciente):
-        print(f"Registro de {paciente.nombre}: Edad: {paciente.edad}, Tipo de Sangre: {paciente.tipo_sangre}, Alergias: {paciente.alergias}")
-
-    def consultar_precios(self, servicio):
-        for s in Servicios.Lista_servicios:
-            if s.servicio == servicio:
-                print(f"El costo de {servicio} es: {s.costo}")
-                return
-        print("Servicio no encontrado.")
-
-
-class Expediente:
-    def Crear_exp(self, paciente):
-        expediente = {
-            "Nombre": paciente.nombre,
-            "Edad": paciente.edad,
-            "Tipo_Sangre": paciente.tipo_sangre,
-            "Alergias": paciente.alergias,
-            "Peso": paciente.peso,
-            "Altura": paciente.altura
-        }
-        print(f"Expediente creado para {paciente.nombre}: {expediente}")
-        return expediente
-
-    def Borra_exp(self, paciente, expedientes):
-        if paciente in expedientes:
-            del expedientes[paciente]
-            print(f"Expediente de {paciente.nombre} borrado.")
-        else:
-            print(f"No se encontró expediente para {paciente.nombre}.")
-
-    @classmethod
-    def cargar_expedientes(cls):
-        if os.path.exists(EXPEDIENTES_JSON):
-            with open(EXPEDIENTES_JSON, "r") as file:
-                return json.load(file)
-        return {}
-
-    @classmethod
-    def guardar_expedientes(cls, expedientes):
-        with open(EXPEDIENTES_JSON, "w") as file:
-            json.dump(expedientes, file, indent=4)
 
 
 class Citas:
@@ -206,25 +135,32 @@ class Citas:
     @classmethod
     def cargar_citas(cls):
         if os.path.exists(CITAS_JSON):
-            with open(CITAS_JSON, "r") as file:
-                data = json.load(file)
-                for cita_data in data:
-                    cita = Citas(cita_data["dia"], cita_data["hora"])
-                    cita.Disponibilidad = cita_data["Disponibilidad"]
-                    cita.paciente = cita_data["paciente"]
-                    cita.doctor = cita_data["doctor"]
+            try:
+                with open(CITAS_JSON, "r") as file:
+                    data = json.load(file)
+                    for cita_data in data:
+                        cita = Citas(cita_data["dia"], cita_data["hora"])
+                        cita.Disponibilidad = cita_data["Disponibilidad"]
+                        # Busca el paciente y el doctor por nombre
+                        paciente_nombre = cita_data.get("paciente")
+                        doctor_nombre = cita_data.get("doctor")
+                        cita.paciente = next((p for p in Pacientes.Lista_pacientes if p.nombre == paciente_nombre), None)
+                        cita.doctor = next((d for d in Doctores.Lista_doctores if d.nombre == doctor_nombre), None)
+            except json.JSONDecodeError:
+                print("Advertencia: El archivo de citas está vacío o corrupto. Se inicializó una lista vacía.")
 
     @classmethod
     def guardar_citas(cls):
         data = []
         for cita in Citas.lista_citas:
-            data.append({
+            cita_data = {
                 "dia": cita.dia,
                 "hora": cita.hora,
                 "Disponibilidad": cita.Disponibilidad,
-                "paciente": cita.paciente,
-                "doctor": cita.doctor
-            })
+                "paciente": cita.paciente.nombre if cita.paciente else None,
+                "doctor": cita.doctor.nombre if cita.doctor else None
+            }
+            data.append(cita_data)
         with open(CITAS_JSON, "w") as file:
             json.dump(data, file, indent=4)
 
@@ -240,10 +176,13 @@ class Servicios:
     @classmethod
     def cargar_servicios(cls):
         if os.path.exists(SERVICIOS_JSON):
-            with open(SERVICIOS_JSON, "r") as file:
-                data = json.load(file)
-                for servicio_data in data:
-                    Servicios(servicio_data["servicio"], servicio_data["costo"])
+            try:
+                with open(SERVICIOS_JSON, "r") as file:
+                    data = json.load(file)
+                    for servicio_data in data:
+                        Servicios(servicio_data["servicio"], servicio_data["costo"])
+            except json.JSONDecodeError:
+                print("Advertencia: El archivo de servicios está vacío o corrupto. Se inicializó una lista vacía.")
 
     @classmethod
     def guardar_servicios(cls):
@@ -257,14 +196,18 @@ class Servicios:
             json.dump(data, file, indent=4)
 
 
-class Consulta:
-    def __init__(self, cita, paciente, servicio):
-        self.cita = cita
-        self.paciente = paciente
-        self.servicio = servicio
+class Expediente:
+    @classmethod
+    def cargar_expedientes(cls):
+        if os.path.exists(EXPEDIENTES_JSON):
+            try:
+                with open(EXPEDIENTES_JSON, "r") as file:
+                    return json.load(file)
+            except json.JSONDecodeError:
+                print("Advertencia: El archivo de expedientes está vacío o corrupto. Se inicializó un diccionario vacío.")
+        return {}
 
-    def diagnosticar(self, diagnostico):
-        print(f"Diagnóstico para {self.paciente.nombre}: {diagnostico}")
-
-    def Tratamiento(self, tratamiento):
-        print(f"Tratamiento para {self.paciente.nombre}: {tratamiento}")
+    @classmethod
+    def guardar_expedientes(cls, expedientes):
+        with open(EXPEDIENTES_JSON, "w") as file:
+            json.dump(expedientes, file, indent=4)
