@@ -679,3 +679,10 @@ def ventana_recepcionista():
     recepcionista_window.mainloop()
 
 ventana_principal()
+
+
+
+#Instalar la libreria pip install pyinstaller
+#crear autoejecutable
+#poner en su directorio actual
+#correr pyinstaller --onefile --windowed frontend.py
