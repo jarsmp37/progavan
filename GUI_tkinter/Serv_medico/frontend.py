@@ -16,8 +16,21 @@ def ventana_principal():
     global root
     root = tk.Tk()
     root.title("Sistema de Consultorio Médico")
-    root.geometry("800x600")
+    root.geometry("800x600+0+0")
     root.iconbitmap("C://Users//Jaime//Documents//GitHub//progavan//GUI_tkinter//Serv_medico//medicina.ico")
+
+    imagen_fondo = Image.open("C://Users//Jaime//Documents//GitHub//progavan//GUI_tkinter//Serv_medico//fondo_inicio.jpg")
+    imagen_fondo = imagen_fondo.resize((800, 600))
+    imagen_fondo = ImageTk.PhotoImage(imagen_fondo)
+
+    fondo_label = tk.Label(root, image=imagen_fondo)
+    fondo_label.place(x=0, y=0, relwidth=1, relheight=1)
+
+    titulo = tk.Label(root, text="Hospital de Programación Avanzada", font=("Arial", 24, "bold"), bg="white", fg="navy")
+    titulo.place(relx=0.5, rely=0.1, anchor="center")
+
+    frame_botones = tk.Frame(root, bg="white", bd=5, relief="ridge")
+    frame_botones.place(relx=0.5, rely=0.5, anchor="center")
 
     def abrir_doctor():
         root.destroy()
@@ -27,16 +40,311 @@ def ventana_principal():
         root.destroy()
         ventana_recepcionista()
 
-    frame = tk.Frame(root)
-    frame.pack(expand=True)
-
-    boton_doctor = tk.Button(frame, text="Doctor", command=abrir_doctor, width=20, height=5)
+    boton_doctor = tk.Button(frame_botones, text="Doctor", command=abrir_doctor, width=20, height=3, font=("Arial", 14, "bold"), bg="lightblue", fg="black")
     boton_doctor.pack(pady=10)
 
-    boton_recepcionista = tk.Button(frame, text="Recepcionista", command=abrir_recepcionista, width=20, height=5)
+    boton_recepcionista = tk.Button(frame_botones, text="Recepcionista", command=abrir_recepcionista, width=20, height=3, font=("Arial", 14, "bold"), bg="lightgreen", fg="black")
     boton_recepcionista.pack(pady=10)
 
     root.mainloop()
+
+def ventana_doctor():
+    doctor_window = tk.Tk()
+    doctor_window.title("Ventana de Doctor")
+    doctor_window.geometry("800x600")
+
+    imagen_fondo = Image.open("C://Users//Jaime//Documents//GitHub//progavan//GUI_tkinter//Serv_medico//fondo_doctor.jpg")
+    imagen_fondo = imagen_fondo.resize((800, 600))
+    imagen_fondo = ImageTk.PhotoImage(imagen_fondo)
+
+    fondo_label = tk.Label(doctor_window, image=imagen_fondo)
+    fondo_label.place(x=0, y=0, relwidth=1, relheight=1)
+
+    def ver_citas_pendientes():
+        ventana_citas = tk.Toplevel(doctor_window)
+        ventana_citas.title("Citas Pendientes")
+        
+        # Crear un Treeview para mostrar las citas
+        tree = ttk.Treeview(ventana_citas, columns=("Día", "Hora", "Paciente", "Estado"), show="headings")
+        tree.heading("Día", text="Día")
+        tree.heading("Hora", text="Hora")
+        tree.heading("Paciente", text="Paciente")
+        tree.heading("Estado", text="Estado")
+        tree.column("Día", width=150, anchor="center")
+        tree.column("Hora", width=100, anchor="center")
+        tree.column("Paciente", width=200, anchor="center")
+        tree.column("Estado", width=100, anchor="center")
+        tree.pack(pady=10)
+
+        # Llenar el Treeview con las citas pendientes
+        for cita in Citas.lista_citas:
+            if not cita.Disponibilidad:  # Muestra solo las citas no disponibles (asignadas)
+                paciente_nombre = cita.paciente.nombre if cita.paciente else "N/A"
+                estado = "Pendiente"  # Estado inicial
+                if hasattr(cita, "estado"):  # Si la cita ya tiene un estado (Atendida/Cancelada)
+                    estado = cita.estado
+                tree.insert("", "end", values=(cita.dia, cita.hora, paciente_nombre, estado))
+
+        # Función para atender una cita
+        def atender_cita():
+            seleccion = tree.selection()
+            if not seleccion:
+                messagebox.showerror("Error", "Seleccione una cita para atender.")
+                return
+            cita_seleccionada = tree.item(seleccion, "values")
+            dia, hora, paciente_nombre, _ = cita_seleccionada
+
+            # Buscar la cita en la lista
+            cita = next((c for c in Citas.lista_citas if c.dia == dia and c.hora == hora), None)
+            if cita:
+                cita.estado = "Atendida"  # Cambiar el estado de la cita
+                Citas.guardar_citas()  # Guardar los cambios
+                messagebox.showinfo("Éxito", "Cita marcada como Atendida.")
+                # Actualizar el Treeview
+                tree.item(seleccion, values=(cita.dia, cita.hora, paciente_nombre, "Atendida"))
+            else:
+                messagebox.showerror("Error", "No se encontró la cita seleccionada.")
+
+        # Función para cancelar una cita
+        def cancelar_cita():
+            seleccion = tree.selection()
+            if not seleccion:
+                messagebox.showerror("Error", "Seleccione una cita para cancelar.")
+                return
+            cita_seleccionada = tree.item(seleccion, "values")
+            dia, hora, paciente_nombre, _ = cita_seleccionada
+
+            # Buscar la cita en la lista
+            cita = next((c for c in Citas.lista_citas if c.dia == dia and c.hora == hora), None)
+            if cita:
+                cita.estado = "Cancelada"  # Cambiar el estado de la cita
+                Citas.guardar_citas()  # Guardar los cambios
+                messagebox.showinfo("Éxito", "Cita marcada como Cancelada.")
+                # Actualizar el Treeview
+                tree.item(seleccion, values=(cita.dia, cita.hora, paciente_nombre, "Cancelada"))
+            else:
+                messagebox.showerror("Error", "No se encontró la cita seleccionada.")
+
+        # Botones para atender y cancelar citas
+        frame_botones = tk.Frame(ventana_citas)
+        frame_botones.pack(pady=10)
+
+        boton_atender = tk.Button(frame_botones, text="Atender Cita", command=atender_cita, width=15, height=2)
+        boton_atender.pack(side="left", padx=10)
+
+        boton_cancelar = tk.Button(frame_botones, text="Cancelar Cita", command=cancelar_cita, width=15, height=2)
+        boton_cancelar.pack(side="left", padx=10)
+
+    def ver_expediente_paciente():
+        def mostrar_expediente():
+            paciente_nombre = combo_paciente_expediente.get()
+            paciente = next((p for p in Pacientes.Lista_pacientes if p.nombre == paciente_nombre), None)
+            if paciente:
+                ventana_expediente = tk.Toplevel(doctor_window)
+                ventana_expediente.title(f"Expediente de {paciente.nombre}")
+                ventana_expediente.geometry("800x600")
+
+                frame_datos = tk.Frame(ventana_expediente)
+                frame_datos.pack(pady=10, padx=10, fill="x")
+
+                tk.Label(frame_datos, text="Nombre:", font=("Arial", 12, "bold")).grid(row=0, column=0, sticky="w")
+                tk.Label(frame_datos, text=paciente.nombre, font=("Arial", 12)).grid(row=0, column=1, sticky="w")
+
+                tk.Label(frame_datos, text="Edad:", font=("Arial", 12, "bold")).grid(row=1, column=0, sticky="w")
+                tk.Label(frame_datos, text=paciente.edad, font=("Arial", 12)).grid(row=1, column=1, sticky="w")
+
+                tk.Label(frame_datos, text="Tipo de Sangre:", font=("Arial", 12, "bold")).grid(row=2, column=0, sticky="w")
+                tk.Label(frame_datos, text=paciente.tipo_sangre, font=("Arial", 12)).grid(row=2, column=1, sticky="w")
+
+                tk.Label(frame_datos, text="Alergias:", font=("Arial", 12, "bold")).grid(row=3, column=0, sticky="w")
+                tk.Label(frame_datos, text=paciente.alergias, font=("Arial", 12)).grid(row=3, column=1, sticky="w")
+
+                tk.Label(frame_datos, text="Peso:", font=("Arial", 12, "bold")).grid(row=4, column=0, sticky="w")
+                tk.Label(frame_datos, text=f"{paciente.peso} kg", font=("Arial", 12)).grid(row=4, column=1, sticky="w")
+
+                tk.Label(frame_datos, text="Altura:", font=("Arial", 12, "bold")).grid(row=5, column=0, sticky="w")
+                tk.Label(frame_datos, text=f"{paciente.altura} cm", font=("Arial", 12)).grid(row=5, column=1, sticky="w")
+
+                frame_citas = tk.Frame(ventana_expediente)
+                frame_citas.pack(pady=10, padx=10, fill="both", expand=True)
+
+                tk.Label(frame_citas, text="Citas Anteriores:", font=("Arial", 12, "bold")).pack(anchor="w")
+
+                tree_citas = ttk.Treeview(frame_citas, columns=("Día", "Hora", "Doctor", "Estado"), show="headings")
+                tree_citas.heading("Día", text="Día")
+                tree_citas.heading("Hora", text="Hora")
+                tree_citas.heading("Doctor", text="Doctor")
+                tree_citas.heading("Estado", text="Estado")
+                tree_citas.column("Día", width=150, anchor="center")
+                tree_citas.column("Hora", width=100, anchor="center")
+                tree_citas.column("Doctor", width=200, anchor="center")
+                tree_citas.column("Estado", width=100, anchor="center")
+                tree_citas.pack(fill="both", expand=True)
+
+                for cita in Citas.lista_citas:
+                    if cita.paciente and cita.paciente.nombre == paciente.nombre:
+                        doctor_nombre = cita.doctor.nombre if cita.doctor else "N/A"
+                        tree_citas.insert("", "end", values=(cita.dia, cita.hora, doctor_nombre, cita.estado))
+
+                frame_diagnosticos = tk.Frame(ventana_expediente)
+                frame_diagnosticos.pack(pady=10, padx=10, fill="both", expand=True)
+
+                tk.Label(frame_diagnosticos, text="Diagnósticos:", font=("Arial", 12, "bold")).pack(anchor="w")
+
+                tree_diagnosticos = ttk.Treeview(frame_diagnosticos, columns=("Fecha", "Diagnóstico"), show="headings")
+                tree_diagnosticos.heading("Fecha", text="Fecha")
+                tree_diagnosticos.heading("Diagnóstico", text="Diagnóstico")
+                tree_diagnosticos.column("Fecha", width=150, anchor="center")
+                tree_diagnosticos.column("Diagnóstico", width=500, anchor="w")
+                tree_diagnosticos.pack(fill="both", expand=True)
+
+                expedientes = Expediente.cargar_expedientes()
+                if paciente_nombre in expedientes:
+                    for registro in expedientes[paciente_nombre]:
+                        if "diagnostico" in registro:
+                            tree_diagnosticos.insert("", "end", values=(registro["fecha"], registro["diagnostico"]))
+                else:
+                    tree_diagnosticos.insert("", "end", values=("No hay diagnósticos registrados.", ""))
+
+            else:
+                messagebox.showerror("Error", "Paciente no encontrado.")
+
+        ventana_seleccion = tk.Toplevel(doctor_window)
+        ventana_seleccion.title("Seleccionar Paciente")
+        ventana_seleccion.geometry("300x150")
+
+        tk.Label(ventana_seleccion, text="Seleccione el paciente:", font=("Arial", 12)).pack(pady=10)
+        nombres_pacientes = [p.nombre for p in Pacientes.Lista_pacientes]
+        combo_paciente_expediente = ttk.Combobox(ventana_seleccion, values=nombres_pacientes, state="readonly", font=("Arial", 12))
+        combo_paciente_expediente.pack(pady=10)
+        tk.Button(ventana_seleccion, text="Ver Expediente", command=mostrar_expediente, font=("Arial", 12)).pack(pady=10)
+            
+    def agregar_diagnostico():
+        def guardar_diagnostico():
+            seleccion = tree.selection()
+            if not seleccion:
+                messagebox.showerror("Error", "Seleccione una cita para agregar el diagnóstico.")
+                return
+            cita_seleccionada = tree.item(seleccion, "values")
+            dia, hora, paciente_nombre, _ = cita_seleccionada
+
+            cita = next((c for c in Citas.lista_citas if c.dia == dia and c.hora == hora), None)
+            if cita:
+                diagnostico = entry_diagnostico.get("1.0", tk.END).strip()
+                if diagnostico:
+                    expedientes = Expediente.cargar_expedientes()
+                    if paciente_nombre in expedientes:
+                        expedientes[paciente_nombre].append({
+                            "fecha": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                            "diagnostico": diagnostico,
+                            "cita": f"{dia} {hora}"
+                        })
+                    else:
+                        expedientes[paciente_nombre] = [{
+                            "fecha": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                            "diagnostico": diagnostico,
+                            "cita": f"{dia} {hora}"
+                        }]
+                    Expediente.guardar_expedientes(expedientes)
+                    messagebox.showinfo("Éxito", "Diagnóstico agregado correctamente.")
+                    ventana_diagnostico.destroy()
+                else:
+                    messagebox.showerror("Error", "El diagnóstico no puede estar vacío.")
+            else:
+                messagebox.showerror("Error", "No se encontró la cita seleccionada.")
+
+        ventana_diagnostico = tk.Toplevel(doctor_window)
+        ventana_diagnostico.title("Agregar Diagnóstico")
+
+        tree = ttk.Treeview(ventana_diagnostico, columns=("Día", "Hora", "Paciente", "Estado"), show="headings")
+        tree.heading("Día", text="Día")
+        tree.heading("Hora", text="Hora")
+        tree.heading("Paciente", text="Paciente")
+        tree.heading("Estado", text="Estado")
+        tree.column("Día", width=150, anchor="center")
+        tree.column("Hora", width=100, anchor="center")
+        tree.column("Paciente", width=200, anchor="center")
+        tree.column("Estado", width=100, anchor="center")
+        tree.pack(pady=10)
+
+        for cita in Citas.lista_citas:
+            if not cita.Disponibilidad:
+                paciente_nombre = cita.paciente.nombre if cita.paciente else "N/A"
+                estado = cita.estado
+                tree.insert("", "end", values=(cita.dia, cita.hora, paciente_nombre, estado))
+
+        tk.Label(ventana_diagnostico, text="Diagnóstico:").pack(pady=10)
+        entry_diagnostico = tk.Text(ventana_diagnostico, width=50, height=10)
+        entry_diagnostico.pack(pady=10)
+        tk.Button(ventana_diagnostico, text="Guardar Diagnóstico", command=guardar_diagnostico).pack(pady=20)
+
+    def generar_receta():
+        def guardar_receta():
+            paciente_nombre = combo_paciente_receta.get()
+            medicamento = entry_medicamento.get("1.0", tk.END).strip()
+            dosis = entry_dosis.get("1.0", tk.END).strip()
+            indicaciones = entry_indicaciones.get("1.0", tk.END).strip()
+            if paciente_nombre and medicamento and dosis and indicaciones:
+                expedientes = Expediente.cargar_expedientes()
+                if paciente_nombre in expedientes:
+                    expedientes[paciente_nombre].append({
+                        "fecha": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                        "tipo": "receta",
+                        "medicamento": medicamento,
+                        "dosis": dosis,
+                        "indicaciones": indicaciones
+                    })
+                else:
+                    expedientes[paciente_nombre] = [{
+                        "fecha": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                        "tipo": "receta",
+                        "medicamento": medicamento,
+                        "dosis": dosis,
+                        "indicaciones": indicaciones
+                    }]
+                Expediente.guardar_expedientes(expedientes)
+                messagebox.showinfo("Éxito", "Receta guardada correctamente.")
+                ventana_receta.destroy()
+            else:
+                messagebox.showerror("Error", "Complete todos los campos.")
+
+        ventana_receta = tk.Toplevel(doctor_window)
+        ventana_receta.title("Generar Receta")
+        tk.Label(ventana_receta, text="Seleccione el paciente:").pack(pady=10)
+        nombres_pacientes = [p.nombre for p in Pacientes.Lista_pacientes]
+        combo_paciente_receta = ttk.Combobox(ventana_receta, values=nombres_pacientes, state="readonly")
+        combo_paciente_receta.pack(pady=10)
+        tk.Label(ventana_receta, text="Medicamento:").pack(pady=10)
+        entry_medicamento = tk.Text(ventana_receta, width=50, height=3)
+        entry_medicamento.pack(pady=10)
+        tk.Label(ventana_receta, text="Dosis:").pack(pady=10)
+        entry_dosis = tk.Text(ventana_receta, width=50, height=3)
+        entry_dosis.pack(pady=10)
+        tk.Label(ventana_receta, text="Indicaciones:").pack(pady=10)
+        entry_indicaciones = tk.Text(ventana_receta, width=50, height=5)
+        entry_indicaciones.pack(pady=10)
+        tk.Button(ventana_receta, text="Guardar Receta", command=guardar_receta).pack(pady=20)
+
+    # Botones principales
+    boton_ver_citas = tk.Button(doctor_window, text="Ver Citas Pendientes", command=ver_citas_pendientes, width=20, height=3)
+    boton_ver_citas.place(x=50, y=50)
+
+    boton_ver_expediente = tk.Button(doctor_window, text="Ver Expediente", command=ver_expediente_paciente, width=20, height=3)
+    boton_ver_expediente.place(x=50, y=150)
+
+    boton_agregar_diagnostico = tk.Button(doctor_window, text="Agregar Diagnóstico", command=agregar_diagnostico, width=20, height=3)
+    boton_agregar_diagnostico.place(x=50, y=250)
+
+    boton_generar_receta = tk.Button(doctor_window, text="Generar Receta", command=generar_receta, width=20, height=3)
+    boton_generar_receta.place(x=50, y=350)
+
+
+    def on_closing():
+        doctor_window.destroy()
+
+    doctor_window.protocol("WM_DELETE_WINDOW", on_closing)
+    doctor_window.mainloop()
+
 
 def ventana_recepcionista():
     recepcionista_window = tk.Tk()

@@ -3,6 +3,7 @@
         "dia": "2025-03-14",
         "hora": "09:30",
         "Disponibilidad": true,
+        "estado": "Pendiente",
         "paciente": null,
         "doctor": null
     },
@@ -10,6 +11,7 @@
         "dia": "2025-03-14",
         "hora": "10:30",
         "Disponibilidad": true,
+        "estado": "Pendiente",
         "paciente": null,
         "doctor": null
     },
@@ -17,6 +19,7 @@
         "dia": "2025-03-12",
         "hora": "12:00",
         "Disponibilidad": false,
+        "estado": "Pendiente",
         "paciente": "Lidia",
         "doctor": "victor"
     },
@@ -24,6 +27,7 @@
         "dia": "2025-03-07",
         "hora": "12:00",
         "Disponibilidad": false,
+        "estado": "Atendida",
         "paciente": "Farid",
         "doctor": "victor"
     },
@@ -31,6 +35,7 @@
         "dia": "2025-03-07",
         "hora": "12:30",
         "Disponibilidad": false,
+        "estado": "Cancelada",
         "paciente": "Farid",
         "doctor": "Raul"
     },
@@ -38,6 +43,7 @@
         "dia": "2025-03-14",
         "hora": "10:00",
         "Disponibilidad": false,
+        "estado": "Pendiente",
         "paciente": "Farid",
         "doctor": "victor"
     }

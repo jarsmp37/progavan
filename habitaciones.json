@@ -46,7 +46,7 @@
         "tipo": "Junior",
         "camas": 2,
         "costo": 500,
-        "disponibilidad": true
+        "disponibilidad": false
     },
     {
         "numero": 108,

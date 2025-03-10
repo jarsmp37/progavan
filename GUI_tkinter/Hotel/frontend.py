@@ -781,7 +781,7 @@ def cancelar_reserva():
 
 ventanainicio()
 
-
+#Instalar la libreria pip install pyinstaller
 #crear autoejecutable
 #poner en su directorio actual
 #correr pyinstaller --onefile --windowed frontend.py

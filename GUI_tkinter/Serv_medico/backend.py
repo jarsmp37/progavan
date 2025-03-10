@@ -130,6 +130,7 @@ class Citas:
         self.Disponibilidad = True
         self.paciente = None
         self.doctor = None
+        self.estado = "Pendiente" 
         Citas.lista_citas.append(self)
 
     @classmethod
@@ -141,6 +142,7 @@ class Citas:
                     for cita_data in data:
                         cita = Citas(cita_data["dia"], cita_data["hora"])
                         cita.Disponibilidad = cita_data["Disponibilidad"]
+                        cita.estado = cita_data.get("estado", "Pendiente")  # Cargar el estado
                         # Busca el paciente y el doctor por nombre
                         paciente_nombre = cita_data.get("paciente")
                         doctor_nombre = cita_data.get("doctor")
@@ -157,13 +159,13 @@ class Citas:
                 "dia": cita.dia,
                 "hora": cita.hora,
                 "Disponibilidad": cita.Disponibilidad,
+                "estado": cita.estado,  # Guardar el estado de la cita
                 "paciente": cita.paciente.nombre if cita.paciente else None,
                 "doctor": cita.doctor.nombre if cita.doctor else None
             }
             data.append(cita_data)
         with open(CITAS_JSON, "w") as file:
             json.dump(data, file, indent=4)
-
 
 class Servicios:
     Lista_servicios = []
