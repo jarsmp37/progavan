@@ -1,0 +1,58 @@
+[
+    {
+        "dia": "2025-03-14",
+        "hora": "09:30",
+        "Disponibilidad": true,
+        "estado": "Pendiente",
+        "paciente": null,
+        "doctor": null
+    },
+    {
+        "dia": "2025-03-14",
+        "hora": "10:30",
+        "Disponibilidad": true,
+        "estado": "Pendiente",
+        "paciente": null,
+        "doctor": null
+    },
+    {
+        "dia": "2025-03-12",
+        "hora": "12:00",
+        "Disponibilidad": false,
+        "estado": "Pendiente",
+        "paciente": null,
+        "doctor": "victor"
+    },
+    {
+        "dia": "2025-03-07",
+        "hora": "12:00",
+        "Disponibilidad": false,
+        "estado": "Atendida",
+        "paciente": null,
+        "doctor": "victor"
+    },
+    {
+        "dia": "2025-03-07",
+        "hora": "12:30",
+        "Disponibilidad": false,
+        "estado": "Cancelada",
+        "paciente": null,
+        "doctor": "Raul"
+    },
+    {
+        "dia": "2025-03-14",
+        "hora": "10:00",
+        "Disponibilidad": true,
+        "estado": "Pendiente",
+        "paciente": null,
+        "doctor": null
+    },
+    {
+        "dia": "2025-03-13",
+        "hora": "13:00",
+        "Disponibilidad": false,
+        "estado": "Pendiente",
+        "paciente": null,
+        "doctor": "Raul"
+    }
+]

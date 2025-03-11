@@ -1,0 +1,20 @@
+[
+    {
+        "Id": 1,
+        "Nombre": "Raul",
+        "Rol": "Doctor",
+        "Especialidad": "General"
+    },
+    {
+        "Id": 2,
+        "Nombre": "victor",
+        "Rol": "Doctor",
+        "Especialidad": "general"
+    },
+    {
+        "Id": 3,
+        "Nombre": "Oscar",
+        "Rol": "Doctor",
+        "Especialidad": "Pediatra"
+    }
+]

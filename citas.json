@@ -42,9 +42,17 @@
     {
         "dia": "2025-03-14",
         "hora": "10:00",
+        "Disponibilidad": true,
+        "estado": "Pendiente",
+        "paciente": null,
+        "doctor": null
+    },
+    {
+        "dia": "2025-03-13",
+        "hora": "13:00",
         "Disponibilidad": false,
         "estado": "Pendiente",
-        "paciente": "Farid",
-        "doctor": "victor"
+        "paciente": "Samuel",
+        "doctor": "Raul"
     }
 ]

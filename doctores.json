@@ -10,5 +10,11 @@
         "Nombre": "victor",
         "Rol": "Doctor",
         "Especialidad": "general"
+    },
+    {
+        "Id": 3,
+        "Nombre": "Oscar",
+        "Rol": "Doctor",
+        "Especialidad": "Pediatra"
     }
 ]
