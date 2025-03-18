@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1,
+        "habitacion": 103,
+        "fecha_entrada": "2025-03-07",
+        "fecha_salida": "2025-03-13",
+        "huesped": "MAfer"
+    },
+    {
+        "id": 2,
+        "habitacion": 107,
+        "fecha_entrada": "2025-03-10",
+        "fecha_salida": "2025-03-13",
+        "huesped": "LUZ MARISOL"
+    }
+]

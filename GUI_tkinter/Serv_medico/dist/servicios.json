@@ -1,0 +1,14 @@
+[
+    {
+        "servicio": "Consulta general",
+        "costo": 50.0
+    },
+    {
+        "servicio": "vacunaci\u00f3n",
+        "costo": 80.0
+    },
+    {
+        "servicio": "Desinfecci\u00f3n",
+        "costo": 120.0
+    }
+]

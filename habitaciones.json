@@ -1,0 +1,142 @@
+[
+    {
+        "numero": 101,
+        "tipo": "Individual",
+        "camas": 1,
+        "costo": 100,
+        "disponibilidad": true
+    },
+    {
+        "numero": 102,
+        "tipo": "Doble",
+        "camas": 2,
+        "costo": 150,
+        "disponibilidad": true
+    },
+    {
+        "numero": 103,
+        "tipo": "Junior",
+        "camas": 2,
+        "costo": 500,
+        "disponibilidad": false
+    },
+    {
+        "numero": 104,
+        "tipo": "Suite",
+        "camas": 3,
+        "costo": 400,
+        "disponibilidad": true
+    },
+    {
+        "numero": 105,
+        "tipo": "Individual",
+        "camas": 1,
+        "costo": 100,
+        "disponibilidad": true
+    },
+    {
+        "numero": 106,
+        "tipo": "Doble",
+        "camas": 2,
+        "costo": 150,
+        "disponibilidad": true
+    },
+    {
+        "numero": 107,
+        "tipo": "Junior",
+        "camas": 2,
+        "costo": 500,
+        "disponibilidad": false
+    },
+    {
+        "numero": 108,
+        "tipo": "Suite",
+        "camas": 3,
+        "costo": 400,
+        "disponibilidad": true
+    },
+    {
+        "numero": 109,
+        "tipo": "Individual",
+        "camas": 1,
+        "costo": 100,
+        "disponibilidad": true
+    },
+    {
+        "numero": 110,
+        "tipo": "Doble",
+        "camas": 2,
+        "costo": 150,
+        "disponibilidad": true
+    },
+    {
+        "numero": 111,
+        "tipo": "Junior",
+        "camas": 2,
+        "costo": 500,
+        "disponibilidad": true
+    },
+    {
+        "numero": 112,
+        "tipo": "Suite",
+        "camas": 3,
+        "costo": 400,
+        "disponibilidad": true
+    },
+    {
+        "numero": 113,
+        "tipo": "Individual",
+        "camas": 1,
+        "costo": 100,
+        "disponibilidad": true
+    },
+    {
+        "numero": 114,
+        "tipo": "Doble",
+        "camas": 2,
+        "costo": 150,
+        "disponibilidad": true
+    },
+    {
+        "numero": 115,
+        "tipo": "Junior",
+        "camas": 2,
+        "costo": 500,
+        "disponibilidad": true
+    },
+    {
+        "numero": 116,
+        "tipo": "Suite",
+        "camas": 3,
+        "costo": 400,
+        "disponibilidad": true
+    },
+    {
+        "numero": 117,
+        "tipo": "Individual",
+        "camas": 1,
+        "costo": 100,
+        "disponibilidad": true
+    },
+    {
+        "numero": 118,
+        "tipo": "Doble",
+        "camas": 2,
+        "costo": 150,
+        "disponibilidad": true
+    },
+    {
+        "numero": 119,
+        "tipo": "Junior",
+        "camas": 2,
+        "costo": 500,
+        "disponibilidad": true
+    },
+    {
+        "numero": 120,
+        "tipo": "Suite",
+        "camas": 3,
+        "costo": 400,
+        "disponibilidad": true
+    }
+]
