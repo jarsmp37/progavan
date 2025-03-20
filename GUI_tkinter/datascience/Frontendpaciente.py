@@ -3,6 +3,7 @@ import customtkinter as ctk
 from tkinter import ttk,messagebox
 from Backendpaciente import SistemaPacientes, Paciente
 from Analisis import *
+from modelo_logistico import *
 
 
 os.chdir(r"C:\Users\Jaime\Documents\GitHub\Prograavanzada\GUI_tkinter\datascience")
@@ -11,6 +12,10 @@ ctk.set_appearance_mode("System")
 ctk.set_default_color_theme("blue")
 
 sistema = SistemaPacientes("pacientes.csv")
+# Entrenar el modelo de regresión logística
+modelo = entrenar_modelo()
+
+
 
 def meter_datos():
     ventana_datos = ctk.CTkToplevel()
@@ -108,7 +113,6 @@ def visualizar_expediente():
             btn_cerrar = ctk.CTkButton(frame, text="Cerrar", command=ventana_detalles.destroy)
             btn_cerrar.grid(row=len(detalles), column=0, columnspan=2, pady=20)
 
-            # Guardar los valores del paciente para usarlos en los gráficos
             global paciente_seleccionado
             paciente_seleccionado = paciente
 
@@ -149,7 +153,16 @@ def mostrar_analisis():
     btn_edad = ctk.CTkButton(ventana_analisis, text="Edad", command=lambda: grafico_edad(df, paciente_seleccionado.edad))
     btn_edad.pack(pady=5)
 
+def generar_prediccion():
+    if 'paciente_seleccionado' not in globals():
+        messagebox.showwarning("Advertencia", "Primero selecciona un paciente en 'Visualizar Expediente'.")
+        return
 
+    glucosa = paciente_seleccionado.glucosa
+
+    diagnostico = predecir_diabetes(modelo, glucosa)
+
+    messagebox.showinfo("Predicción de Diabetes", f"Paciente: {paciente_seleccionado.nombre}\nDiagnóstico: {diagnostico}")
 
 ventana_principal = ctk.CTk()
 ventana_principal.title("Sistema de Pacientes")
@@ -163,5 +176,8 @@ btn_visualizar_expediente.pack(pady=10)
 
 btn_mostrar_analisis = ctk.CTkButton(ventana_principal, text="Mostrar Análisis", command=mostrar_analisis)
 btn_mostrar_analisis.pack(pady=10)
+
+btn_generar_prediccion = ctk.CTkButton(ventana_principal, text="Generar Predicción Logística", command=generar_prediccion)
+btn_generar_prediccion.pack(pady=10)
 
 ventana_principal.mainloop()
