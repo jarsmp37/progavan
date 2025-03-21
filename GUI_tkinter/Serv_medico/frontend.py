@@ -17,9 +17,9 @@ def ventana_principal():
     root = tk.Tk()
     root.title("Sistema de Consultorio Médico")
     root.geometry("800x600+0+0")
-    root.iconbitmap("C://Users//Jaime//Documents//GitHub//progavan//GUI_tkinter//Serv_medico//medicina.ico")
+    root.iconbitmap("C://Users//Jaime//Documents//GitHub//Prograavanzada//GUI_tkinter//Serv_medico//medicina.ico")
 
-    imagen_fondo = Image.open("C://Users//Jaime//Documents//GitHub//progavan//GUI_tkinter//Serv_medico//fondo_inicio.jpg")
+    imagen_fondo = Image.open("C://Users//Jaime//Documents//GitHub//Prograavanzada//GUI_tkinter//Serv_medico//fondo_inicio.jpg")
     imagen_fondo = imagen_fondo.resize((800, 600))
     imagen_fondo = ImageTk.PhotoImage(imagen_fondo)
 
@@ -53,7 +53,7 @@ def ventana_doctor():
     doctor_window.title("Ventana de Doctor")
     doctor_window.geometry("800x600")
 
-    imagen_fondo = Image.open("C://Users//Jaime//Documents//GitHub//progavan//GUI_tkinter//Serv_medico//fondo_doctor.jpg")
+    imagen_fondo = Image.open("C://Users//Jaime//Documents//GitHub//Prograavanzada//GUI_tkinter//Serv_medico//fondo_doctor.jpg")
     imagen_fondo = imagen_fondo.resize((800, 600))
     imagen_fondo = ImageTk.PhotoImage(imagen_fondo)
 
@@ -351,7 +351,7 @@ def ventana_recepcionista():
     recepcionista_window.title("Ventana de Recepcionista")
     recepcionista_window.geometry("800x600")
 
-    imagen_fondo = Image.open("C://Users//Jaime//Documents//GitHub//progavan//GUI_tkinter//Serv_medico//fondo.jpg")
+    imagen_fondo = Image.open("C://Users//Jaime//Documents//GitHub//Prograavanzada//GUI_tkinter//Serv_medico//fondo.jpg")
     imagen_fondo = imagen_fondo.resize((800, 600))
     imagen_fondo = ImageTk.PhotoImage(imagen_fondo)
 
