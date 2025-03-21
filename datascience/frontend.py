@@ -9,8 +9,8 @@ manager = ReservacionManager()
 def abrir_ventana_reservar():
     ventana_reservar = ctk.CTkToplevel(root)
     ventana_reservar.title("Reservar")
-    ventana_reservar.geometry("1000x600")  # Ventana más grande
-    ventana_reservar.geometry("+0+0")  # Posición en la esquina superior izquierda
+    ventana_reservar.geometry("1000x600")
+    ventana_reservar.geometry("+0+0") 
     ventana_reservar.lift()
     ventana_reservar.grab_set()
 
@@ -90,7 +90,7 @@ def abrir_ventana_ver_reservacion():
             if reservacion:
                 ventana_detalles = ctk.CTkToplevel(ventana_ver)
                 ventana_detalles.title("Detalles de la Reservación")
-                ventana_detalles.geometry("800x600")
+                ventana_detalles.geometry("800x600+0+0")
                 ventana_detalles.lift()
                 ventana_detalles.grab_set()
 
