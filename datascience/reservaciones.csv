@@ -1,0 +1,5 @@
+Nombre,Dias_Antelacion,Solicitudes_Especiales,Fecha_Entrada,Fecha_Salida,Huesped_Repetido,Fecha_Reservacion
+Jaime,6,"Comida vegetariana, Habitación con vista al mar",27/03/2025,03/04/2025,False,2025-03-21 12:35:01
+Jaime,26,"Cuna para bebé, Transporte al aeropuerto",16/04/2025,24/04/2025,True,2025-03-21 12:48:28
+Mia,222,,29/10/2025,31/10/2025,False,2025-03-21 12:52:42
+Artur,363,,19/03/2026,27/03/2026,False,2025-03-21 12:53:39

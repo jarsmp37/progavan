@@ -1,10 +1,15 @@
 import customtkinter as ctk
-from tkinter import ttk
+from tkinter import ttk, messagebox
 from backend import Reservacion, ReservacionManager
 from tkcalendar import Calendar
 from datetime import datetime
+from prediccion import *
+import os
 
+
+os.chdir(r"C:\Users\Jaime\Documents\GitHub\Prograavanzada\datascience")
 manager = ReservacionManager()
+modelo=entrenamiento()
 
 def abrir_ventana_reservar():
     ventana_reservar = ctk.CTkToplevel(root)
@@ -81,13 +86,34 @@ def abrir_ventana_ver_reservacion():
         ))
 
     def mostrar_detalles():
-    
+        global Dias_Antelacion, Solicitudes_Especiales, Mes_Llegada, Huesped_Repetido, Nombre_Huesped
+
         selected_item = tree.selection()
         if selected_item:
             item = tree.item(selected_item)
             nombre = item["values"][0]
             reservacion = next((r for r in reservaciones if r["Nombre"] == nombre), None)
             if reservacion:
+                # Obtener los valores necesarios
+                Dias_Antelacion = int(reservacion['Dias_Antelacion'])
+
+                # Contar solicitudes especiales
+                solicitudes = reservacion["Solicitudes_Especiales"]
+                if solicitudes.strip():  # Verificar si la cadena no está vacía
+                    Solicitudes_Especiales = len(solicitudes.split(", "))
+                else:
+                    Solicitudes_Especiales = 0  # Si no hay solicitudes, asignar 0
+
+                Mes_Llegada = datetime.strptime(reservacion["Fecha_Entrada"], "%d/%m/%Y").month
+
+                # Calcular si el huésped es repetido
+                contador_nombre = sum(1 for r in reservaciones if r["Nombre"] == nombre)
+                Huesped_Repetido = 1 if contador_nombre > 1 else 0
+
+                # Guardar el nombre del huésped
+                Nombre_Huesped = nombre
+
+                # Crear la ventana de detalles
                 ventana_detalles = ctk.CTkToplevel(ventana_ver)
                 ventana_detalles.title("Detalles de la Reservación")
                 ventana_detalles.geometry("800x600+0+0")
@@ -129,26 +155,26 @@ def abrir_ventana_ver_reservacion():
                 ctk.CTkLabel(frame_detalles, text=f"Nombre: {reservacion['Nombre']}", font=("Arial", 14)).pack(pady=5)
 
                 ctk.CTkLabel(frame_detalles, text="Servicios Seleccionados:", font=("Arial", 14)).pack(pady=5)
-                servicios = reservacion["Solicitudes_Especiales"].split(", ")
+                servicios = reservacion["Solicitudes_Especiales"].split(", ") if reservacion["Solicitudes_Especiales"].strip() else []
                 for servicio in servicios:
                     ctk.CTkLabel(frame_detalles, text=f"- {servicio}", font=("Arial", 12)).pack()
 
-                # Detalles adicionales (las 4 variables que necesitas)
+                # Detalles adicionales
                 ctk.CTkLabel(frame_detalles, text="Datos Adicionales:", font=("Arial", 14)).pack(pady=10)
-                ctk.CTkLabel(frame_detalles, text=f"Días de Antelación: {reservacion['Dias_Antelacion']}", font=("Arial", 12)).pack()
-                ctk.CTkLabel(frame_detalles, text=f"Solicitudes Especiales: {len(servicios)}", font=("Arial", 12)).pack()
-                
-                # Mes de llegada en número
-                mes_llegada = datetime.strptime(reservacion["Fecha_Entrada"], "%d/%m/%Y").month
-                ctk.CTkLabel(frame_detalles, text=f"Mes de Llegada: {mes_llegada}", font=("Arial", 12)).pack()
-                
-                # Huésped repetido (0 o 1)
-                huesped_repetido = 1 if reservacion["Huesped_Repetido"] == "True" else 0
-                ctk.CTkLabel(frame_detalles, text=f"Huésped Repetido: {huesped_repetido}", font=("Arial", 12)).pack()
+                ctk.CTkLabel(frame_detalles, text=f"Días de Antelación: {Dias_Antelacion}", font=("Arial", 12)).pack()
+                ctk.CTkLabel(frame_detalles, text=f"Solicitudes Especiales: {Solicitudes_Especiales}", font=("Arial", 12)).pack()
+                ctk.CTkLabel(frame_detalles, text=f"Mes de Llegada: {Mes_Llegada}", font=("Arial", 12)).pack()
+                ctk.CTkLabel(frame_detalles, text=f"Huésped Repetido: {Huesped_Repetido}", font=("Arial", 12)).pack()
         else:
             print("Selecciona una reservación para ver los detalles.")
 
     ctk.CTkButton(ventana_ver, text="Mostrar Detalles", command=mostrar_detalles).pack(pady=20)
+
+def predi1():
+    cancela=prediccion_usuario(modelo,Dias_Antelacion,Solicitudes_Especiales,Mes_Llegada,Huesped_Repetido)
+    messagebox.showinfo("PRediccion de cancelación",f"Tu usuario {Nombre_Huesped} : {cancela}")
+
+
 
 root = ctk.CTk()
 root.title("Sistema de Reservaciones")
@@ -156,5 +182,6 @@ root.geometry("600x400")
 
 ctk.CTkButton(root, text="Reservar", command=abrir_ventana_reservar).pack(pady=20)
 ctk.CTkButton(root, text="Ver Reservación", command=abrir_ventana_ver_reservacion).pack(pady=20)
+ctk.CTkButton(root, text="prediccion", command=predi1).pack(pady=20)
 
 root.mainloop()

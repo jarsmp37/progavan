@@ -2,6 +2,8 @@ import csv
 import os
 from datetime import datetime
 
+os.chdir(r"C:\Users\Jaime\Documents\GitHub\Prograavanzada\datascience")
+
 class Reservacion:
     def __init__(self, nombre, dias_antelacion, solicitudes_especiales, fecha_entrada, fecha_salida, huesped_repetido):
         self.nombre = nombre
