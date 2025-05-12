@@ -185,3 +185,5 @@ ctk.CTkButton(root, text="Ver Reservación", command=abrir_ventana_ver_reservaci
 ctk.CTkButton(root, text="prediccion", command=predi1).pack(pady=20)
 
 root.mainloop()
+
+
