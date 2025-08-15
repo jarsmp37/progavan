@@ -1,0 +1,10 @@
+[
+    {
+        "dia": "2025-05-23",
+        "hora": "10:00",
+        "Disponibilidad": false,
+        "estado": "Pendiente",
+        "paciente": "jaime",
+        "doctor": "arturo"
+    }
+]

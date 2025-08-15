@@ -1,0 +1,12 @@
+[
+    {
+        "Id": 1,
+        "Nombre": "jaime",
+        "Rol": "Paciente",
+        "Edad": 38,
+        "Tipo_Sangre": "o+",
+        "Alergias": "ninguna",
+        "Peso": 80.0,
+        "Altura": 1.7
+    }
+]

@@ -1,9 +1,15 @@
 import customtkinter as ctk
-from tkinter import messagebox, ttk
+from tkinter import messagebox, ttk, Menu
 from tkcalendar import Calendar
 from backend import *
 from datetime import datetime
 from PIL import Image, ImageTk
+
+import os
+
+# Obtener la ruta del directorio actual del script
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+IMAGES_DIR = os.path.join(BASE_DIR, "assets", "imagenes")
 
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")
@@ -20,9 +26,9 @@ def ventana_principal():
     root = ctk.CTk()
     root.title("Sistema de Consultorio Médico")
     root.geometry("800x600+0+0")
-    root.iconbitmap("C://Users//Jaime//Documents//GitHub//progavan//GUI_tkinter//Serv_medico//medicina.ico")
+    
 
-    imagen_fondo = Image.open("C://Users//Jaime//Documents//GitHub//progavan//GUI_tkinter//Serv_medico//fondo_inicio.jpg")
+    imagen_fondo = Image.open(os.path.join(IMAGES_DIR, "fondo_inicio.jpg"))
     imagen_fondo = imagen_fondo.resize((800, 600))
     imagen_fondo = ImageTk.PhotoImage(imagen_fondo)
 
@@ -56,7 +62,7 @@ def ventana_doctor():
     doctor_window.title("Ventana de Doctor")
     doctor_window.geometry("800x600+0+0")
 
-    imagen_fondo = Image.open("C://Users//Jaime//Documents//GitHub//progavan//GUI_tkinter//Serv_medico//fondo_doctor.jpg")
+    imagen_fondo = Image.open("C://Users//Jaime//Documents//GitHub//Prograavanzada//GUI_tkinter//Serv_medico//fondo_doctor.jpg")
     imagen_fondo = imagen_fondo.resize((800, 600))
     imagen_fondo = ImageTk.PhotoImage(imagen_fondo)
 
@@ -339,13 +345,13 @@ def ventana_recepcionista():
     recepcionista_window = ctk.CTk()
     recepcionista_window.title("Ventana de Recepcionista")
     recepcionista_window.geometry("800x600+0+0")
-
-    imagen_fondo = Image.open("C://Users//Jaime//Documents//GitHub//progavan//GUI_tkinter//Serv_medico//fondo.jpg")
+    imagen_fondo = Image.open(os.path.join(IMAGES_DIR, "fondo_recepcionista.jpg"))
     imagen_fondo = imagen_fondo.resize((800, 600))
     imagen_fondo = ImageTk.PhotoImage(imagen_fondo)
-
     fondo_label = ctk.CTkLabel(recepcionista_window, image=imagen_fondo, text="")
     fondo_label.place(x=0, y=0, relwidth=1, relheight=1)
+    
+    
 
     def agendar_cita():
         def guardar_cita():
@@ -411,15 +417,44 @@ def ventana_recepcionista():
     def agregar_paciente():
         def guardar_paciente():
             nombre = entry_nombre.get()
-            edad = int(entry_edad.get())
+            edad = entry_edad.get()
             tipo_sangre = entry_tipo_sangre.get()
             alergias = entry_alergias.get()
-            peso = float(entry_peso.get())
-            altura = float(entry_altura.get())
-            paciente = Pacientes(id, nombre, "Paciente", edad, tipo_sangre, alergias, peso, altura)
-            Pacientes.guardar_pacientes()
-            messagebox.showinfo("Éxito", "Paciente agregado correctamente")
-            ventana_agregar.destroy()
+            peso = entry_peso.get()
+            altura = entry_altura.get()
+            
+            # Validaciones básicas
+            if not all([nombre, edad, tipo_sangre, alergias, peso, altura]):
+                messagebox.showerror("Error", "Todos los campos son obligatorios")
+                return
+            
+            try:
+                # Convertir a tipos numéricos
+                edad = int(edad)
+                peso = float(peso)
+                altura = float(altura)
+                
+                # Generar un ID único (puedes mejorar esto)
+                nuevo_id = len(Pacientes.Lista_pacientes) + 1
+                
+                # Crear el paciente
+                paciente = Pacientes(
+                    Id=nuevo_id,
+                    Nombre=nombre,
+                    Rol="Paciente",
+                    Edad=edad,
+                    Tipo_Sangre=tipo_sangre,
+                    Alergias=alergias,
+                    Peso=peso,
+                    Altura=altura
+                )
+                
+                Pacientes.guardar_pacientes()
+                messagebox.showinfo("Éxito", "Paciente agregado correctamente")
+                ventana_agregar.destroy()
+                
+            except ValueError:
+                messagebox.showerror("Error", "Edad, peso y altura deben ser números válidos")
 
         ventana_agregar = ctk.CTkToplevel(recepcionista_window)
         ventana_agregar.title("Agregar Paciente")
@@ -620,6 +655,33 @@ def ventana_recepcionista():
             tree.insert("", "end", values=(doctor.nombre, doctor.especialidad))
         tree.pack(expand=True, fill="both")
 
+    menu_bar = Menu(recepcionista_window)
+    # Menú Archivo
+    menu_archivo = Menu(menu_bar, tearoff=0)
+    menu_archivo.add_command(label="Agregar_Paciente", command=agregar_paciente)
+    menu_archivo.add_command(label="Listar_Pacientes", command=listar_pacientes)
+    menu_archivo.add_separator()
+    menu_archivo.add_command(label="Salir", command=recepcionista_window.quit)
+    menu_bar.add_cascade(label="Archivo", menu=menu_archivo)
+    # Menú Citas
+    menu_citas = Menu(menu_bar, tearoff=0)
+    menu_citas.add_command(label="Agendar_Cita", command=agendar_cita)
+    menu_citas.add_command(label="Cancelar_Cita", command=cancelar_cita)
+    menu_citas.add_command(label="Listar_Citas", command=listar_citas)
+    menu_bar.add_cascade(label="Citas", menu=menu_citas)
+    # Menú Servicios
+    menu_servicios = Menu(menu_bar, tearoff=0)
+    menu_servicios.add_command(label="Agregar_Servicio", command=agregar_servicio)
+    menu_servicios.add_command(label="Listar_Servicios", command=listar_servicios)
+    menu_bar.add_cascade(label="Servicios", menu=menu_servicios)
+    # Menú Doctores
+    menu_doctores = Menu(menu_bar, tearoff=0)
+    menu_doctores.add_command(label="Agregar_Doctor", command=agregar_doctor)
+    menu_doctores.add_command(label="Listar_Doctores", command=listar_doctores)
+    menu_bar.add_cascade(label="Doctores", menu=menu_doctores)
+    # Configurar el menú en la ventana
+    recepcionista_window.config(menu=menu_bar)
+    
     boton_agendar_cita = ctk.CTkButton(recepcionista_window, text="Agendar Cita", command=agendar_cita, width=200, height=50, font=("Arial", 14, "bold"), corner_radius=10, fg_color="#2aa55c", hover_color="#1a703d")
     boton_agendar_cita.place(x=50, y=50)
 

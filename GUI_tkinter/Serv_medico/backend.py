@@ -1,14 +1,33 @@
 from datetime import datetime
 import json
 import os
+import sys
+
+
+# Determinar si estamos ejecutando como .exe o como script
+if getattr(sys, 'frozen', False):
+    # Si es ejecutable, la ruta es donde está el .exe
+    BASE_DIR = os.path.dirname(sys.executable)
+else:
+    # Si es script, la ruta normal
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# Ruta para datos persistentes (se creará si no existe)
+DATA_DIR = os.path.join(BASE_DIR, 'data')
+if not os.path.exists(DATA_DIR):
+    os.makedirs(DATA_DIR)
+
+# Configuración de rutas
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.join(BASE_DIR, "assets", "data")
 
 # Rutas de los archivos JSON
-PERSONAS_JSON = "personas.json"
-PACIENTES_JSON = "pacientes.json"
-CITAS_JSON = "citas.json"
-SERVICIOS_JSON = "servicios.json"
-EXPEDIENTES_JSON = "expedientes.json"
-DOCTORES_JSON = "doctores.json"
+PERSONAS_JSON = os.path.join(DATA_DIR, "personas.json")
+PACIENTES_JSON = os.path.join(DATA_DIR, "pacientes.json")
+CITAS_JSON = os.path.join(DATA_DIR, "citas.json")
+SERVICIOS_JSON = os.path.join(DATA_DIR, "servicios.json")
+EXPEDIENTES_JSON = os.path.join(DATA_DIR, "expedientes.json")
+DOCTORES_JSON = os.path.join(DATA_DIR, "doctores.json")
 
 class Personas:
     Lista_personas = []
