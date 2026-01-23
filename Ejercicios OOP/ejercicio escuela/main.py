@@ -34,3 +34,10 @@ print(f"La alumna {alumno5.nombre} tiene promedio de: {alumno5.calcular_promedio
 
 
 grupo1=Grupo("Progra")
+grupo1.agregar_alumno(alumno1)
+grupo1.agregar_alumno(alumno2)
+grupo1.agregar_alumno(alumno3)
+grupo1.agregar_alumno(alumno4)
+grupo1.agregar_alumno(alumno5)
+print(grupo1.mostrar_promedios())
+print(grupo1.mejor_alumno())
