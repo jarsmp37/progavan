@@ -37,3 +37,4 @@ class Veterinaria():
         for i in self.lista:
             print(f"El animal es un {i.tipo} su nombre es {i.nombre} y es de color {i.color} y hace el sonido {i.sonido()}")
 
+
