@@ -15,11 +15,13 @@ class Programador(Humano):
     def saludo2(self):
         print("Hola soy un programador")
 
-class Licenciado(Humano):
-    def __init__(self,nombre,edad, genero,telefono):
-        super().__init__(nombre,edad, genero)
-        self.telefono=telefono
+
+class Ingeniero(Humano):
+    def __init__(self,nombre,edad,genero,tipo):
+        super().__init__(nombre,edad,genero)
+        self.tipo=tipo
+    
     def saludo(self):
-        print("Hola soy lic")
-    def caract(self):
-        print(f"Hola mi nombre es {self.nombre} tengo {self.edad} y soy {self.genero} y mi numero es {self.telefono}")
+        print("Hola soy un ingeniero")
+
+

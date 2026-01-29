@@ -1,18 +1,18 @@
 from humanidad import *
 
-humano1=Humano("Diana",17,"Femenino")
+humano1=Humano("Mich",18,"Femenino")
 print(humano1.nombre)
 print(humano1.edad)
 print(humano1.genero)
 humano1.caract()
 humano1.saludo()
 
-programador1=Programador("Gilberto",20,"Masculino")
-print(programador1.nombre)
-programador1.caract()
-programador1.saludo()
-programador1.saludo2()
+prog1=Programador("Jose",20,"Masculino")
+print(prog1.nombre)
+print(prog1.edad)
+print(prog1.genero)
+prog1.caract()
+prog1.saludo()
+prog1.saludo2()
 
-lic1=Licenciado("Brian",23,"No Binario",2134453123)
-lic1.saludo()
-lic1.caract()
+ing=Ingeniero("Emir",23,"No binario","Letras")
