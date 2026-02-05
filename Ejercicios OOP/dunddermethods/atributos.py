@@ -17,4 +17,4 @@ class Nombre():
         return self.edad*otra.edad
     
     def __eq__(self,otra):
-        return self.edad==otra.edad
+        return self.carrera==otra.carrera

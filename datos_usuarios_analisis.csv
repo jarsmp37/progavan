@@ -1,0 +1,16 @@
+Nombre,Correo,Edad,Genero,Ciudad,Ocupacion,Ingreso_Anual,Score_Credito,Nivel_Educativo,Suscripcion_Tipo,Horas_Uso_Semanal,Fecha_Registro
+Juan Carlos Ruiz,jc.ruiz@mail.mx,28,Masculino,CDMX,Ingeniero de Software,450000.0,720,Licenciatura,Premium,12.5,2026-02-03 16:14:35
+Ana Karen López,ak.lopez@mail.mx,34,Femenino,Guadalajara,Médico Cirujano,620000.0,810,Especialidad,Premium,5.0,2026-02-03 16:14:35
+Luis Angel Gomez,lagomez@mail.mx,22,Masculino,Monterrey,Estudiante,120000.0,640,Bachillerato,Gratis,25.5,2026-02-03 16:14:35
+Marta Elena Sanz,m.sanz@mail.mx,45,Femenino,Puebla,Gerente de Ventas,550000.0,750,Licenciatura,Estándar,8.0,2026-02-03 16:14:35
+Jorge Vigil,jvigil@mail.mx,31,Masculino,Querétaro,Analista de Datos,380000.0,690,Licenciatura,Estándar,15.2,2026-02-03 16:14:35
+Elena Toro,etoro@mail.mx,29,Femenino,Mérida,Diseñadora Gráfica,320000.0,710,Licenciatura,Gratis,20.0,2026-02-03 16:14:35
+Pedro Picó,ppico@mail.mx,52,Masculino,Tijuana,Consultor Fiscal,700000.0,830,Doctorado,Premium,4.5,2026-02-03 16:14:35
+Sofía Vega,svega@mail.mx,26,Femenino,León,Community Manager,280000.0,670,Licenciatura,Gratis,18.5,2026-02-03 16:14:35
+Raúl Peña,rpena@mail.mx,39,Masculino,Toluca,Arquitecto,480000.0,740,Maestría,Estándar,10.0,2026-02-03 16:14:35
+Lucía Mar,lmar@mail.mx,24,Femenino,CDMX,Programadora Frontend,400000.0,705,Licenciatura,Premium,30.0,2026-02-03 16:14:35
+Kevin Moreno,kmoreno@mail.mx,21,Masculino,San Luis Potosí,Pasante,150000.0,620,Licenciatura,Gratis,14.0,2026-02-03 16:14:35
+Laura Cid,lcid@mail.mx,33,Femenino,Cancún,Abogada,580000.0,790,Maestría,Premium,6.5,2026-02-03 16:14:35
+Miguel Reyes,mreyes@mail.mx,41,Masculino,Veracruz,Chef Ejecutivo,350000.0,680,Técnico Superior,Estándar,11.0,2026-02-03 16:14:35
+Natalia Rojas,nrojas@mail.mx,27,Femenino,Aguascalientes,Enfermera,310000.0,725,Licenciatura,Estándar,9.5,2026-02-03 16:14:35
+Oscar Gil,ogil@mail.mx,48,Masculino,Chihuahua,Contador Público,520000.0,770,Licenciatura,Premium,7.2,2026-02-03 16:14:35

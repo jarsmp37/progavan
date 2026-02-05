@@ -1,0 +1,24 @@
+class Producto():
+    def __init__(self,nom,prec,stok):
+        self.nombre=nom
+        self.precio=prec
+        self.stock=stok
+    def aplicar_descuento(self,porcentaje):
+        self.precio*=(1-porcentaje)
+        print(f"el nuevo precio es {self.precio}")
+    def actualizar_stock(self,cantidad):
+        if (self.stock+cantidad)<0:
+            print("no puedes tener stock negativo")
+        else:
+            self.stock+=cantidad
+            print(f"la nueva cantidad es {self.stock}")
+
+class Categoria():
+    def __init__(self,nomcat):
+        self.nombre_cat=nomcat
+        self.lista=[]
+    def agregar_producto(self,producto):
+        self.lista.append(producto)
+        print(f"el producto {producto.nombre} se agrego a la lista")
+    def valor_total_categoria(self):
+        pass
