@@ -26,4 +26,5 @@ lst1=[prod4, prod5,prod6,prod7,prod8]
 for a in lst1:
     cat1.agregar_producto(a)
 
-print(cat1.lista)
+print(cat1.lista[0].precio)
+cat1.valor_total_categoria()
