@@ -28,3 +28,11 @@ for a in lst1:
 
 print(cat1.lista[0].precio)
 cat1.valor_total_categoria()
+
+pedido1=Pedido("Alfredo")
+pedido1.agregar_produto(prod10)
+pedido1.agregar_produto(prod8)
+pedido1.agregar_produto(prod6)
+print(pedido1.lista_comprados)
+pedido1.calcula_total()
+

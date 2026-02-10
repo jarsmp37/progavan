@@ -25,3 +25,20 @@ class Categoria():
         for b in self.lista:
             suma+=b.precio
         print(f"el valor total de la categoria es {suma}")
+
+class Pedido():
+    def __init__(self,cliente):
+        self.cliente=cliente
+        self.lista_comprados=[]
+        self.estado="Pendiente"
+    
+    def agregar_produto(self,product):
+        self.lista_comprados.append(product)
+        print(f"Agregaste el producto {product.nombre} al carrito")
+    
+    def calcula_total(self):
+        total=0
+        for x in self.lista_comprados:
+            total+=x.precio
+        
+        print(f"El total de productos comprados es ${total}, el iva es ${0.16*total} y dando sumado ${1.16*total:0.2f}")
