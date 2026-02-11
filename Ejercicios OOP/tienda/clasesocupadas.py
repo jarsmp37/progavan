@@ -26,6 +26,7 @@ class Categoria():
             suma+=b.precio
         print(f"el valor total de la categoria es {suma}")
 
+
 class Pedido():
     def __init__(self,cliente):
         self.cliente=cliente
@@ -40,5 +41,12 @@ class Pedido():
         total=0
         for x in self.lista_comprados:
             total+=x.precio
-        
         print(f"El total de productos comprados es ${total}, el iva es ${0.16*total} y dando sumado ${1.16*total:0.2f}")
+    
+    def finalizar_pedido(self,listab):
+        self.estado="Completado"
+        for x in self.lista_comprados:
+            for y in listab:
+                if x.nombre==y.nombre:
+                    y.stock-=1
+                    print(f"El producto {y.nombre} se le quito un elemento")

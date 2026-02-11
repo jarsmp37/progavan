@@ -21,13 +21,27 @@ prod18 = Producto("Papel Higiénico 4 rollos", 29, 30)
 prod19 = Producto("Refresco de Naranja 2L", 32, 20)
 prod20 = Producto("Chocolate en Barra", 14, 75)
 
-cat1=Categoria("Alimentos")
-lst1=[prod4, prod5,prod6,prod7,prod8]
-for a in lst1:
-    cat1.agregar_producto(a)
+listaproductos=[]
+listaproductos.append(prod1)
+listaproductos.append(prod2)
+listaproductos.append(prod3)
+listaproductos.append(prod4)
+listaproductos.append(prod5)
+listaproductos.append(prod6)
+listaproductos.append(prod7)
+listaproductos.append(prod8)
+listaproductos.append(prod9)
+listaproductos.append(prod10)
 
-print(cat1.lista[0].precio)
-cat1.valor_total_categoria()
+print(listaproductos)
+
+#cat1=Categoria("Alimentos")
+#lst1=[prod4, prod5,prod6,prod7,prod8]
+#for a in lst1:
+    #cat1.agregar_producto(a)
+
+#print(cat1.lista[0].precio)
+#cat1.valor_total_categoria()
 
 pedido1=Pedido("Alfredo")
 pedido1.agregar_produto(prod10)
@@ -35,4 +49,4 @@ pedido1.agregar_produto(prod8)
 pedido1.agregar_produto(prod6)
 print(pedido1.lista_comprados)
 pedido1.calcula_total()
-
+pedido1.finalizar_pedido()
