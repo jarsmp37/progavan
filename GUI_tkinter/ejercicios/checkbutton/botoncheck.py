@@ -1,36 +1,23 @@
 import tkinter as tk
 from tkinter import messagebox
 
-def seleccionados():
-    lista=[]
-    if var1.get()==1:
-        lista.append("Python")
-    if var2.get()==1:
-        lista.append("Java")
-    if var3.get()==1:
-        lista.append("C++")
-    print(f"Los programas que dominas son: {lista}")
+def estatus():
+    if var.get()==1:
+        messagebox.showinfo("Estado", "Checkbutton seleccionado")
+    else:
+        messagebox.showinfo("Estado", "Checkbutton no está seleccionado")
 
-ventana1=tk.Tk()
-ventana1.title=("Lenguaje de programación")
-ventana1.geometry("400x500")
+ven1=tk.Tk()
+ven1.title("Uso del checkbutton")
+ven1.geometry("400x500")
 
-var1=tk.IntVar()
-var2=tk.IntVar()
-var3=tk.IntVar()
-
-etiqueta1=tk.Label(ventana1,text="Selecciona el lenguaje que sabes ocupar:")
+etiqueta1=tk.Label(ven1,text="Aquí voy a poner un checkbutton")
 etiqueta1.pack(pady=20)
 
-python=tk.Checkbutton(ventana1,text="Python",variable=var1)
-python.pack(padx=10,pady=20)
+var=tk.IntVar()
+bcheck=tk.Checkbutton(ven1,text="Elegir opción",variable=var)
+bcheck.pack(pady=10)
+boton1=tk.Button(ven1,text="Verificar Estatus",command=estatus)
+boton1.pack()
 
-java=tk.Checkbutton(ventana1,text="Java",variable=var2)
-java.pack(padx=10,pady=20)
-
-cmas=tk.Checkbutton(ventana1,text="C++",variable=var3)
-cmas.pack(padx=10,pady=20)
-
-tk.Button(ventana1,text="Enviar",command=seleccionados).pack(pady=10)
-
-ventana1.mainloop()
+ven1.mainloop()
