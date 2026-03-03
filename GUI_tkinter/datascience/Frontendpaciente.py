@@ -6,7 +6,7 @@ from Analisis import *
 from modelo_logistico import *
 
 
-os.chdir(r"C:\Users\Jaime\Documents\GitHub\Prograavanzada\GUI_tkinter\datascience")
+os.chdir(r"C:/Users/Jaime/Documents/GitHub/progavan/GUI_tkinter/datascience")
 
 ctk.set_appearance_mode("System")
 ctk.set_default_color_theme("blue")

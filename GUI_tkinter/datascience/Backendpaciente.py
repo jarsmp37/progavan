@@ -1,6 +1,6 @@
 import csv
 import os
-os.chdir(r"C:\Users\Jaime\Documents\GitHub\Prograavanzada\GUI_tkinter\datascience")
+os.chdir(r"C:/Users/Jaime/Documents/GitHub/progavan/GUI_tkinter/datascience")
 
 class Paciente:
     def __init__(self, nombre, telefono, genero, embarazos, glucosa, presion_sanguinea, grosor_piel, insulina, imc, edad):

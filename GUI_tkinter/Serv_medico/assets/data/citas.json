@@ -3,8 +3,16 @@
         "dia": "2025-05-23",
         "hora": "10:00",
         "Disponibilidad": false,
-        "estado": "Pendiente",
+        "estado": "Atendida",
         "paciente": "jaime",
         "doctor": "arturo"
+    },
+    {
+        "dia": "2026-03-11",
+        "hora": "10:00",
+        "Disponibilidad": true,
+        "estado": "Pendiente",
+        "paciente": null,
+        "doctor": null
     }
 ]

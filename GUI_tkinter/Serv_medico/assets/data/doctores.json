@@ -4,5 +4,17 @@
         "Nombre": "arturo",
         "Rol": "Doctor",
         "Especialidad": "pediatra"
+    },
+    {
+        "Id": 2,
+        "Nombre": "Renata",
+        "Rol": "Doctor",
+        "Especialidad": "Ginecolog\u00eda"
+    },
+    {
+        "Id": 3,
+        "Nombre": "Amy",
+        "Rol": "Doctor",
+        "Especialidad": "Cardio"
     }
 ]

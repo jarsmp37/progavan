@@ -2,5 +2,9 @@
     {
         "servicio": "Consulta general",
         "costo": 35.0
+    },
+    {
+        "servicio": "Ortondoncia",
+        "costo": 800.0
     }
 ]

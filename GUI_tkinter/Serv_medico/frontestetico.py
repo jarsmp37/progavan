@@ -62,12 +62,12 @@ def ventana_doctor():
     doctor_window.title("Ventana de Doctor")
     doctor_window.geometry("800x600+0+0")
 
-    imagen_fondo = Image.open("C://Users//Jaime//Documents//GitHub//Prograavanzada//GUI_tkinter//Serv_medico//fondo_doctor.jpg")
-    imagen_fondo = imagen_fondo.resize((800, 600))
-    imagen_fondo = ImageTk.PhotoImage(imagen_fondo)
+    #imagen_fondo = Image.open("C://Users//Jaime//Documents//GitHub//Prograavanzada//GUI_tkinter//Serv_medico//fondo_doctor.jpg")
+    #imagen_fondo = imagen_fondo.resize((800, 600))
+    #imagen_fondo = ImageTk.PhotoImage(imagen_fondo)
 
-    fondo_label = ctk.CTkLabel(doctor_window, image=imagen_fondo, text="")
-    fondo_label.place(x=0, y=0, relwidth=1, relheight=1)
+    #fondo_label = ctk.CTkLabel(doctor_window, image=imagen_fondo, text="")
+    #fondo_label.place(x=0, y=0, relwidth=1, relheight=1)
 
     def ver_citas_pendientes():
         ventana_citas = ctk.CTkToplevel(doctor_window)
