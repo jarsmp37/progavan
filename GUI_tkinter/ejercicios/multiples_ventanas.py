@@ -49,11 +49,25 @@ def ventana_elefante():
     ven1.destroy()
     ven2=tk.Tk()
     ven2.title("Información del elefante")
-    ven2.geometry("500x500")
+    ven2.geometry("700x500")
     ven2.config(bg="gray")
 
     eti2=tk.Label(ven2,text="Elefante",bg="gray",font=("Algerian",24,"bold"))
     eti2.pack(pady=10)
+    frame3= tk.Frame(ven2)
+    frame3.pack(fill=tk.X, padx=10, pady=10)
+    imagen2 = Image.open("C:/Users/Jaime/Documents/GitHub/progavan/GUI_tkinter/ejercicios/elefante.jpg")
+    imagen2 = imagen2.resize((400, 200))  # Redimensionar si es necesario
+    imagen_tk2 = ImageTk.PhotoImage(imagen2) 
+    label_imagen = tk.Label(frame3, image=imagen_tk2)
+    label_imagen.grid(row=0, column=0, padx=5, pady=5)
+    Texto1=tk.Label(frame3,text="Los elefantes o elefántidos son una familia de mamíferos placentarios " \
+    "del orden proboscideos. Antiguamente se clasificaban, junto con otros mamíferos de piel gruesa, " \
+    "en el orden, ahora inválido, de los paquidermos. Existen hoy en día tres especies " \
+    "y diversas subespecies.",wraplength=250,justify="left")
+    Texto1.grid(row=0, column=1, padx=5, pady=5)
+
+
     boton2=tk.Button(ven2,text="ir a ventana principal",command=lambda: regresar_a_primera(ven2) )
     boton2.pack(pady=30)
 

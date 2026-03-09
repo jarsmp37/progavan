@@ -45,7 +45,7 @@ def editar(usuario):
     obt_edad_editar.insert(0, usuario.edad) 
     obt_edad_editar.pack(pady=5)
 
-    etiqueta_sangre_editar = tk.Label(ventana_editar, text="Tipo de Sangre")
+    etiqueta_sangre_editar = tk.Label(ventana_editar, text="Comida favorita")
     etiqueta_sangre_editar.pack(pady=5)
     obt_sangre_editar = tk.Entry(ventana_editar)
     obt_sangre_editar.insert(0, usuario.tiposangre)  
@@ -136,7 +136,7 @@ etiqueta_edad.pack(pady=8)
 obt_edad=tk.Entry(ventana1)
 obt_edad.pack(pady=8)
 
-etiqueta_sangre=tk.Label(ventana1,text="Tipo de Sagre")
+etiqueta_sangre=tk.Label(ventana1,text="Comida favorita")
 etiqueta_sangre.pack(pady=8)
 obt_sangre=tk.Entry(ventana1)
 obt_sangre.pack(pady=8)
