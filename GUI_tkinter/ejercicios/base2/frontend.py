@@ -6,7 +6,7 @@ def ventana_principal():
     venta1=tk.Tk()
     venta1.title("Base de datos")
     venta1.geometry("400x400")
-    Usuario.cargar_usuarios()
+    
 
     etiqueta1=tk.Label(venta1,text="Nombre")
     etiqueta1.pack()
@@ -18,7 +18,7 @@ def ventana_principal():
     entrada2=tk.Entry(venta1,width=40)
     entrada2.pack(pady=15)
 
-    etiqueta3=tk.Label(venta1,text="Comida favorita")
+    etiqueta3=tk.Label(venta1,text="Contraseña")
     etiqueta3.pack()
     entrada3=tk.Entry(venta1,width=40)
     entrada3.pack(pady=15)
@@ -26,8 +26,8 @@ def ventana_principal():
     def registrar():
         name=entrada1.get()
         age=entrada2.get()
-        food=entrada3.get()
-        newuser=Usuario(name,age,food)
+        contra=entrada3.get()
+        newuser=Usuario(name,age,contra)
         entrada1.delete(0,tk.END)
         entrada2.delete(0,tk.END)
         entrada3.delete(0,tk.END)
@@ -54,5 +54,35 @@ def ventana_principal():
 
     venta1.mainloop()
 
+def ventana_login():
+    ven2=tk.Tk()
+    ven2.title("Inicio de Sesión")
+    ven2.geometry("400x300")
+    Usuario.cargar_usuarios()
+    etiqueta3=tk.Label(ven2,text="Usuario")
+    etiqueta3.pack()
+    entrada4=tk.Entry(ven2,width=60)
+    entrada4.pack(pady=10)
+    etiqueta4=tk.Label(ven2,text="Password")
+    etiqueta4.pack(pady=10)
+    entrada5=tk.Entry(ven2,width=60)
+    entrada5.pack(pady=10)
 
-ventana_principal()
+    def iniciar():
+        name=entrada4.get()
+        password=entrada5.get()
+        for x in Usuario.lista:
+            if name == x.nombre:
+                if password==x.contra:
+                    ventana_principal()
+            else:
+                messagebox.showwarning("inicio de sesión","El usuario no existe")
+    
+    
+
+    boton4=tk.Button(ven2,text="Iniciar sesión",command=iniciar)
+    boton4.pack(pady=10)
+
+    ven2.mainloop()
+
+ventana_login()

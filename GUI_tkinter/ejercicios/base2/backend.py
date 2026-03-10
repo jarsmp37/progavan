@@ -4,15 +4,15 @@ import os
 class Usuario():
     lista=[]
     ruta_csv=r"C:/Users/Jaime/Documents/GitHub/progavan/GUI_tkinter/ejercicios/base2/personas.csv"
-    def __init__(self,name,age,food):
+    def __init__(self,name,age,pasword):
         self.nombre=name
         self.edad=age
-        self.comida=food
+        self.contra=pasword
         if self not in Usuario.lista:
             Usuario.lista.append(self)
 
     def mostrar_datos(self):
-        return f"El usuario {self.nombre} tiene {self.edad} y le gusta {self.comida}"
+        return f"El usuario {self.nombre} tiene {self.edad} y su pasword es {self.contra}"
     
     @classmethod
     def mostrar_lista(cls):
@@ -20,7 +20,7 @@ class Usuario():
     
     @classmethod
     def guardar_usuarios(cls):
-        campos=["nombre","edad","comida"] #Nombres de las columnas en la tabla
+        campos=["nombre","edad","contraseña"] #Nombres de las columnas en la tabla
 
         # Crear el directorio si no existe
         directorio = os.path.dirname(cls.ruta_csv)
@@ -37,7 +37,7 @@ class Usuario():
             escritor=csv.DictWriter(f, fieldnames=campos, delimiter=',')
             escritor.writeheader()
             for u in cls.lista:
-                escritor.writerow({"nombre":u.nombre,"edad":u.edad,"comida":u.comida})
+                escritor.writerow({"nombre":u.nombre,"edad":u.edad,"contraseña":u.contra})
     @classmethod
     def cargar_usuarios(cls):
         if not os.path.exists(cls.ruta_csv):
@@ -50,5 +50,5 @@ class Usuario():
             cls.lista = []
             for fila in lector:
                 # Al instanciarlo, el __init__ lo agrega a la lista automáticamente
-                Usuario(fila["nombre"], fila["edad"], fila["comida"])
+                Usuario(fila["nombre"], fila["edad"], fila["contraseña"])
         print("Datos cargados exitosamente.")    
