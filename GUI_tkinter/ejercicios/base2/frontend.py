@@ -6,6 +6,7 @@ def ventana_principal():
     venta1=tk.Tk()
     venta1.title("Base de datos")
     venta1.geometry("400x400")
+    Usuario.cargar_usuarios()
 
     etiqueta1=tk.Label(venta1,text="Nombre")
     etiqueta1.pack()
@@ -36,7 +37,9 @@ def ventana_principal():
     boton1=tk.Button(venta1,text="Registrar",command=registrar)
     boton1.pack(pady=15)
     def mostrar():
-        Usuario.mostrar_lista()
+        usuarios = Usuario.mostrar_lista()
+        for u in usuarios:
+            print(u.mostrar_datos())
 
     boton2=tk.Button(venta1,text="Mostrar lista",command=mostrar)
     boton2.pack(pady=15)

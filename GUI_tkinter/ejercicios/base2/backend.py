@@ -16,8 +16,7 @@ class Usuario():
     
     @classmethod
     def mostrar_lista(cls):
-        for u in Usuario.lista:
-            print(u.mostrar_datos())
+        return cls.lista
     
     @classmethod
     def guardar_usuarios(cls):
