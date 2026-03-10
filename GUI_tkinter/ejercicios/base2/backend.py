@@ -39,4 +39,17 @@ class Usuario():
             escritor.writeheader()
             for u in cls.lista:
                 escritor.writerow({"nombre":u.nombre,"edad":u.edad,"comida":u.comida})
-        
+    @classmethod
+    def cargar_usuarios(cls):
+        if not os.path.exists(cls.ruta_csv):
+            print("No hay base de datos previa.")
+            return
+
+        with open(cls.ruta_csv, "r", encoding="utf-8") as f:
+            lector = csv.DictReader(f)
+            # Limpiamos la lista actual para no duplicar si se llama varias veces
+            cls.lista = []
+            for fila in lector:
+                # Al instanciarlo, el __init__ lo agrega a la lista automáticamente
+                Usuario(fila["nombre"], fila["edad"], fila["comida"])
+        print("Datos cargados exitosamente.")    
