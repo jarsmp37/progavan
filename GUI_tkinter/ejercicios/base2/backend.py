@@ -51,4 +51,11 @@ class Usuario():
             for fila in lector:
                 # Al instanciarlo, el __init__ lo agrega a la lista automáticamente
                 Usuario(fila["nombre"], fila["edad"], fila["contraseña"])
-        print("Datos cargados exitosamente.")    
+        print("Datos cargados exitosamente.")
+
+    def to_dict(self):
+        return {
+            "nombre": self.nombre,
+            "edad": int(self.edad),
+            "contraseña": self.contra
+        }    

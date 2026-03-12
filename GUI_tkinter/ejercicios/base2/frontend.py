@@ -2,6 +2,11 @@ import tkinter as tk
 from backend import *
 from tkinter import messagebox
 
+from basedatos import *
+
+# 1. Instancia el gestor globalmente
+gestor = GestorUsuarios()
+
 def ventana_principal():
     venta1=tk.Tk()
     venta1.title("Base de datos")
@@ -28,6 +33,7 @@ def ventana_principal():
         age=entrada2.get()
         contra=entrada3.get()
         newuser=Usuario(name,age,contra)
+        gestor.usuarios_nuevos.append(newuser)
         entrada1.delete(0,tk.END)
         entrada2.delete(0,tk.END)
         entrada3.delete(0,tk.END)
@@ -47,6 +53,7 @@ def ventana_principal():
     def al_cerrar():
         print("Guardando datos antes de salir...")
         Usuario.guardar_usuarios()
+        gestor.guardar_en_supabase()
         venta1.destroy() # Cierra la ventana físicamente
     
     # Configuración de que pasa al cerrar la ventana

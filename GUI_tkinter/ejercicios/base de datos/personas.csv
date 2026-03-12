@@ -1,5 +1,3 @@
-nombre,edad,comida
-Bryan,23,Bongles
-Wen,18,Pasta
-Fanny,18,Hamburguesas
-Ren,18,Pozole
+nombre,edad,contraseña
+Administrador,23,1234
+Emir,23,2345
