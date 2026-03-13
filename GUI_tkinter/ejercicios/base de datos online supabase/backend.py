@@ -58,4 +58,4 @@ class Usuario():
             "nombre": self.nombre,
             "edad": int(self.edad),
             "contraseña": self.contra
-        }    
+        }       

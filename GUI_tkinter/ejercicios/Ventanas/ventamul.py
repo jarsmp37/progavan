@@ -24,7 +24,7 @@ def ventanaperro():
     frame2.pack(side="top", padx=5)
 
     global imagen_tk  
-    imagen = Image.open("C://Users//Jaime//Documents//GitHub//progavan//GUI_tkinter//Ventanas//perro.jpg")
+    imagen = Image.open("progavan/GUI_tkinter/ejercicios/Ventanas/perro.jpg")
     imagen = imagen.resize((300, 400))  
     imagen_tk = ImageTk.PhotoImage(imagen) 
 
@@ -57,7 +57,7 @@ def ventanagato():
     frame2.pack(side="top", padx=5)
 
     global imagen_tk  
-    imagen = Image.open("C://Users//Jaime//Documents//GitHub//progavan//GUI_tkinter//Ventanas//gato.jpg")
+    imagen = Image.open("progavan/GUI_tkinter/ejercicios/Ventanas/gato.jpg")
     imagen = imagen.resize((300, 400))  
     imagen_tk = ImageTk.PhotoImage(imagen) 
 
@@ -89,7 +89,7 @@ def ventanaelefante():
     frame2.pack(side="top", padx=5)
 
     global imagen_tk  
-    imagen = Image.open("C://Users//Jaime//Documents//GitHub//progavan//GUI_tkinter//Ventanas//elefante.jpg")
+    imagen = Image.open("progavan/GUI_tkinter/ejercicios/Ventanas/elefante.jpg")
     imagen = imagen.resize((300, 400))  
     imagen_tk = ImageTk.PhotoImage(imagen) 
 
@@ -121,7 +121,7 @@ def ventanacoco():
     frame2.pack(side="top", padx=5)
 
     global imagen_tk  
-    imagen = Image.open("C://Users//Jaime//Documents//GitHub//progavan//GUI_tkinter//Ventanas//cocodrilo.jpg")
+    imagen = Image.open("progavan/GUI_tkinter/ejercicios/Ventanas/cocodrilo.jpg")
     imagen = imagen.resize((300, 400))  
     imagen_tk = ImageTk.PhotoImage(imagen) 
 
