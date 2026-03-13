@@ -23,7 +23,7 @@ boton.pack()
 etiqueta = tk.Label(ven1, text="Texto inicial", font=("Arial", 12))
 etiqueta.pack(pady=10)
 
-imagen = Image.open("images.jpg")
+imagen = Image.open("progavan\GUI_tkinter\ejercicios\ejercicio1\images.jpg")
 imagen = imagen.resize((400, 200))  # Redimensionar si es necesario
 imagen_tk = ImageTk.PhotoImage(imagen) 
 label_imagen = tk.Label(ven1, image=imagen_tk)
