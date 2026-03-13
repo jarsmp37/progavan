@@ -7,7 +7,7 @@ from basedatos import *
 # 1. Instancia el gestor globalmente
 gestor = GestorUsuarios()
 
-def ventana_principal():
+def ventana_registro():
     venta1=tk.Tk()
     venta1.title("Base de datos")
     venta1.geometry("400x400")
@@ -61,11 +61,15 @@ def ventana_principal():
 
     venta1.mainloop()
 
+def ventana_admin():
+    ven3=tk.Tk()
+
+
 def ventana_login():
     ven2=tk.Tk()
     ven2.title("Inicio de Sesión")
     ven2.geometry("400x300")
-    Usuario.cargar_usuarios()
+    gestor.cargar_desde_supabase()
     etiqueta3=tk.Label(ven2,text="Usuario")
     etiqueta3.pack()
     entrada4=tk.Entry(ven2,width=60)
@@ -76,14 +80,31 @@ def ventana_login():
     entrada5.pack(pady=10)
 
     def iniciar():
-        name=entrada4.get()
-        password=entrada5.get()
-        for x in Usuario.lista:
-            if name == x.nombre:
-                if password==x.contra:
-                    ventana_principal()
+        name = entrada4.get()
+        password = entrada5.get()
+
+        # Buscamos si el usuario existe en la lista que bajamos de Supabase
+        usuario_encontrado = None
+
+        for u in Usuario.lista:
+            if u.nombre == name:
+                usuario_encontrado = u
+                break
+
+        # Validaciones
+        if usuario_encontrado:
+            if usuario_encontrado.contra == password:
+                if name == "Administrador":
+                    messagebox.showinfo("Login", "Bienvenido, Administrador")
+                    ven2.destroy() # Cerramos login
+                    ventana_registro() # Abrimos panel
+                else:
+                    messagebox.showinfo("Login", f"Bienvenido {name}")
+                    # Aquí podrías abrir una ventana para usuarios normales si quisieras
             else:
-                messagebox.showwarning("inicio de sesión","El usuario no existe")
+                messagebox.showerror("Error", "Contraseña incorrecta")
+        else:
+            messagebox.showwarning("Login", "El usuario no existe en la base de datos")
     
     
 

@@ -3,8 +3,8 @@ from backend import *
 # pip install supabase
 
 # Reemplaza estos valores con la URL y Key (anon public) de tu proyecto en Supabase
-SUPABASE_URL = "pon tu direc"
-SUPABASE_KEY = "pon tu key"
+SUPABASE_URL = "aqui va la url"
+SUPABASE_KEY = "aqui va la key"
 
 # Creamos el cliente global de Supabase
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
