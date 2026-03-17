@@ -3,7 +3,7 @@ import os
 class Usuario():
     lista=[]
     #ruta de guardado con todo y nombre del archivo
-    ruta_csv=r"C:/Users/Jaime/Documents/GitHub/progavan/GUI_tkinter/ejercicios/base de datos/personas.csv"
+    ruta_csv=r"progavan/GUI_tkinter/ejercicios\base de datos local csv/personas.csv"
     def __init__(self,name,age,contr):
         self.nombre=name
         self.edad=age
