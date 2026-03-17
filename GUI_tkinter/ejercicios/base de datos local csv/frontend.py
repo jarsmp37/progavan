@@ -3,13 +3,10 @@ from backend import *
 from tkinter import messagebox
 
 
-def ventana_principal():
+def ventana_registrar():
     venta1=tk.Tk()
     venta1.title("Base de datos")
     venta1.geometry("400x400")
-
-    # CARGAR AL INICIO ---
-    Usuario.cargar_usuarios()
 
     etiqueta1=tk.Label(venta1,text="Nombre")
     etiqueta1.pack()
@@ -57,6 +54,7 @@ def ventana_principal():
     venta1.mainloop()
 
 def ventana_login():
+    global ven2
     ven2=tk.Tk()
     ven2.title("Inicio de Sesión")
     ven2.geometry("400x300")
@@ -70,16 +68,71 @@ def ventana_login():
     entrada5=tk.Entry(ven2,width=60)
     entrada5.pack(pady=10)
     def iniciar():
-        name=entrada4.get()
-        password=entrada5.get()
-        for x in Usuario.lista:
-            if name == x.nombre:
-                if password==x.contra:
-                    ventana_principal()
+        name = entrada4.get()
+        password = entrada5.get()
+        usuario_encontrado = None
+        for u in Usuario.lista:
+            if u.nombre == name:
+                usuario_encontrado = u
+                break
+
+        if usuario_encontrado:
+            if usuario_encontrado.contra == password:
+                if name == "Administrador":
+                    messagebox.showinfo("Login", "Bienvenido, Administrador")
+                    ven2.destroy() 
+                    ventana_Administrador()
+                else:
+                    messagebox.showinfo("Login", f"Bienvenido {name}")
             else:
-                messagebox.showwarning("inicio de sesión","El usuario no existe")
+                messagebox.showerror("Error", "Contraseña incorrecta")
+        else:
+            messagebox.showwarning("Login", "El usuario no existe en la base de datos")
+    
     boton4=tk.Button(ven2,text="Iniciar sesión",command=iniciar)
     boton4.pack(pady=10)
     ven2.mainloop()
+
+def ventana_Administrador():
+    
+    ven3=tk.Tk()
+    ven3.title("Título")
+    ven3.geometry("400x500")
+
+    etiqueta4=tk.Label(ven3,text="Bienvenido Administrador")
+    etiqueta4.pack(pady=10)
+
+    boton1=tk.Button(ven3,text="Registrar usuarios", command=ventana_registrar)
+    boton1.pack(pady=10)
+    boton2=tk.Button(ven3,text="Opción 2")
+    boton2.pack(pady=10)
+    boton3=tk.Button(ven3,text="Opción 3")
+    boton3.pack(pady=10)
+    boton4=tk.Button(ven3,text="Opción 4")
+    boton4.pack(pady=10)
+
+    ven3.mainloop()
+
+
+def ventana_plantilla():
+    ven2.destroy()
+    ven3=tk.Tk()
+    ven3.title("Título")
+    ven3.geometry("400x500")
+
+    etiqueta4=tk.Label(ven3,text="Aquí va texto")
+    etiqueta4.pack(pady=10)
+
+    boton1=tk.Button(ven3,Text="Opción 1")
+    boton1.pack(pady=10)
+    boton2=tk.Button(ven3,Text="Opción 2")
+    boton2.pack(pady=10)
+    boton3=tk.Button(ven3,Text="Opción 3")
+    boton3.pack(pady=10)
+    boton4=tk.Button(ven3,Text="Opción 4")
+    boton4.pack(pady=10)
+
+    ven3.mainloop()
+
 
 ventana_login()
