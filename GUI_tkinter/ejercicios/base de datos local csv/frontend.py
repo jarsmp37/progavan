@@ -82,6 +82,14 @@ def ventana_login():
                     messagebox.showinfo("Login", "Bienvenido, Administrador")
                     ven2.destroy() 
                     ventana_Administrador()
+                if name == "Normal":
+                    messagebox.showinfo("Login", "Bienvenido, usuario normal")
+                    ven2.destroy() 
+                    ventana_Normal()
+                if name == "Jaime":
+                    messagebox.showinfo("Login", "Bienvenido, Jimmy")
+                    ven2.destroy() 
+                    ventana_jaime()
                 else:
                     messagebox.showinfo("Login", f"Bienvenido {name}")
             else:
@@ -113,9 +121,49 @@ def ventana_Administrador():
 
     ven3.mainloop()
 
+def ventana_Normal():
+    
+    ven3=tk.Tk()
+    ven3.title("Usuario normal")
+    ven3.geometry("400x500")
+
+    etiqueta4=tk.Label(ven3,text="Bienvendido usuario normal")
+    etiqueta4.pack(pady=10)
+
+    boton1=tk.Button(ven3,text="Opción 1")
+    boton1.pack(pady=10)
+    boton2=tk.Button(ven3,text="Opción 2")
+    boton2.pack(pady=10)
+    boton3=tk.Button(ven3,text="Opción 3")
+    boton3.pack(pady=10)
+    boton4=tk.Button(ven3,text="Opción 4")
+    boton4.pack(pady=10)
+
+    ven3.mainloop()
+
+
+def ventana_jaime():
+    
+    ven3=tk.Tk()
+    ven3.title("Título")
+    ven3.geometry("400x500")
+
+    etiqueta4=tk.Label(ven3,text="Esta es mi ventana")
+    etiqueta4.pack(pady=10)
+
+    boton1=tk.Button(ven3,text="Opción 1")
+    boton1.pack(pady=10)
+    boton2=tk.Button(ven3,text="Opción 2")
+    boton2.pack(pady=10)
+    boton3=tk.Button(ven3,text="Opción 3")
+    boton3.pack(pady=10)
+    boton4=tk.Button(ven3,text="Opción 4")
+    boton4.pack(pady=10)
+
+    ven3.mainloop()
 
 def ventana_plantilla():
-    ven2.destroy()
+    
     ven3=tk.Tk()
     ven3.title("Título")
     ven3.geometry("400x500")
@@ -123,16 +171,15 @@ def ventana_plantilla():
     etiqueta4=tk.Label(ven3,text="Aquí va texto")
     etiqueta4.pack(pady=10)
 
-    boton1=tk.Button(ven3,Text="Opción 1")
+    boton1=tk.Button(ven3,text="Opción 1")
     boton1.pack(pady=10)
-    boton2=tk.Button(ven3,Text="Opción 2")
+    boton2=tk.Button(ven3,text="Opción 2")
     boton2.pack(pady=10)
-    boton3=tk.Button(ven3,Text="Opción 3")
+    boton3=tk.Button(ven3,text="Opción 3")
     boton3.pack(pady=10)
-    boton4=tk.Button(ven3,Text="Opción 4")
+    boton4=tk.Button(ven3,text="Opción 4")
     boton4.pack(pady=10)
 
     ven3.mainloop()
-
 
 ventana_login()
