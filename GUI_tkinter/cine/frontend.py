@@ -9,7 +9,7 @@ COLOR_BOTON_AZUL_REY = "#002366"
 COLOR_BOTON_HOVER = "#003bba"
 COLOR_CUADRO_IMAGEN = "#1e293b"
 
-ctk.set_appearance_mode("Dark")
+ctk.set_appearance_mode("Dark") 
 ctk.set_default_color_theme("blue")
 
 # Instancia global del backend
@@ -30,7 +30,7 @@ def _crear_boton_cerrar_sesion(ventana):
         ventana, 
         text="Cerrar Sesión", 
         fg_color="#dc2626", 
-        hover_color="#b91c1c",
+        hover_color="#3c0ed3",
         font=("Roboto", 14, "bold"),
         command=lambda: mostrar_pantalla_login(ventana)
     )
@@ -74,7 +74,7 @@ def mostrar_pantalla_login(ventana):
     frame_login = ctk.CTkFrame(ventana, corner_radius=20, fg_color="#1e293b")
     frame_login.place(relx=0.5, rely=0.5, anchor=ctk.CENTER)
 
-    label_titulo = ctk.CTkLabel(frame_login, text="Bienvenido a Cinépolis (Demo)", font=("Roboto", 24, "bold"), text_color="white")
+    label_titulo = ctk.CTkLabel(frame_login, text="Bienvenido a LoboCine", font=("Roboto", 24, "bold"), text_color="white")
     label_titulo.pack(pady=(30, 10), padx=40)
 
     frame_imagen = ctk.CTkFrame(frame_login, width=200, height=120, fg_color=COLOR_CUADRO_IMAGEN, corner_radius=10)
