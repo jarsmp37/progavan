@@ -56,7 +56,7 @@ class CineControlador:
         self.ventas_totales=0.0
     
     def agregar_funcion(self,funcion):
-        self.cartelera.appen(funcion)
+        self.cartelera.append(funcion)
     def agregar_producto(self,producto):
         self.inventario_dulceria.append(producto)
     
@@ -112,3 +112,15 @@ class SistemaAutenticacion:
         if usuario is not None and usuario.password == password:
             return usuario.rol
         return None
+    
+    def actualizar_csv_completo(self):
+        """Sobrescribe el CSV con el estado actual del diccionario de usuarios."""
+        with open(self.archivo_usuarios, mode='w', newline='', encoding='utf-8') as archivo:
+            writer = csv.DictWriter(archivo, fieldnames=["nombre", "rol", "password"])
+            writer.writeheader()
+            for usuario in self.usuarios.values():
+                writer.writerow({
+                    "nombre": usuario.nombre,
+                    "rol": usuario.rol,
+                    "password": usuario.password
+                })
