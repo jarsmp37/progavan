@@ -9,20 +9,21 @@ class Usuario:
         self.password = password
 
 class Pelicula:
-    def __init__(self,id,titulo,clasif,dura,direc_img):
+    def __init__(self,id,titulo,clasif,dura,genero,direc_img):
         self.id_pelicula=id
         self.titulo=titulo
         self.clasificacion=clasif
         self.duracion=dura
+        self.genero=genero
         self.dir_img=direc_img
 
 class Funcion:
-    def __init__(self,id_fun,pelicula,sala,hora_ini,asientos):
+    def __init__(self,id_fun,pelicula,sala,hora_ini,precio):
         self.id_funcion=id_fun
         self.peli=pelicula
         self.sala=sala
         self.hora_inicio=hora_ini
-        self.asientos=asientos
+        self.precio=precio
 
 class Producto:
     def __init__(self,id_prod,nombre,categoria,precio,stock):
@@ -31,6 +32,34 @@ class Producto:
         self.categoria=categoria
         self.precio=precio
         self.stock=stock
+
+class Sala:
+    def __init__(self,idsala,numero,filas,columnas,tipo):
+        self.idsala=idsala
+        self.numero=numero
+        self.asientos=[[False for _ in range(columnas)] for _ in range(filas)]
+        self.tipo=tipo
+
+    def mostrar_disponibilidad(self):
+        return self.asientos
+    
+    def reservar_asientos(self,fila,columna):
+        if not self.asientos[fila][columna]:
+            self.asientos[fila][columna]=True
+            return True
+        return False
+    
+class CineControlador:
+    def __init__(self):
+        self.cartelera=[]
+        self.inventario_dulceria=[]
+        self.ventas_totales=0.0
+    
+    def agregar_funcion(self,funcion):
+        self.cartelera.appen(funcion)
+    def agregar_producto(self,producto):
+        self.inventario_dulceria.append(producto)
+    
 
 class SistemaAutenticacion:
     """Clase encargada de gestionar los usuarios y la autenticación leyendo desde un archivo CSV."""

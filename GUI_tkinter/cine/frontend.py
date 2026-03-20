@@ -1,5 +1,5 @@
 import customtkinter as ctk
-from backend import SistemaAutenticacion
+from backend import *
 from PIL import Image
 
 # ========================================================================
@@ -41,12 +41,53 @@ def _crear_boton_cerrar_sesion(ventana):
 # VISTAS (PANTALLAS)
 # ========================================================================
 
+def abrir_ventana_accion(titulo):
+    nueva_ventana=ctk.CTkToplevel()
+    nueva_ventana.title(titulo)
+    nueva_ventana.after(0,lambda: nueva_ventana.state('zoomed'))
+    nueva_ventana.grab_set()
+
+    etiqueta1=ctk.CTkLabel(nueva_ventana,text=f"Módulo {titulo}")
+    etiqueta1.pack(pady=10)
+
+    boton_regresar=ctk.CTkButton(nueva_ventana,text="Volver al menu",command=nueva_ventana.destroy)
+    boton_regresar.pack()
+
+
+
 def mostrar_pantalla_admin(ventana):
     limpiar_pantalla(ventana)
-    ventana.title("Ventana con administrador")
+    ventana.title("Ventana Gestión Administrativa")
     
     label = ctk.CTkLabel(ventana, text="¡Bienvenido al Panel de Administrador!", font=("Roboto", 28, "bold"), text_color="white")
     label.pack(pady=60)
+
+    frame_menu=ctk.CTkFrame(ventana,fg_color="transparent")
+    frame_menu.pack(pady=10)
+
+    boton_registro=ctk.CTkButton(frame_menu,text="Registrar usuarios",width=220,height=50,command=lambda: abrir_ventana_accion("Registrar usuarios"))
+    boton_registro.grid(row=0,column=0,padx=10,pady=10)
+
+    boton_modusu=ctk.CTkButton(frame_menu,text="Modificar usuarios",width=220,height=50,command=lambda: abrir_ventana_accion("Modificar usuarios"))
+    boton_modusu.grid(row=0,column=1,padx=10,pady=10)
+
+    boton_lisusu=ctk.CTkButton(frame_menu,text="Lista de usuarios",width=220,height=50,command=lambda: abrir_ventana_accion("Lista de usuarios"))
+    boton_lisusu.grid(row=1,column=0,padx=10,pady=10)
+
+    boton_crearsalas=ctk.CTkButton(frame_menu,text="Crear salas",width=220,height=50,command=lambda: abrir_ventana_accion("Crear salas"))
+    boton_crearsalas.grid(row=1,column=1,padx=10,pady=10)
+
+    boton_lissalas=ctk.CTkButton(frame_menu,text="Lista de salas",width=220,height=50,command=lambda: abrir_ventana_accion("Lista de salas"))
+    boton_lissalas.grid(row=2,column=0,padx=10,pady=10)
+
+    boton_crearprod=ctk.CTkButton(frame_menu,text="Crear producto",width=220,height=50,command=lambda: abrir_ventana_accion("Crear producto"))
+    boton_crearprod.grid(row=2,column=1,padx=10,pady=10)
+
+    boton_lisprod=ctk.CTkButton(frame_menu,text="Lista de productos",width=220,height=50,command=lambda: abrir_ventana_accion("Lista de productos"))
+    boton_lisprod.grid(row=3,column=0,padx=10,pady=10)
+
+    boton_cartelera=ctk.CTkButton(frame_menu,text="Cartelera",width=220,height=50,command=lambda: abrir_ventana_accion("Cartelera"))
+    boton_cartelera.grid(row=3,column=1,padx=10,pady=10)
     
     _crear_boton_cerrar_sesion(ventana)
 
@@ -119,7 +160,7 @@ def mostrar_pantalla_login(ventana):
 
 def iniciar_aplicacion():
     ventana = ctk.CTk()
-    ventana.geometry("600x500")
+    ventana.geometry("600x600")
     ventana.configure(fg_color=COLOR_FONDO_PRINCIPAL)
     ventana.title("Cargando Sistema...")
     mostrar_pantalla_login(ventana)
