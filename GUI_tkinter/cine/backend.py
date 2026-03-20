@@ -8,6 +8,30 @@ class Usuario:
         self.rol = rol
         self.password = password
 
+class Pelicula:
+    def __init__(self,id,titulo,clasif,dura,direc_img):
+        self.id_pelicula=id
+        self.titulo=titulo
+        self.clasificacion=clasif
+        self.duracion=dura
+        self.dir_img=direc_img
+
+class Funcion:
+    def __init__(self,id_fun,pelicula,sala,hora_ini,asientos):
+        self.id_funcion=id_fun
+        self.peli=pelicula
+        self.sala=sala
+        self.hora_inicio=hora_ini
+        self.asientos=asientos
+
+class Producto:
+    def __init__(self,id_prod,nombre,categoria,precio,stock):
+        self.id_producto=id_prod
+        self.nombre=nombre
+        self.categoria=categoria
+        self.precio=precio
+        self.stock=stock
+
 class SistemaAutenticacion:
     """Clase encargada de gestionar los usuarios y la autenticación leyendo desde un archivo CSV."""
     def __init__(self, archivo_usuarios="usuarios.csv"):

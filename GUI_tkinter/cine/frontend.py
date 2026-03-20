@@ -1,5 +1,6 @@
 import customtkinter as ctk
 from backend import SistemaAutenticacion
+from PIL import Image
 
 # ========================================================================
 # CONFIGURACIÓN DE DISEÑO (Colores y Apariencia)
@@ -77,10 +78,12 @@ def mostrar_pantalla_login(ventana):
     label_titulo = ctk.CTkLabel(frame_login, text="Bienvenido a LoboCine", font=("Roboto", 24, "bold"), text_color="white")
     label_titulo.pack(pady=(30, 10), padx=40)
 
-    frame_imagen = ctk.CTkFrame(frame_login, width=200, height=120, fg_color=COLOR_CUADRO_IMAGEN, corner_radius=10)
+    frame_imagen = ctk.CTkFrame(frame_login, width=300, height=150, fg_color=COLOR_CUADRO_IMAGEN, corner_radius=10)
     frame_imagen.pack(pady=10)
     
-    label_imagen = ctk.CTkLabel(frame_imagen, text="[Aquí va tu imagen del cine]", font=("Roboto", 12, "italic"), text_color="gray")
+    imagen = Image.open("C:/Users/Jaime/Documents/GitHub/progavan/GUI_tkinter/cine/logocine.png")
+    mi_imagen=ctk.CTkImage(light_image=imagen,dark_image=imagen, size=(150,150))
+    label_imagen = ctk.CTkLabel(frame_imagen,image=mi_imagen, text="", font=("Roboto", 12, "italic"), text_color="gray")
     label_imagen.place(relx=0.5, rely=0.5, anchor=ctk.CENTER)
 
     entry_usuario = ctk.CTkEntry(frame_login, placeholder_text="Nombre de usuario", width=250, height=40, corner_radius=10)
