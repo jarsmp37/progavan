@@ -1,0 +1,16 @@
+id_funcion,id_pelicula,id_sala,dia,hora_inicio
+F_4,M_1,S_1,Martes,12:00
+F_5,M_1,S_1,Martes,15:21
+F_6,M_1,S_1,Martes,18:42
+F_7,M_1,S_1,Miércoles,12:30
+F_8,M_1,S_1,Miércoles,15:51
+F_9,M_1,S_1,Miércoles,19:12
+F_10,M_2,S_2,Martes,12:00
+F_11,M_2,S_2,Martes,13:52
+F_12,M_2,S_2,Martes,15:44
+F_13,M_2,S_2,Martes,17:36
+F_14,M_2,S_2,Martes,19:28
+F_15,M_2,S_2,Martes,21:20
+F_16,M_1,S_1,Lunes,13:00
+F_17,M_1,S_1,Lunes,16:21
+F_18,M_1,S_1,Lunes,19:42

@@ -1,0 +1,5 @@
+id_venta,taquillero,id_funcion,asientos,total,fecha_hora
+V_1,brian,F_16,F7|F8|F9,255.0,2026-03-23 21:10:04
+V_2,brian,F_16,H10|H11|H12,255.0,2026-03-23 21:13:06
+V_3,brian,F_16,J14|J13,170.0,2026-03-23 21:15:07
+V_4,brian,F_16,L7|L8|L9,255.0,2026-03-23 21:15:29

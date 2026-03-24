@@ -1,0 +1,7 @@
+id_venta,dulcero,id_producto,nombre_producto,cantidad,subtotal,total,fecha_hora
+VD_1,renata,P_24,Pizza personal (2 rebanadas),3,270.0,410.0,2026-03-23 21:23:07
+VD_1,renata,P_23,Hot Dog,1,65.0,410.0,2026-03-23 21:23:07
+VD_1,renata,P_22,Nachos con queso,1,75.0,410.0,2026-03-23 21:23:07
+VD_2,renata,P_26,nestea,1,56.0,210.0,2026-03-23 21:25:46
+VD_2,renata,P_1,Palomitas Chicas,1,55.0,210.0,2026-03-23 21:25:46
+VD_2,renata,P_5,Combo Palomitas Chicas + Refresco,1,99.0,210.0,2026-03-23 21:25:46
