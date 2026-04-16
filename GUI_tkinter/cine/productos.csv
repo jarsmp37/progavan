@@ -1,0 +1,30 @@
+id_producto,nombre,categoria,precio,stock
+P_1,Palomitas Chicas,Palomitas,55.0,299
+P_2,Palomitas Medianas,Palomitas,70.0,299
+P_3,Palomitas Grandes,Palomitas,90.0,300
+P_4,Palomitas XL Mantequilla,Palomitas,110.0,200
+P_5,Combo Palomitas Chicas + Refresco,Combos,99.0,149
+P_6,Combo Palomitas Medianas + 2 Refrescos,Combos,149.0,150
+P_7,Combo Familiar (Pal. XL + 4 Refrescos),Combos,229.0,100
+P_8,Combo Pareja (2 Pal. Med. + 2 Ref.),Combos,199.0,100
+P_9,Pepsi 600ml,Bebidas,45.0,398
+P_10,Pepsi 1L,Bebidas,60.0,300
+P_11,7UP 600ml,Bebidas,45.0,399
+P_12,Agua Natural 600ml,Bebidas,30.0,399
+P_13,Jugo de manzana,Bebidas,40.0,200
+P_14,Café americano,Bebidas,55.0,150
+P_15,Chocolate caliente,Bebidas,60.0,150
+P_16,M&Ms,Dulces,35.0,500
+P_17,Skittles,Dulces,35.0,500
+P_18,Gomas de oso,Dulces,30.0,500
+P_19,Snickers,Dulces,30.0,395
+P_20,KitKat,Dulces,28.0,400
+P_21,Paleta de caramelo,Dulces,15.0,299
+P_22,Nachos con queso,Snacks,75.0,197
+P_23,Hot Dog,Snacks,65.0,199
+P_24,Pizza personal (2 rebanadas),Snacks,90.0,147
+P_25,Churros (3 piezas),Snacks,50.0,200
+P_26,nestea,Bebidas,56.0,48
+P_27,Esquites,Snacks,50.0,99
+P_28,Tlayudas,Snacks,80.0,47
+P_29,Doriesquites,Snacks,70.0,79
