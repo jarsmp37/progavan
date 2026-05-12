@@ -1,0 +1,198 @@
+# Prompt Mejorado — Sistema de Gestión Veterinaria MVC (Java Swing + NetBeans)
+
+> **Versión:** 2.0 — Lecciones aprendidas incorporadas  
+> **Uso:** Copia todo el contenido del bloque `<prompt>` y pégalo tal cual en el agente.
+
+---
+
+````xml
+<prompt>
+
+<config>
+  <!--
+    ╔══════════════════════════════════════════════════════════════════╗
+    ║  SECCIÓN DE CONFIGURACIÓN — Editar solo esta sección             ║
+    ║  antes de ejecutar el prompt en una máquina nueva.               ║
+    ╚══════════════════════════════════════════════════════════════════╝
+    
+    PROJECT_NAME     → Nombre del proyecto (sin espacios)
+    NETBEANS_PATH    → Ruta absoluta donde NetBeans guarda proyectos
+    JAVA_VERSION     → Versión del JDK instalado en la máquina (ej. 17, 21, 24)
+    ROOT_PACKAGE     → Paquete raíz del proyecto
+  -->
+  <PROJECT_NAME>SistemaVeterinaria</PROJECT_NAME>
+  <NETBEANS_PATH>C:\Users\[TU_USUARIO]\Documents\NetBeansProjects</NETBEANS_PATH>
+  <JAVA_VERSION>21</JAVA_VERSION>
+  <ROOT_PACKAGE>com.veterinaria</ROOT_PACKAGE>
+</config>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<role>
+Eres un Arquitecto de Software Java Enterprise Senior, experto en diseño
+orientado a objetos, patrones de diseño (MVC, DAO) y construcción de
+aplicaciones de escritorio empresariales con Swing. Escribes código
+limpio, mantenible y escalable.
+</role>
+
+<context>
+Una clínica veterinaria en expansión necesita un sistema local centralizado
+para gestionar el registro de pacientes. El sistema actual en Excel es
+insostenible. Este proyecto será la base de un sistema más grande, por lo
+que la arquitectura desde el día 1 debe ser perfecta. Será importado
+directamente por desarrolladores Junior en su IDE Apache NetBeans; la
+estructura de paquetes, el manejo de excepciones y el encapsulamiento
+deben servir como ejemplo educativo de las mejores prácticas en Java.
+</context>
+
+<instruction>
+Desarrolla el código core para un Sistema de Gestión Veterinaria en Java
+Swing siguiendo estrictamente el patrón MVC (Modelo-Vista-Controlador).
+
+Características funcionales:
+1. Interfaz Gráfica (Vista): Ventana principal con formulario completo para
+   registrar pacientes (ID, Nombre, Especie, Raza, Edad, Dueño, Teléfono
+   de Contacto, Síntomas). Usa `EmptyBorder` para márgenes profesionales,
+   `GridBagLayout` para alineación precisa y paleta de colores neutros/
+   profesionales (no colores planos básicos).
+2. Tabla de Datos: `JTable` dentro de `JScrollPane` con filas alternas
+   (zebra striping) y cabecera estilizada, que se actualice dinámicamente
+   al guardar o eliminar pacientes.
+3. Modelo de Dominio: Clase `Paciente` con encapsulamiento estricto
+   (atributos `private`, getters/setters), tres constructores sobrecargados
+   (vacío, completo con ID, y sin ID para creación nueva) y `toString()`.
+4. Persistencia Simulada (DAO): Clase `PacienteDAO` con `ArrayList<Paciente>`
+   en memoria implementando: `guardar`, `obtenerTodos`, `buscarPorId`,
+   `eliminarPorId` y `actualizar`. Incluir comentarios sobre cómo migrar
+   a JDBC en el futuro.
+5. Validaciones y UX: El controlador valida campos vacíos, parsea la edad
+   con `try-catch NumberFormatException`, confirma eliminaciones con
+   `JOptionPane.showConfirmDialog`, y muestra feedback con `JOptionPane`
+   de éxito/error/advertencia.
+6. Botones: Guardar (verde), Eliminar (rojo), Limpiar (gris), con efecto
+   hover implementado mediante `MouseAdapter`.
+7. Limpieza: Al guardar exitosamente, limpiar formulario y devolver foco
+   al primer campo.
+8. EDT: Toda la UI debe iniciarse dentro de `SwingUtilities.invokeLater`.
+</instruction>
+
+<output_rules>
+<!--
+  REGLAS CRÍTICAS DE SALIDA — El agente DEBE cumplirlas todas.
+  Estas reglas previenen errores de estructura que requieren corrección manual.
+-->
+
+REGLA 1 — RUTA DESTINO:
+  Genera todos los archivos directamente en:
+    {NETBEANS_PATH}\{PROJECT_NAME}\
+  Ejemplo real: C:\Users\Jaime\Documents\NetBeansProjects\SistemaVeterinaria\
+
+REGLA 2 — ESTRUCTURA DE CARPETA src/:
+  Los archivos Java van en:
+    src\com\veterinaria\...     ← CORRECTO
+  NO anidar como:
+    src\src\com\veterinaria\... ← INCORRECTO (error a evitar)
+  
+  Árbol completo obligatorio:
+    {PROYECTO}\
+    ├── build.xml
+    ├── manifest.mf
+    ├── nbproject\
+    │   ├── project.xml
+    │   └── project.properties    ← main.class DEBE estar configurado
+    └── src\
+        └── com\veterinaria\
+            ├── Main.java
+            ├── modelo\
+            │   └── Paciente.java
+            ├── dao\
+            │   └── PacienteDAO.java
+            ├── controlador\
+            │   └── PacienteController.java
+            └── vista\
+                └── VentanaPrincipal.java
+
+REGLA 3 — ARCHIVOS DE PROYECTO NETBEANS:
+  El agente DEBE generar también los archivos de configuración de NetBeans,
+  no solo el código fuente Java. Son indispensables para abrir el proyecto
+  con "File → Open Project":
+
+  a) build.xml — Script Ant mínimo:
+     <?xml version="1.0" encoding="UTF-8"?>
+     <project name="{PROJECT_NAME}" default="default" basedir=".">
+         <description>Builds, tests, and runs the project.</description>
+         <import file="nbproject/build-impl.xml"/>
+     </project>
+
+  b) manifest.mf — Manifiesto mínimo:
+     Manifest-Version: 1.0
+     X-COMMENT: Main-Class will be added automatically by build
+
+  c) nbproject/project.xml — Descriptor de proyecto NetBeans:
+     <?xml version="1.0" encoding="UTF-8"?>
+     <project xmlns="http://www.netbeans.org/ns/project/1">
+         <type>org.netbeans.modules.java.j2seproject</type>
+         <configuration>
+             <data xmlns="http://www.netbeans.org/ns/j2se-project/3">
+                 <name>{PROJECT_NAME}</name>
+                 <source-roots>
+                     <root id="src.dir"/>
+                 </source-roots>
+                 <test-roots>
+                     <root id="test.src.dir"/>
+                 </test-roots>
+             </data>
+         </configuration>
+     </project>
+
+  d) nbproject/project.properties — CLAVE: main.class NUNCA puede quedar vacío:
+     Incluir estas propiedades mínimas (el agente puede añadir más):
+       main.class={ROOT_PACKAGE}.Main     ← OBLIGATORIO, no dejar vacío
+       src.dir=src
+       test.src.dir=test
+       build.dir=build
+       dist.dir=dist
+       dist.jar=${dist.dir}/{PROJECT_NAME}.jar
+       javac.source={JAVA_VERSION}
+       javac.target={JAVA_VERSION}
+       source.encoding=UTF-8
+       platform.active=default_platform
+
+REGLA 4 — VALIDACIÓN ANTES DE TERMINAR:
+  Antes de reportar como completado, el agente debe verificar internamente:
+  [ ] Los 5 archivos .java existen en sus paquetes correctos
+  [ ] build.xml existe en la raíz del proyecto
+  [ ] manifest.mf existe en la raíz del proyecto  
+  [ ] nbproject/project.xml existe y tiene el nombre del proyecto
+  [ ] nbproject/project.properties tiene `main.class={ROOT_PACKAGE}.Main`
+  [ ] NO existe ninguna carpeta src/src/ anidada
+</output_rules>
+
+<format>
+- Genera los archivos en el orden: Modelo → DAO → Controlador → Vista → Main
+  → archivos de configuración NetBeans.
+- Añade comentarios JavaDoc completos en todas las clases y métodos públicos.
+- Al finalizar, muestra un resumen en tabla Markdown con:
+  | Archivo | Ruta completa | Estado |
+  y confirma que el proyecto puede abrirse con File → Open Project y
+  ejecutarse con F6 sin ningún paso adicional.
+</format>
+
+</prompt>
+````
+
+---
+
+## Cambios respecto al prompt original
+
+| Problema encontrado | Solución en v2.0 |
+|---|---|
+| Archivos guardados en `proyectos/` en vez de `NetBeansProjects/` | `<config>` con `NETBEANS_PATH` explícito |
+| `Copy-Item` creó `src/src/com/...` anidado | `REGLA 2` prohíbe explícitamente el anidamiento |
+| `main.class=` vacío → F6 no funcionaba | `REGLA 3d` lo marca como **OBLIGATORIO** |
+| Archivos NetBeans (`build.xml`, etc.) no generados | `REGLA 3` exige los 4 archivos de config |
+| Sin verificación post-generación | `REGLA 4` checklist interno antes de terminar |
+| Parámetros hardcodeados (versión Java, rutas) | Sección `<config>` centralizada, editar una sola vez |
+
+> [!TIP]
+> En una máquina nueva, solo necesitas editar los 4 valores dentro de `<config>` antes de ejecutar el prompt.
